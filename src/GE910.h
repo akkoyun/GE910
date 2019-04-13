@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 1.0.0
+ *	Revision			: 1.0.2
  *
  *********************************************************************************/
 
@@ -33,7 +33,9 @@ private:
 
 	// AT Command Set
 	bool AT(void);
-	
+	bool AT_CMEE(int _Parameter);
+	bool AT_FCLASS(int _Parameter);
+
 	// Utility Functions
 	bool UART_Flush(void);
 

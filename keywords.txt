@@ -1,18 +1,18 @@
 #######################################
-# Syntax Coloring Map For Nox_Environment
+# Syntax Coloring Map For GE910
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-
 GE910						KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-
 AT							KEYWORD2
+AT_CMEE						KEYWORD2
+AT_FCLASS					KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
