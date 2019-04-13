@@ -1,2 +1,1 @@
-# Weather_Station
-Open Source Weather Station
+# Telit GE910 GSM Modem AT Library.
