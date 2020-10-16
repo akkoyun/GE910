@@ -13,8 +13,36 @@ GE910						KEYWORD1
 AT							KEYWORD2
 AT_CMEE						KEYWORD2
 AT_FCLASS					KEYWORD2
+AT_K						KEYWORD2
+AT_CGSN						KEYWORD2
+AT_GSN						KEYWORD2
+AT_CPIN						KEYWORD2
+AT_CCID						KEYWORD2
+AT_CREG						KEYWORD2
+AT_CGREG					KEYWORD2
+AT_CGDCONT					KEYWORD2
+AT_SCFG						KEYWORD2
+AT_SGACT					KEYWORD2
+AT_SERVINFO					KEYWORD2
+AT_SLED						KEYWORD2
+AT_TXMONMODE				KEYWORD2
+AT_CCLK						KEYWORD2
+AT_NTP						KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
-
+Firmware					LITERAL1
+ID							LITERAL1
+IMEI						LITERAL1
+ICCID						LITERAL1
+IP							LITERAL1
+Operator					LITERAL1
+Signal						LITERAL1
+Band						LITERAL1
+Day							LITERAL1
+Month						LITERAL1
+Year						LITERAL1
+Hour						LITERAL1
+Minute						LITERAL1
+Second						LITERAL1
