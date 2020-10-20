@@ -26,7 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.00.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.01.00";		// Library Firmware
 
 	// IoT Variables
 	char 					ID[11];							// 10 digit number
