@@ -28,7 +28,13 @@ AT_SLED						KEYWORD2
 AT_TXMONMODE				KEYWORD2
 AT_CCLK						KEYWORD2
 AT_NTP						KEYWORD2
-
+AT_CSQ						KEYWORD2
+AT_CTZU						KEYWORD2
+UART_Clear					KEYWORD2
+Response_Wait				KEYWORD2
+Connect						KEYWORD2
+Time_Update					KEYWORD2
+		
 #######################################
 # Constants (LITERAL1)
 #######################################
@@ -38,11 +44,12 @@ IMEI						LITERAL1
 ICCID						LITERAL1
 IP							LITERAL1
 Operator					LITERAL1
-Signal						LITERAL1
-Band						LITERAL1
+RSSI						LITERAL1
+dBM							LITERAL1
 Day							LITERAL1
 Month						LITERAL1
 Year						LITERAL1
 Hour						LITERAL1
 Minute						LITERAL1
 Second						LITERAL1
+Connected					LITERAL1

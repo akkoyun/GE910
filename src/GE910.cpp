@@ -11,7 +11,7 @@
 #include "Arduino.h"
 #include "GE910.h"
 
-// AT Command Set
+// Modem Set Functions
 bool GE910::AT(void) {
 	
 	/******************************************************************************
@@ -22,52 +22,42 @@ bool GE910::AT(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
+	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT")));
+	UART_IoT.println(F("AT"));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 10) {
+	// Declare Variables
+	uint8_t _Response_Length = 10;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 	
 }
 bool GE910::AT_CMEE(void) {
@@ -82,52 +72,42 @@ bool GE910::AT_CMEE(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT+CMEE=")) + String(_CMEE));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 17) {
+	// Declare Variables
+	uint8_t _Response_Length = 17;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_FCLASS(void) {
@@ -142,52 +122,42 @@ bool GE910::AT_FCLASS(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CMEE=")) + String(_FCLASS));
+	UART_IoT.println(String(F("AT+FCLASS=")) + String(_FCLASS));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 19) {
+	// Declare Variables
+	uint8_t _Response_Length = 19;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_K(void) {
@@ -202,54 +172,46 @@ bool GE910::AT_K(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT&K")) + String(_K));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 13) {
+	// Declare Variables
+	uint8_t _Response_Length = 13;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
+
+// SIM Functions
 bool GE910::AT_CPIN(void) {
 	
 	/******************************************************************************
@@ -260,54 +222,228 @@ bool GE910::AT_CPIN(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT+CPIN?")));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 32) {
+	// Declare Variables
+	uint8_t _Response_Length = 32;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "READY") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("READY")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
+bool GE910::AT_CCID(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT CCID Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT#CCID\r\n (9 byte)
+	 *	Response	: AT#CCID\r\n\r\n#CCID: 0000000000000000000\r\n\r\nOK\r\n (45 byte)
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.println(String(F("AT#CCID")));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 45;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		uint8_t _Data_Order = 0;
+		char _Response[_Response_Length];
+
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Handle Data
+			if (_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
+				
+				// Get Data
+				ICCID[_Data_Order] = _Response[_Read_Order];
+
+				// Increase Data Order
+				_Data_Order++;
+
+			}
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
+
+}
+
+// Modem ID Functions
+bool GE910::AT_CGSN(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT CGSN Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT+CGSN\r\n (9 byte)
+	 *	Response	: AT+CGSN\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.println(String(F("AT+CGSN")));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 34;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		uint8_t _Data_Order = 0;
+		char _Response[_Response_Length];
+
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Handle Data
+			if (_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
+				
+				// Get Data
+				IMEI[_Data_Order] = _Response[_Read_Order];
+
+				// Increase Data Order
+				_Data_Order++;
+
+			}
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
+	
+}
+bool GE910::AT_GSN(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT GSN Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT+GSN\r\n (8 byte)
+	 *	Response	: AT+GSN\r\n\r\n0000000000\r\n\r\nOK\r\n (28 byte)
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.println(String(F("AT+GSN")));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 28;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		uint8_t _Data_Order = 0;
+		char _Response[_Response_Length];
+
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Handle Data
+			if (_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
+				
+				// Get Data
+				ID[_Data_Order] = _Response[_Read_Order];
+
+				// Increase Data Order
+				_Data_Order++;
+
+			}
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
+
+}
+
+// GPIO Functions
 bool GE910::AT_SLED(void) {
 
 	/******************************************************************************
@@ -320,52 +456,42 @@ bool GE910::AT_SLED(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT#SLED=")) + String(_SLED));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 17) {
+	// Declare Variables
+	uint8_t _Response_Length = 17;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_TXMONMODE(void) {
@@ -380,194 +506,46 @@ bool GE910::AT_TXMONMODE(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT#TXMONMODE=")) + String(_TXMONMODE));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 22) {
+	// Declare Variables
+	uint8_t _Response_Length = 22;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
-			
-		}
-		
-	}
-
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
-}
-bool GE910::AT_CGSN(void) {
-	
-	/******************************************************************************
-	 *	Function	: AT CGSN Command
-	 *	Revision	: 01.00.00
-	 *	Command		: AT+CGSN\r\n (9 byte)
-	 *	Response	: AT+CGSN\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
-	 ******************************************************************************/
-
-	// Clear UART Buffer
-	UART_Flush();
-
-	// Send UART Command
-	UART_IoT.println(String(F("AT+CGSN")));
-
-	// Read Current Time
-	long _Time = millis();
-
-	// Wait for UART Available
-	while (UART_IoT.available() < 34) {
-		
-		// Wait delay
-		delay(1);
-		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
-			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
-
-	// Read UART Buffer
-	String _Buffer = UART_IoT.readString();
-
-	// Parse ICCID Number
-	IMEI = _Buffer.substring(11, 26);
 
 	// End Function
-	return (true);
-	
-}
-bool GE910::AT_GSN(void) {
-	
-	/******************************************************************************
-	 *	Function	: AT GSN Command
-	 *	Revision	: 01.00.00
-	 *	Command		: AT+GSN\r\n (8 byte)
-	 *	Response	: AT+GSN\r\n\r\n0000000000\r\n\r\nOK\r\n (28 byte)
-	 ******************************************************************************/
-
-	// Clear UART Buffer
-	UART_Flush();
-
-	// Send UART Command
-	UART_IoT.println(String(F("AT+GSN")));
-
-	// Read Current Time
-	long _Time = millis();
-
-	// Wait for UART Available
-	while (UART_IoT.available() < 28) {
-		
-		// Wait delay
-		delay(1);
-		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
-			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
-			
-		}
-		
-	}
-
-	// Read UART Buffer
-	String _Buffer = UART_IoT.readString();
-
-	// Parse Serial Number
-	IMEI = _Buffer.substring(10, 20);
-	
-	// End Function
-	return (true);
+	return (false);
 
 }
-bool GE910::AT_CCID(void) {
-	
-	/******************************************************************************
-	 *	Function	: AT CCID Command
-	 *	Revision	: 01.00.00
-	 *	Command		: AT#CCID\r\n (9 byte)
-	 *	Response	: AT#CCID\r\n\r\n000000000000000000\r\n\r\nOK\r\n (37 byte)
-	 ******************************************************************************/
 
-	// Clear UART Buffer
-	UART_Flush();
-
-	// Send UART Command
-	UART_IoT.println(String(F("AT#CCID")));
-
-	// Read Current Time
-	long _Time = millis();
-
-	// Wait for UART Available
-	while (UART_IoT.available() < 37) {
-		
-		// Wait delay
-		delay(1);
-		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
-			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
-			
-		}
-		
-	}
-
-	// Read UART Buffer
-	String _Buffer = UART_IoT.readString();
-
-	// Parse ICCID Number
-	ICCID = _Buffer.substring(11, 29);
-	
-	// End Function
-	return (true);
-
-}
+// GSM Connection Functions
 bool GE910::AT_CREG(void) {
 
 	/******************************************************************************
@@ -590,174 +568,164 @@ bool GE910::AT_CREG(void) {
 
 	// Send CREG Connection Command
 	while (_CREG_Set == false) {
-		
+	
 		// Clear UART Buffer
-		UART_Flush();
-
+		UART_Clear();
+		
 		// Send UART Command
 		UART_IoT.println(String(F("AT+CREG=1")));
 
-		// Read Current Time
-		long _Time = millis();
+		// Wait for UART Data Send
+		UART_IoT.flush();
 
-		// Wait for UART Available
-		while (UART_IoT.available() < 17) {
+		// Declare Variables
+		uint8_t _Response_Length = 17;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
 			
-			// Wait delay
-			delay(1);
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
 			
-			// Handle for timeout
-			if (millis() - _Time >= 1000) {
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Clear UART Buffer
-				UART_Flush();
-
-				// End Function Failed
-				return(false);
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
-			
-		}
 
-		// Analyse Respose
-		if (UART_IoT.find("OK")) {
-
-			// Set Control Variable
-			_CREG_Set = true;
-			
-		}
-		else {
-
-			// Set Control Variable
-			_CREG_Set = false;
+			// Control for Response
+			if(strstr(_Response, "OK") != NULL) _CREG_Set = true;
 
 		}
-
-		// Handle for Error
-		if (_Error_WD >= 5) return(false);
-
+		
 		// Count for Error
 		_Error_WD++;
 
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
+
 		// Wait on Error
 		if (_CREG_Set == false) delay(500);
-		
+
 	}
 	
 	// Reset Error WD
 	_Error_WD = 0;
-	
+
 	// Send CREG Status Read Command
 	while (_CREG_Status == false) {
 		
 		// Clear UART Buffer
-		UART_Flush();
-
+		UART_Clear();
+		
 		// Send UART Command
 		UART_IoT.println(String(F("AT+CREG?")));
 
-		// Read Current Time
-		long _Time = millis();
+		// Wait for UART Data Send
+		UART_IoT.flush();
 
-		// Wait for UART Available
-		while (UART_IoT.available() < 30) {
+		// Declare Variables
+		uint8_t _Response_Length = 30;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
 			
-			// Wait delay
-			delay(1);
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
 			
-			// Handle for timeout
-			if (millis() - _Time >= 1000) {
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Clear UART Buffer
-				UART_Flush();
-
-				// End Function Failed
-				return(false);
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
-			
-		}
-		
-		// Analyse Response
-		if (UART_IoT.find("+CREG") == true) {
-			
-			/******************************************************************************
-			 [Stat]
-			 0 - Not Registered to Network
-			 1 - Registered to Home Network
-			 2 - Searching Network
-			 3 - Registration to Network Denied
-			 4 - Unknown
-			 5 - Registered & Rooming
-			 ******************************************************************************/
-			
-			// Get Response Parameters
-			_Mode  = UART_IoT.parseInt();
-			_Stat  = UART_IoT.parseInt();
-			
-			// Set Control Variable
-			_CREG_Status = true;
-			
-			// Control for Stat
-			if (_Stat == 1 or _Stat == 5) return(true);
 
+			// Control for Response
+			if(strstr(_Response, "+CREG:") != NULL) {
+			
+				// Set Control Variable
+				_CREG_Status = true;
+				
+				// Read Mode
+				_Mode = _Response[19];
+				
+				// Read Stat
+				_Stat = _Response[21];
+				
+				// Control for Stat
+				if (_Stat == 49 or _Stat == 53) return(true);
+
+			}
+				
 		}
-		
-		// Handle for Error
-		if (_Error_WD >= 10) return(false);
 
 		// Count for Error
 		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
 
 		// Wait on Error
 		if (_CREG_Status == false) delay(500);
 
 	}
+	
+	// Control for Connection
+	while (_CREG_Connection == false) {
 
-	// Wait for CREG process
-	if (_Stat != 1 or _Stat != 5) {
-		
-		// Control for Connection
-		while (_CREG_Connection != true) {
+		// Declare Variables
+		uint8_t _Response_Length = 12;
+
+		// Handle Response
+		if (Response_Wait(_Response_Length, 150000)) {
 			
-			// Read Current Time
-			long _Time = millis();
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
 
-			// Wait for UART Available
-			while (UART_IoT.available() < 12) {
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Wait delay
-				delay(1);
-				
-				// Handle for timeout
-				if (millis() - _Time >= 1000) {
-					
-					// Clear UART Buffer
-					UART_Flush();
-
-					// End Function Failed
-					return(false);
-					
-				}
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
 
-			// Wait for Response
-			if (UART_IoT.find("+CREG") == true) {
-				
-				// Get Response Parameters
-				_Stat = UART_IoT.parseInt();
+			// Control for Response
+			if(strstr(_Response, "+CREG:") != NULL) {
+			
+				// Read Stat
+				_Stat = _Response[9];
 				
 				// Handle Stat Variable
-				if (_Stat == 0) return (false);				// Not Registered
-				if (_Stat == 1) _CREG_Connection = true;	// Registered to Home Network
-				if (_Stat == 2) delay(10);					// Searching Network
-				if (_Stat == 3) return (false);				// Registration to Network Denied
-				if (_Stat == 4) return (false);				// Unknown
-				if (_Stat == 5) _CREG_Connection = true;	// Registered & Rooming
-				
+				if (_Stat == 48) return (false);				// Not Registered
+				if (_Stat == 49) _CREG_Connection = true;	// Registered to Home Network
+				if (_Stat == 50) delay(10);					// Searching Network
+				if (_Stat == 51) return (false);				// Registration to Network Denied
+				if (_Stat == 52) return (false);				// Unknown
+				if (_Stat == 53) _CREG_Connection = true;	// Registered & Rooming
+
 			}
-			
+				
+		} else {
+
+			// End Function
+			return(false);
+
 		}
 		
 	}
@@ -790,52 +758,45 @@ bool GE910::AT_CGREG(void) {
 	while (_CGREG_Set == false) {
 		
 		// Clear UART Buffer
-		UART_Flush();
-
+		UART_Clear();
+		
 		// Send UART Command
 		UART_IoT.println(String(F("AT+CGREG=1")));
 
-		// Read Current Time
-		long _Time = millis();
+		// Wait for UART Data Send
+		UART_IoT.flush();
 
-		// Wait for UART Available
-		while (UART_IoT.available() < 18) {
+		// Declare Variables
+		uint8_t _Response_Length = 18;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
 			
-			// Wait delay
-			delay(1);
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
 			
-			// Handle for timeout
-			if (millis() - _Time >= 1000) {
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Clear UART Buffer
-				UART_Flush();
-
-				// End Function Failed
-				return(false);
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
-			
-		}
 
-		// Analyse Respose
-		if (UART_IoT.find("OK")) {
-
-			// Set Control Variable
-			_CGREG_Set = true;
-			
-		}
-		else {
-
-			// Set Control Variable
-			_CGREG_Set = false;
+			// Control for Response
+			if(strstr(_Response, "OK") != NULL) _CGREG_Set = true;
 
 		}
-
-		// Handle for Error
-		if (_Error_WD >= 5) return(false);
-
+		
 		// Count for Error
 		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
 
 		// Wait on Error
 		if (_CGREG_Set == false) delay(500);
@@ -849,113 +810,105 @@ bool GE910::AT_CGREG(void) {
 	while (_CGREG_Status == false) {
 		
 		// Clear UART Buffer
-		UART_Flush();
-
+		UART_Clear();
+		
 		// Send UART Command
 		UART_IoT.println(String(F("AT+CGREG?")));
 
-		// Read Current Time
-		long _Time = millis();
+		// Wait for UART Data Send
+		UART_IoT.flush();
 
-		// Wait for UART Available
-		while (UART_IoT.available() < 32) {
+		// Declare Variables
+		uint8_t _Response_Length = 32;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
 			
-			// Wait delay
-			delay(1);
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
 			
-			// Handle for timeout
-			if (millis() - _Time >= 1000) {
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Clear UART Buffer
-				UART_Flush();
-
-				// End Function Failed
-				return(false);
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
-			
-		}
-		
-		// Analyse Response
-		if (UART_IoT.find("+CGREG") == true) {
-			
-			/******************************************************************************
-			 [Stat]
-			 0 - Not Registered to Network
-			 1 - Registered to Home Network
-			 2 - Searching Network
-			 3 - Registration to Network Denied
-			 4 - Unknown
-			 5 - Registered & Rooming
-			 ******************************************************************************/
 
-			// Get Response Parameters
-			_Mode  = UART_IoT.parseInt();
-			_Stat  = UART_IoT.parseInt();
+			// Control for Response
+			if(strstr(_Response, "+CGREG:") != NULL) {
 			
-			// Set Control Variable
-			_CGREG_Status = true;
-			
-			// Control for Stat
-			if (_Stat == 1 or _Stat == 5) return(true);
+				// Set Control Variable
+				_CGREG_Status = true;
+				
+				// Read Mode
+				_Mode = _Response[21];
+				
+				// Read Stat
+				_Stat = _Response[23];
+				
+				// Control for Stat
+				if (_Stat == 49 or _Stat == 53) return(true);
 
+			}
+				
 		}
-		
-		// Handle for Error
-		if (_Error_WD >= 10) return(false);
 
 		// Count for Error
 		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
 
 		// Wait on Error
 		if (_CGREG_Status == false) delay(500);
 
 	}
+	
+	// Control for Connection
+	while (_CGREG_Connection == false) {
 
-	// Wait for CGREG process
-	if (_Stat != 1 or _Stat != 5) {
-		
-		// Control for Connection
-		while (_CGREG_Connection != true) {
+		// Declare Variables
+		uint8_t _Response_Length = 13;
+
+		// Handle Response
+		if (Response_Wait(_Response_Length, 150000)) {
 			
-			// Read Current Time
-			long _Time = millis();
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
 
-			// Wait for UART Available
-			while (UART_IoT.available() < 13) {
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
 				
-				// Wait delay
-				delay(1);
-				
-				// Handle for timeout
-				if (millis() - _Time >= 1000) {
-					
-					// Clear UART Buffer
-					UART_Flush();
-
-					// End Function Failed
-					return(false);
-					
-				}
+				// Increase Read Order
+				_Read_Order++;
 				
 			}
 
-			// Wait for Response
-			if (UART_IoT.find("+CGREG") == true) {
-				
-				// Get Response Parameters
-				_Stat = UART_IoT.parseInt();
+			// Control for Response
+			if(strstr(_Response, "+CGREG:") != NULL) {
+			
+				// Read Stat
+				_Stat = _Response[10];
 				
 				// Handle Stat Variable
-				if (_Stat == 0) delay(10);					// Not Registered
-				if (_Stat == 1) _CGREG_Connection = true;	// Registered to Home Network
-				if (_Stat == 2) delay(10);					// Searching Network
-				if (_Stat == 3) return (false);				// Registration to Network Denied
-				if (_Stat == 4) return (false);				// Unknown
-				if (_Stat == 5) _CGREG_Connection = true;	// Registered & Rooming
-				
+				if (_Stat == 48) return (false);				// Not Registered
+				if (_Stat == 49) _CGREG_Connection = true;	// Registered to Home Network
+				if (_Stat == 50) delay(10);					// Searching Network
+				if (_Stat == 51) return (false);				// Registration to Network Denied
+				if (_Stat == 52) return (false);				// Unknown
+				if (_Stat == 53) _CGREG_Connection = true;	// Registered & Rooming
+
 			}
-			
+				
 		}
 		
 	}
@@ -974,52 +927,42 @@ bool GE910::AT_CGDCONT(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CGDCONT=")) + String(_Cid) + String(F(",\"")) + String(_PDP) + String(F("\",\"")) + String(_APN) + String(F("\"")));
+	UART_IoT.println(String(F("AT+CGDCONT=1,\"")) + String(_PDP) + String(F("\",\"")) + String(_APN) + String(F("\"")));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 36) {
+	// Declare Variables
+	uint8_t _Response_Length = 36;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_SCFG(void) {
@@ -1032,52 +975,42 @@ bool GE910::AT_SCFG(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#SCFG=")) + String(_ConnID) + String(F(",")) + String(_Cid) + String(F(",")) + String(_PktSz) + String(F(",")) + String(_MaxTo) + String(F(",")) + String(_ConnTo) + String(F(",")) + String(_TxTo) + String(F(",")));
+	UART_IoT.println(String(F("AT#SCFG=1,1,")) + String(_PktSz) + String(F(",")) + String(_MaxTo) + String(F(",")) + String(_ConnTo) + String(F(",")) + String(_TxTo));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 29) {
+	// Declare Variables
+	uint8_t _Response_Length = 29;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Success
-		return (true);
-		
-	}
-	else {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// End Function Failed
-		return (false);
-		
-	}
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_SGACT(void) {
@@ -1087,152 +1020,261 @@ bool GE910::AT_SGACT(void) {
 	 *	Revision	: 01.00.00
 	 *	Command-1	: AT#SGACT=1,0\r\n (14 byte)
 	 *	Response-1	: AT#SGACT=1,0\r\n\r\nOK\r\n (20 byte)
-	 *	Command-2	: AT#SGACT?\r\n (11 byte)
-	 *	Response-2	: AT#SGACT?\r\n\r\n#SGACT: 1,0\r\n\r\nOK\r\n (32 byte)
+	 *	Command-2	: AT#SGACT=1,1\r\n (14 byte)
+	 *	Response-2	: AT#SGACT?\r\n\r\n#SGACT: 1,1\r\n\r\nOK\r\n (32 byte)
+	 ******************************************************************************/
+
+	// Define Variables
+	bool _SGACT_Release_IP = false;
+	bool _SGACT_Get_IP = false;
+	bool _SGACT_Parse_IP = false;
+	uint8_t _Error_WD = 0;
+	uint8_t _Cid = 0;
+	uint8_t _Stat = 0;
+
+	// Send Release IP Command
+	while (_SGACT_Release_IP == false) {
+	
+		// Clear UART Buffer
+		UART_Clear();
+		
+		// Send UART Command
+		UART_IoT.println(String(F("AT#SGACT=1,0")));
+
+		// Wait for UART Data Send
+		UART_IoT.flush();
+
+		// Declare Variables
+		uint8_t _Response_Length = 20;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, "OK") != NULL) _SGACT_Release_IP = true;
+			if(strstr(_Response, "ERROR:") != NULL) {
+			
+				// End Function
+				return(false);
+
+			}
+
+		}
+		
+		// Count for Error
+		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
+
+		// Wait on Error
+		if (_SGACT_Release_IP == false) delay(500);
+
+	}
+
+	// Reset Error WD
+	_Error_WD = 0;
+
+	// Send GET IP Command
+	while (_SGACT_Get_IP == false) {
+	
+		// Clear UART Buffer
+		UART_Clear();
+		
+		// Send UART Command
+		UART_IoT.println(String(F("AT#SGACT=1,1")));
+
+		// Wait for UART Data Send
+		UART_IoT.flush();
+
+		// Declare Variables
+		uint8_t _Response_Length = 14;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, "SGACT") != NULL) _SGACT_Get_IP = true;
+			if(strstr(_Response, "ERROR:") != NULL) {
+			
+				// End Function
+				return(false);
+
+			}
+
+		}
+		
+		// Count for Error
+		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
+
+		// Wait on Error
+		if (_SGACT_Get_IP == false) delay(500);
+
+	}
+
+	// Control for Connection
+	while (_SGACT_Parse_IP == false) {
+
+		// Declare Variables
+		uint8_t _Response_Length = 29;
+
+		// Handle Response
+		if (Response_Wait(_Response_Length, 150000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			uint8_t _Data_Order = 0;
+			char _Response[_Response_Length];
+
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Handle Data
+				if ((_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) or _Response[_Read_Order] == 46) {
+					
+					// Get Data
+					IP[_Data_Order] = _Response[_Read_Order];
+
+					// Increase Data Order
+					_Data_Order++;
+
+				}
+				
+				// Increase Read Order
+				_Read_Order++;
+
+			}
+
+			// Control for Response
+			if(strstr(_Response, "SGACT:") != NULL) {
+			
+				// Set Control Variable
+				_SGACT_Parse_IP = true;
+
+			}
+			if(strstr(_Response, "ERROR:") != NULL) {
+			
+				// End Function
+				return(false);
+
+			}
+
+		} else {
+
+			// End Function
+			return(false);
+
+		}
+		
+	}
+	
+	// End Function
+	return(true);
+	
+}
+
+// Operotor Functions
+bool GE910::AT_CSQ(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT CSQ Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT+CSQ\r\n (9 byte)
+	 *	Response	: AT+CSQ\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#SGACT=")) + String(_Cid) + String(F(",0")));
+	UART_IoT.println(String(F("AT+CSQ")));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 20) {
+	// Declare Variables
+	uint8_t _Response_Length = 28;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
-		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		uint8_t _Data_Order = 0;
+		char _Response[_Response_Length];
+
+		// Declare Buffer Variables
+		char _RSSI[3];
+
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
+			// Handle Data
+			if ((_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) or _Response[_Read_Order] == 45) {
+				
+				// Get Data
+				_RSSI[_Data_Order] = _Response[_Read_Order];
 
-			// End Function Failed
-			return(false);
+				// Increase Data Order
+				_Data_Order++;
+
+			}
+			
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
+
+		// Convert Variable
+		RSSI = (uint8_t)atoi(_RSSI);
+
+		// Control for Response
+		if(strstr(_Response, "CSQ") != NULL) return (true);
+
 	}
 
-	// Analyse Respose
-	if (UART_IoT.find("OK")) {
-
-		// Clear UART Buffer
-		UART_Flush();
-
-		// Send UART Command
-		UART_IoT.println(String(F("AT#SGACT?")));
-
-		// Read Current Time
-		_Time = millis();
-
-		// Wait for UART Available
-		while (UART_IoT.available() < 32) {
-			
-			// Wait delay
-			delay(1);
-			
-			// Handle for timeout
-			if (millis() - _Time >= 1000) {
-				
-				// Clear UART Buffer
-				UART_Flush();
-
-				// End Function Failed
-				return(false);
-				
-			}
-			
-		}
-
-		// Analyse Respose
-		if (UART_IoT.find("OK")) {
-
-			// Clear UART Buffer
-			UART_Flush();
-
-			// Send UART Command
-			UART_IoT.println(String(F("AT#SGACT=")) + String(_Cid) + String(F(",1")));
-
-			// Read Current Time
-			_Time = millis();
-
-			// Wait for UART Available
-			while (UART_IoT.available() < 14) {
-				
-				// Wait delay
-				delay(1);
-				
-				// Handle for timeout
-				if (millis() - _Time >= 1000) {
-					
-					// Clear UART Buffer
-					UART_Flush();
-
-					// End Function Failed
-					return(false);
-					
-				}
-				
-			}
-
-			// Analyse Respose
-			if (UART_IoT.find("AT#SGACT=1,1")) {
-				
-				// Control for Connection
-				while (_SGACT_Connection != true) {
-					
-					// Read Current Time
-					long _Time = millis();
-
-					// Wait for UART Available
-					while (UART_IoT.available() < 25) {
-						
-						// Wait delay
-						delay(1);
-						
-						// Handle for timeout
-						if (millis() - _Time >= 1000) {
-							
-							// Clear UART Buffer
-							UART_Flush();
-
-							// End Function Failed
-							return(false);
-							
-						}
-						
-					}
-
-					// Wait for Response
-					if (UART_IoT.find("SGACT:") == true) {
-												
-						// GET IP values
-						uint8_t _IP1  = UART_IoT.parseInt();
-						uint8_t _IP2  = UART_IoT.parseInt();
-						uint8_t _IP3  = UART_IoT.parseInt();
-						uint8_t _IP4  = UART_IoT.parseInt();
-						
-						// Parse IP
-						IP = _IP1 + "." + _IP2 + "." + _IP3 + "." + _IP4;
-
-						// End Function
-						return (true);
-
-					}
-					
-				}
-
-			}
-		}
-		
-	}
-
+	// End Function
+	return (false);
+	
 }
 bool GE910::AT_SERVINFO(void) {
 	
@@ -1244,53 +1286,137 @@ bool GE910::AT_SERVINFO(void) {
 	 ******************************************************************************/
 
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
 	UART_IoT.println(String(F("AT#SERVINFO")));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 75) {
+	// Declare Variables
+	uint8_t _Response_Length = 60;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
-	}
 
-	// Analyse Respose
-	if (UART_IoT.find("SERVINFO:")) {
+		// Parse DBM
+		char _Buffer[2];
+		_Buffer[0] = _Response[30];
+		_Buffer[1] = _Response[31];
+		dBM = (uint8_t)atoi(_Buffer);
 
-		// Parse Data
-		int _Band = UART_IoT.parseInt();
-		Signal = UART_IoT.parseInt();
-		Operator = UART_IoT.parseInt();
+		// Parse Operator
+		if(strstr(_Response, "28601") != NULL) Operator = 28601;
+		if(strstr(_Response, "28602") != NULL) Operator = 28602;
+		if(strstr(_Response, "28603") != NULL) Operator = 28603;
+		if(strstr(_Response, "28604") != NULL) Operator = 28604;
 
-		// Define Band
-		if ((_Band >= 259 and _Band <= 293) or (_Band >= 306 and _Band <= 340)) Band = 500;
-		if (_Band >= 438 and _Band <= 511) Band = 700;
-		if (_Band >= 128 and _Band <= 251) Band = 850;
-		if ((_Band >= 0 and _Band <= 124) or (_Band >= 955 and _Band <= 1023)) Band = 900;
-		if (_Band >= 512 and _Band <= 810) Band = 1900;
-		if (_Band >= 512 and _Band <= 885) Band = 1800;
+		// Control for Response
+		if(strstr(_Response, "#SERVINFO:") != NULL) return (true);
 
 	}
 
 	// End Function
-	return (true);
+	return (false);
+
+}
+
+// RTC Functions
+bool GE910::AT_CCLK(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT CCLK Command
+	 *	Revision	: 01.00.00
+	 *	Command 	: AT#CCLK?\r\n (10 byte)
+	 *	Response	: AT#CCLK?\r\n\r\n#CCLK: "20/10/16,08:55:58+00.0"\r\n\r\nOK\r\n (51 byte)
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.println(String(F("AT#CCLK?")));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 51;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
+		
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Declare Buffer
+		char _Buffer[2];
+
+		// Parse Year
+		_Buffer[0] = _Response[20];
+		_Buffer[1] = _Response[21];
+		Year = (uint8_t)atoi(_Buffer);
+
+		// Parse Month
+		_Buffer[0] = _Response[23];
+		_Buffer[1] = _Response[24];
+		Month = (uint8_t)atoi(_Buffer);
+
+		// Parse Day
+		_Buffer[0] = _Response[26];
+		_Buffer[1] = _Response[27];
+		Day = (uint8_t)atoi(_Buffer);
+
+		// Parse Hour
+		_Buffer[0] = _Response[29];
+		_Buffer[1] = _Response[30];
+		Hour = (uint8_t)atoi(_Buffer);
+
+		// Parse Minute
+		_Buffer[0] = _Response[32];
+		_Buffer[1] = _Response[33];
+		Minute = (uint8_t)atoi(_Buffer);
+
+		// Parse Second
+		_Buffer[0] = _Response[35];
+		_Buffer[1] = _Response[36];
+		Second = (uint8_t)atoi(_Buffer);
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
 
 }
 bool GE910::AT_NTP(void) {
@@ -1303,163 +1429,92 @@ bool GE910::AT_NTP(void) {
 	 *	Response-2	: \r\n#NTP: 20/10/16,08:55:58\r\nOK\r\n (31 byte)
 	 ******************************************************************************/
 
-	// Define Control Variables
-	bool _NTP_Set = false;
-	bool _NTP_Ready = false;
-	uint8_t _Error_WD = 0;
-
-	// NTP Time Update Command
-	while (_NTP_Set == false) {
+	// Clear UART Buffer
+	UART_Clear();
 	
-		// Clear UART Buffer
-		UART_Flush();
+	// Send UART Command
+	UART_IoT.println(String(F("AT#NTP=\"")) + String(_NTP_Server) + String(F("\",123,1,3")));
 
-		// Send UART Command
-		UART_IoT.println(String(F("AT#NTP=\"")) + String(_NTP_Server) + String("\",") + String(_NTP_Port) + String(",1,10"));
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-		// Read Current Time
-		long _Time = millis();
+	// Declare Variables
+	uint8_t _Response_Length = 62;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 4000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
+		
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
 
-		// Wait for UART Available
-		while (UART_IoT.available() < 31) {
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Wait delay
-			delay(1);
-			
-			// Handle for timeout
-			if (millis() - _Time >= 11000) {
-				
-				// End Function Failed
-				return (false);
-				
-			}
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
 
-		// Analyse Response
-		if (UART_IoT.find("AT#NTP=") == true) _NTP_Set = true;
-
-		// Handle for Error
-		if (_Error_WD == 10) return(false);
-		
-		// Count for Error
-		_Error_WD++;
-		
-		// Wait on Error
-		if (_NTP_Set == false) delay(500);
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+		if(strstr(_Response, "ERROR") != NULL) return (false);
 
 	}
-	
-	// Reset Error Variable
-	_Error_WD = 0;
 
-	// Wait NTP Time Set
-	while (_NTP_Ready == false) {
-		
-		// Read Current Time
-		long _Time = millis();
-
-		// Wait for UART Available
-		while (UART_IoT.available() < 31) {
-			
-			// Wait delay
-			delay(1);
-			
-			// Handle for timeout
-			if (millis() - _Time >= 11000) {
-				
-				// End Function Failed
-				return (false);
-				
-			}
-			
-		}
-
-		// Analyse Response
-		if (UART_IoT.find("NTP:") == true) {
-		
-			// End Delay
-			delay(10);
-
-			// End Function Success
-			return (true);
-
-		}
-		
-		// Handle for Error
-		if (_Error_WD == 10) return(false);
-		
-		// Count for Error
-		_Error_WD++;
-		
-		// Wait on Error
-		if (_NTP_Ready == false) delay(500);
-
-	}
+	// End Function
+	return (false);
 		
 }
-bool GE910::AT_CCLK(void) {
+bool GE910::AT_CTZU(void) {
 	
-	/******************************************************************************
-	 *	Function	: AT CCLK Command
-	 *	Revision	: 01.00.00
-	 *	Command 	: AT#CCLK?\r\n (10 byte)
-	 *	Response	: AT#CCLK?\r\n\r\n#CCLK: "20/10/16,08:55:58+00.0"\r\n\r\nOK\r\n (51 byte)
-	 ******************************************************************************/
-
 	// Clear UART Buffer
-	UART_Flush();
-
+	UART_Clear();
+	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#CCLK?")));
+	UART_IoT.println(F("AT+CTZU=1"));
 
-	// Read Current Time
-	long _Time = millis();
+	// Wait for UART Data Send
+	UART_IoT.flush();
 
-	// Wait for UART Available
-	while (UART_IoT.available() < 51) {
+	// Declare Variables
+	uint8_t _Response_Length = 17;
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Wait delay
-		delay(1);
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
 		
-		// Handle for timeout
-		if (millis() - _Time >= 1000) {
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Clear UART Buffer
-			UART_Flush();
-
-			// End Function Failed
-			return(false);
+			// Increase Read Order
+			_Read_Order++;
 			
 		}
-		
-	}
 
-	// Analyse Respose
-	if (UART_IoT.find("CCLK:")) {
-
-		// Parse Data
-		Year = UART_IoT.parseInt();
-		Month = UART_IoT.parseInt();
-		Day = UART_IoT.parseInt();
-		Hour = UART_IoT.parseInt();
-		Minute = UART_IoT.parseInt();
-		Second = UART_IoT.parseInt();
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
 
 	}
 
-	// End Function Success
-	return (true);
+	// End Function
+	return (false);
 
 }
 
 // Utility Functions
-bool GE910::UART_Flush(void) {
+void GE910::UART_Clear(void) {
 	
-	// Flush UART
-	UART_IoT.flush();
-	
-	// Controll for UART Buffer
+	// Control for UART Buffer
 	while(UART_IoT.available() > 0) {
 	
 		// Read Buffer
@@ -1467,7 +1522,491 @@ bool GE910::UART_Flush(void) {
 	
 	}
 	
-	// Flush Delay
-	delay(2);
+	// Clear Delay
+	delay(1);
+
+}
+bool GE910::Response_Wait(uint8_t _Length, uint16_t _TimeOut) {
+	
+	// Read Current Time
+	long _Time = millis();
+
+	// Wait for UART Available
+	while (UART_IoT.available() < _Length) {
+		
+		// Wait delay
+		delay(1);
+		
+		// Handle for timeout
+		if (millis() - _Time >= _TimeOut) return(false);
+		
+	}
+	
+	// End Function
+	return(true);
+
+}
+
+// Public Functions
+bool GE910::Connect(void) {
+	
+	// Start AT Command Sequence
+	if (Connected == false) {
+		
+		// Declare Variable
+		bool _Process_Control = false;
+		bool AT_Command_Confirmation[16] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+		
+		// ************************************************************
+		// 1- IoT AT Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[0] = true;
+				
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+		
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 2- IoT CMEE Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CMEE() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[1] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 3- IoT FCLASS Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_FCLASS() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[2] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 4- IoT K Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_K() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[3] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 5- IoT CPIN Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CPIN() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[4] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+
+		// ************************************************************
+		// 6- IoT CGSN Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CGSN() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[5] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+
+		// ************************************************************
+		// 7- IoT GSN Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_GSN() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[6] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+
+		// ************************************************************
+		// 8- IoT CCID Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CCID() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[7] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+
+		// ************************************************************
+		// 9- IoT SLED Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_SLED() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[8] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 10- IoT TXMONMODE Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_TXMONMODE() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[9] = true;
+				
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 11- IoT CREG Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CREG() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[10] = true;
+				
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 12- IoT CGREG Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CGREG() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[11] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 13- IoT CGDCONT Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_CGDCONT() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[12] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 14- IoT SCFG Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_SCFG() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[13] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 15- IoT SGACT Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_SGACT() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[14] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// ************************************************************
+		// 16- IoT SERVINFO Command
+		// ************************************************************
+		while (_Process_Control == false) {
+			
+			// Process Command
+			if (AT_SERVINFO() == true) {
+				
+				// Set Command Response
+				_Process_Control = true;
+				
+				// Set Confirmation
+				AT_Command_Confirmation[15] = true;
+
+			} else {
+				
+				// Set Command Response
+				_Process_Control = false;
+
+			}
+
+		}
+
+		// Set Control Variable
+		_Process_Control = false;
+		
+		// GSM Delay
+		delay(100);
+		
+		// Control for IoT AT Confirmation
+		if (AT_Command_Confirmation[0] and AT_Command_Confirmation[1] and AT_Command_Confirmation[2] and AT_Command_Confirmation[3] and AT_Command_Confirmation[4] and AT_Command_Confirmation[5] and AT_Command_Confirmation[6] and AT_Command_Confirmation[7] and AT_Command_Confirmation[8] and AT_Command_Confirmation[9] and AT_Command_Confirmation[10] and AT_Command_Confirmation[11] and AT_Command_Confirmation[12] and AT_Command_Confirmation[13]) {
+			
+			// Set Global Variable
+			Connected = true;
+			
+			// End Function
+			return(true);
+
+		}
+		
+	} else {
+
+		// Set Global Variable
+		Connected = true;
+
+		// End Function
+		return(true);
+
+	}
+	
+}
+bool GE910::Time_Update(void) {
+
+	// Time Zone Update
+	AT_CTZU();
+	
+	// Update RTC
+	AT_NTP();
+
+	// Get Time
+	AT_CCLK();
 
 }
