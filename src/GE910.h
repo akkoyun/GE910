@@ -26,7 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.01.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.02.00";		// Library Firmware
 
 	// IoT Variables
 	char 					ID[11];							// 10 digit number
@@ -47,6 +47,8 @@ public:
 	
 	// Control Variables
 	bool 					Connected;						// GSM Connected Variable
+	bool					Time_Updated;					// Time Updated Variable
+	bool					Recorded;						// Data Recorded Variable
 
 	// ************************************************************
 	// Public Functions
@@ -57,6 +59,10 @@ public:
 	
 	// GSM RTC Functions
 	bool Time_Update(void);
+	
+	// Data Functions
+	bool AT_HTTPCFG(void);
+	bool AT_HTTPSND(String _Data);
 	
 private:
 	
@@ -101,7 +107,7 @@ private:
 	// Utility Functions
 	void UART_Clear(void);
 	bool Response_Wait(uint8_t _Length, uint16_t _TimeOut);
-	
+		
 	// ************************************************************
 	// Private GSM Setting Variables
 	// ************************************************************
@@ -134,6 +140,10 @@ private:
 	// NTP Variables
 	const PROGMEM char 		_NTP_Server[15] 	= "85.199.214.98";	// Set NTP Server Variable (NASA)
 	
+	// HTTP Variables
+	const PROGMEM char 		_HTTP_Server[23] 	= "agristat.aeyazilim.com";	// API Server
+	const PROGMEM uint8_t 	_HTTP_Port 			= 80;				// API Port
+	const PROGMEM char 		_HTTP_URL[20] 		= "/api/airstatservice";
 };
 
 #endif /* defined(__GE910__) */

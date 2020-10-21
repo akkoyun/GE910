@@ -1439,7 +1439,7 @@ bool GE910::AT_NTP(void) {
 	UART_IoT.flush();
 
 	// Declare Variables
-	uint8_t _Response_Length = 62;
+	uint8_t _Response_Length = 50 + String(_NTP_Server).length();
 	
 	// Handle Response
 	if (Response_Wait(_Response_Length, 4000)) {
@@ -1508,6 +1508,260 @@ bool GE910::AT_CTZU(void) {
 
 	// End Function
 	return (false);
+
+}
+
+// Data Functions
+bool GE910::AT_HTTPCFG(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT HTTPCFG Command
+	 *	Revision	: 01.00.00
+	 *	Command 	: AT#HTTPCFG=1,"xxx.xxx.xxx.xxx",80,0,"","",0,60,1\r\n ( byte)
+	 *	Response	: AT#CCLK?\r\n\r\n#CCLK: "20/10/16,08:55:58+00.0"\r\n\r\nOK\r\n (51 byte)
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.print(String(F("AT#HTTPCFG=1,\"")));
+	UART_IoT.print(String(_HTTP_Server));
+	UART_IoT.print(String(F("\",")));
+	UART_IoT.print(String(_HTTP_Port));
+	UART_IoT.println(String(F(",0,\"\",\"\",0,60,1")));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 41 + String(_HTTP_Server).length();
+	
+	// Handle Response
+	if (Response_Wait(_Response_Length, 60000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		char _Response[_Response_Length];
+		
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
+}
+bool GE910::AT_HTTPSND(String _Data) {
+	
+	/******************************************************************************
+	 *	Function	: AT HTTPSND Command
+	 *	Revision	: 01.00.00
+	 *	Command		:  (4 byte)
+	 *	Response	:  (10 byte)
+	 ******************************************************************************/
+
+	// Declare Variable
+	bool _HTTP_Command = false;
+	bool _HTTP_Prompt = false;
+	bool _HTTP_Ring = false;
+	bool _HTTP_Rcv = false;
+	uint8_t _Error_WD = 0;
+	
+	// Send HTTPSND Command
+	while (_HTTP_Command == false) {
+	
+		// Clear UART Buffer
+		UART_Clear();
+		
+		// Send UART Command
+		UART_IoT.print(String(F("AT#HTTPSND=1,0,\"")));
+		UART_IoT.print(String(_HTTP_URL));
+		UART_IoT.print(String(F("\",")));
+		UART_IoT.print(String(_Data.length()));
+		UART_IoT.println(String(F(",\"application/json\"")));
+
+		// Wait for UART Data Send
+		UART_IoT.flush();
+
+		// Declare Variables
+		uint8_t _Response_Length = 60;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, "HTTPSND") != NULL) _HTTP_Command = true;
+
+		}
+		
+		// Count for Error
+		_Error_WD++;
+
+		// Handle for Error
+		if (_Error_WD >= 10) return(false);
+
+	}
+	
+	// Reset Error WD
+	_Error_WD = 0;
+
+	// Control for Prompt
+	while (_HTTP_Prompt == false) {
+
+		// Declare Variables
+		uint8_t _Response_Length = 3;
+
+		// Handle Response
+		if (Response_Wait(_Response_Length, 150000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, ">>>") != NULL) {
+			
+				// Set Control Variable
+				_HTTP_Prompt = true;
+
+				// Send Delay
+				delay(20);
+				
+				// Print Data
+				UART_IoT.print(_Data);
+				
+			}
+				
+		}
+		
+	}
+
+	// Control for Ring
+	while (_HTTP_Ring == false) {
+
+		// Declare Variables
+		uint8_t _Response_Length = 56;
+
+		// Handle Response
+		if (Response_Wait(_Response_Length, 60000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, "200") != NULL) _HTTP_Ring = true;
+
+		}
+		
+	}
+	
+	// Send HTTPSND Command
+	while (_HTTP_Rcv == false) {
+	
+		// Clear UART Buffer
+		UART_Clear();
+		
+		// Send UART Command
+		UART_IoT.println(String(F("AT#HTTPRCV=1")));
+
+		// Wait for UART Data Send
+		UART_IoT.flush();
+
+		// Declare Variables
+		uint8_t _Response_Length = 52;
+		
+		// Handle Response
+		if (Response_Wait(_Response_Length, 1000)) {
+			
+			// Declare Variables
+			uint8_t _Read_Order = 0;
+			char _Response[_Response_Length];
+			
+			// Read UART Response
+			while(UART_IoT.available() > 0) {
+
+				// Read Serial Char
+				_Response[_Read_Order] = UART_IoT.read();
+				
+				// Increase Read Order
+				_Read_Order++;
+				
+			}
+
+			// Control for Response
+			if(strstr(_Response, "\"result\":\"0\"") != NULL) return(false);
+			if(strstr(_Response, "\"result\":\"1\"") != NULL) {
+
+				// Set Control Variable
+				_HTTP_Rcv = true;
+
+				// Set Variable
+				Recorded = true;
+				
+			}
+			if(strstr(_Response, "\"result\":\"2\"") != NULL) return(false);
+
+		} else {
+			
+			// End Function
+			return(false);
+		
+		}
+		
+	}
+
+	// End Function
+	return(true);
 
 }
 
@@ -2009,4 +2263,6 @@ bool GE910::Time_Update(void) {
 	// Get Time
 	AT_CCLK();
 
+	Time_Updated = true;
+	
 }
