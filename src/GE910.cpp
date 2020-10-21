@@ -4,12 +4,76 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 1.0.0
+ *	Revision			: 01.04.00
  *
  *********************************************************************************/
 
 #include "Arduino.h"
 #include "GE910.h"
+
+// Power Functions
+bool GE910::GSM_Module_ON(void) {
+
+	// Begin UART Communication
+	UART_IoT.begin(115200);
+
+	// Set Communication Enable Pin as OUTPUT and LOW
+	Comm_EN_DDR |= _BV(Comm_EN_PIN);
+	Comm_EN_PORT &= ~_BV(Comm_EN_PIN);
+
+	// Set Power Enable Pin as OUTPUT and HIGH
+	Power_EN_DDR |= _BV(Power_EN_PIN);
+	Power_EN_PORT |= _BV(Power_EN_PIN);
+	
+	// Set On/Off Pin as OUTPUT and LOW
+	OnOff_DDR |= _BV(OnOff_PIN);
+	OnOff_PORT &= ~_BV(OnOff_PIN);
+
+	// Set SDown Pin as OUTPUT and LOW
+	SDown_DDR |= _BV(SDown_PIN);
+	SDown_PORT &= ~_BV(SDown_PIN);
+
+	// Set PwrMon Pin as INPUT and LOW
+	PwrMon_DDR &= ~_BV(PwrMon_PIN);
+	PwrMon_PORT &= ~_BV(PwrMon_PIN);
+	
+	// Control for PWMon
+	if (PwrMon_PINS & _BV(PwrMon_PIN)) {
+	
+		// Set Variable
+		GE910_Power = true;
+		
+		// End Function
+		return(true);
+
+	} else {
+		
+		// Set On/Off Signal High
+		OnOff_PORT |= _BV(OnOff_PIN);
+		
+		// Command Delay
+		delay(5000);
+
+		// Set On/Off Signal Low
+		OnOff_PORT &= ~_BV(OnOff_PIN);
+
+		// Control for PWMon
+		if (PwrMon_PINS & _BV(PwrMon_PIN)) {
+		
+			// Set Variable
+			GE910_Power = true;
+			
+			// End Function
+			return(true);
+
+		}
+
+	}
+	
+	// Reset Device
+	asm volatile ("  jmp 0");
+
+}
 
 // Modem Set Functions
 bool GE910::AT(void) {

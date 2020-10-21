@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.00.00
+ *	Revision			: 01.04.00
  *
  *********************************************************************************/
 
@@ -14,9 +14,27 @@
 #include <Arduino.h>
 
 // Software Definations
-#define UART_IoT		Serial
-#define UART_BAUD		115200
+#define 	UART_IoT			Serial
+#define 	UART_BAUD			115200
 
+// Power Variables
+#define 	Power_EN_DDR 		DDRB
+#define 	Power_EN_PORT 		PORTB
+#define 	Power_EN_PIN 		2
+#define 	Comm_EN_DDR 		DDRC
+#define 	Comm_EN_PORT 		PORTC
+#define 	Comm_EN_PIN 		0
+#define 	OnOff_DDR 			DDRC
+#define 	OnOff_PORT 			PORTC
+#define 	OnOff_PIN 			1
+#define 	SDown_DDR 			DDRC
+#define 	SDown_PORT 			PORTC
+#define 	SDown_PIN 			2
+#define 	PwrMon_DDR 			DDRC
+#define 	PwrMon_PORT 		PORTC
+#define 	PwrMon_PINS 		PINC
+#define 	PwrMon_PIN 			3
+	
 class GE910 {
 
 public:
@@ -26,33 +44,37 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.02.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.04.00";		// Library Firmware
 
 	// IoT Variables
-	char 					ID[11];							// 10 digit number
-	char 					IMEI[17];						// 17 digit number
-	char 					ICCID[20];						// 20 digit number
-	char 					IP[15];							// 15 digit string
-	int 					Operator;						// 5 digit number
-	uint8_t 				RSSI;							// 2 digit number
-	uint8_t 				dBM;							// 2 digit number
+	char 					ID[11];				// 10 digit number
+	char 					IMEI[17];			// 17 digit number
+	char 					ICCID[20];			// 20 digit number
+	char 					IP[15];				// 15 digit string
+	int 					Operator;			// 5 digit number
+	uint8_t 				RSSI;				// 2 digit number
+	uint8_t 				dBM;				// 2 digit number
 
 	// CCLK Variables
-	uint8_t 				Day;							// 2 digit Day Variable
-	uint8_t 				Month;							// 2 digit Month Variable
-	uint8_t 				Year;							// 2 digit Year Variable
-	uint8_t 				Hour;							// 2 digit Hour Variable
-	uint8_t 				Minute;							// 2 digit Minute Variable
-	uint8_t 				Second;							// 2 digit Second Variable
+	uint8_t 				Day;				// 2 digit Day Variable
+	uint8_t 				Month;				// 2 digit Month Variable
+	uint8_t 				Year;				// 2 digit Year Variable
+	uint8_t 				Hour;				// 2 digit Hour Variable
+	uint8_t 				Minute;				// 2 digit Minute Variable
+	uint8_t 				Second;				// 2 digit Second Variable
 	
 	// Control Variables
-	bool 					Connected;						// GSM Connected Variable
-	bool					Time_Updated;					// Time Updated Variable
-	bool					Recorded;						// Data Recorded Variable
+	bool					GE910_Power;		// GSM Power Variable
+	bool 					Connected;			// GSM Connected Variable
+	bool					Time_Updated;		// Time Updated Variable
+	bool					Recorded;			// Data Recorded Variable
 
 	// ************************************************************
 	// Public Functions
 	// ************************************************************
+	
+	// Power Functions
+	bool GSM_Module_ON(void);
 	
 	// GSM Connection Functions
 	bool Connect(void);
@@ -111,7 +133,7 @@ private:
 	// ************************************************************
 	// Private GSM Setting Variables
 	// ************************************************************
-	
+		
 	// CMEE Variables
 	const PROGMEM uint8_t 	_CMEE 				= 1;				// Set Numeric Error Format (1)
 
@@ -141,9 +163,9 @@ private:
 	const PROGMEM char 		_NTP_Server[15] 	= "85.199.214.98";	// Set NTP Server Variable (NASA)
 	
 	// HTTP Variables
-	const PROGMEM char 		_HTTP_Server[23] 	= "agristat.aeyazilim.com";	// API Server
-	const PROGMEM uint8_t 	_HTTP_Port 			= 80;				// API Port
+	const PROGMEM char 		_HTTP_Server[23] 	= "agristat.aeyazilim.com";
 	const PROGMEM char 		_HTTP_URL[20] 		= "/api/airstatservice";
+	const PROGMEM uint8_t 	_HTTP_Port 			= 80;
 };
 
 #endif /* defined(__GE910__) */
