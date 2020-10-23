@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.04.00
+ *	Revision			: 01.06.00
  *
  *********************************************************************************/
 
@@ -12,64 +12,68 @@
 #include "GE910.h"
 
 // Power Functions
-bool GE910::GSM_Module_ON(void) {
+bool GE910::Module_ON(void) {
+
+	// IoT Signal Pins
+	// ---------------------------------------------------------------
+	// Power EN			- Output [Active HIGH] (Pull-up) 	- PB1
+	// Comm EN			- Output [Active LOW] (Pull-up) 	- PC0
+	// On/Off			- Output [Active HIGH] (Pull-down) 	- PC1
+	// SDown			- Output [Active HIGH] (Pull-down) 	- PC2
+	// PwrMon			- Input [Active HIGH] (Pull-down) 	- PC3
+	// ---------------------------------------------------------------
+	DDRB	|= 0b00000010;	PORTB	&= 0b11111101;
+	DDRC	|= 0b00000001;	PORTC	|= 0b00000001;
+	DDRC	|= 0b00000010;	PORTC	&= 0b11111101;
+	DDRC	|= 0b00000100;	PORTC	&= 0b11111011;
+	DDRC	&= 0b11110111;	PORTC	&= 0b11110111;
+	DDRD	|= 0b00100000;	PORTD	&= 0b11011111;
+
+	// Boot Delay
+	delay(200);
 
 	// Begin UART Communication
 	UART_IoT.begin(115200);
 
-	// Set Communication Enable Pin as OUTPUT and LOW
-	Comm_EN_DDR |= _BV(Comm_EN_PIN);
-	Comm_EN_PORT &= ~_BV(Comm_EN_PIN);
+	// Set Communication Signal LOW
+	PORTC &= 0b11111110;
 
-	// Set Power Enable Pin as OUTPUT and HIGH
-	Power_EN_DDR |= _BV(Power_EN_PIN);
-	Power_EN_PORT |= _BV(Power_EN_PIN);
-	
-	// Set On/Off Pin as OUTPUT and LOW
-	OnOff_DDR |= _BV(OnOff_PIN);
-	OnOff_PORT &= ~_BV(OnOff_PIN);
+	// Set GSM Power Signal EN HIGH
+	PORTB |= 0b00000010;
 
-	// Set SDown Pin as OUTPUT and LOW
-	SDown_DDR |= _BV(SDown_PIN);
-	SDown_PORT &= ~_BV(SDown_PIN);
-
-	// Set PwrMon Pin as INPUT and LOW
-	PwrMon_DDR &= ~_BV(PwrMon_PIN);
-	PwrMon_PORT &= ~_BV(PwrMon_PIN);
-	
-	// Control for PWMon
-	if (PwrMon_PINS & _BV(PwrMon_PIN)) {
-	
-		// Set Variable
-		GE910_Power = true;
+	// Control for PWMon (PC3)
+	if ((PINC & 0b00001000) == 0b00001000) {
 		
+		// Set Variable
+		PowerMon = true;
+
 		// End Function
 		return(true);
-
+		
 	} else {
-		
-		// Set On/Off Signal High
-		OnOff_PORT |= _BV(OnOff_PIN);
-		
+
+		// Set On/Off Signal High [PC1]
+		PORTC |= 0b00000010;
+
 		// Command Delay
 		delay(5000);
-
-		// Set On/Off Signal Low
-		OnOff_PORT &= ~_BV(OnOff_PIN);
-
-		// Control for PWMon
-		if (PwrMon_PINS & _BV(PwrMon_PIN)) {
 		
+		// Set On/Off Signal Low [PC1]
+		PORTC &= 0b11111101;
+
+		// Control for PWMon (PC3)
+		if ((PINC & 0b00001000) == 0b00001000) {
+
 			// Set Variable
-			GE910_Power = true;
-			
+			PowerMon = true;
+
 			// End Function
 			return(true);
-
+			
 		}
-
+		
 	}
-	
+
 	// Reset Device
 	asm volatile ("  jmp 0");
 
@@ -89,7 +93,8 @@ bool GE910::AT(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(F("AT"));
+	UART_IoT.print(F("AT"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -139,7 +144,9 @@ bool GE910::AT_CMEE(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CMEE=")) + String(_CMEE));
+	UART_IoT.print(F("AT+CMEE="));
+	UART_IoT.print(_CMEE);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -189,7 +196,9 @@ bool GE910::AT_FCLASS(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+FCLASS=")) + String(_FCLASS));
+	UART_IoT.print(F("AT+FCLASS="));
+	UART_IoT.print(_FCLASS);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -239,7 +248,9 @@ bool GE910::AT_K(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT&K")) + String(_K));
+	UART_IoT.print(F("AT&K"));
+	UART_IoT.print(_K);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -289,7 +300,8 @@ bool GE910::AT_CPIN(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CPIN?")));
+	UART_IoT.print(F("AT+CPIN?"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -337,7 +349,8 @@ bool GE910::AT_CCID(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#CCID")));
+	UART_IoT.print(F("AT#CCID"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -384,6 +397,68 @@ bool GE910::AT_CCID(void) {
 	return (false);
 
 }
+bool GE910::AT_CNUM(void) {
+	
+	/******************************************************************************
+	 *	Function	: AT CNUM Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT+CNUM\r\n (9 byte)
+	 *	Response	:
+	 ******************************************************************************/
+
+	// Clear UART Buffer
+	UART_Clear();
+	
+	// Send UART Command
+	UART_IoT.print(F("AT+CNUM"));
+	UART_IoT.print(F("\r\n"));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Declare Variables
+	uint8_t _Response_Length = 15;
+
+	// Handle Response
+	if (Response_Wait(_Response_Length, 1000)) {
+		
+		// Declare Variables
+		uint8_t _Read_Order = 0;
+		uint8_t _Data_Order = 0;
+		char _Response[_Response_Length];
+
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Handle Data
+			if (_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
+				
+				// Get Data
+				PHONE[_Data_Order] = _Response[_Read_Order];
+
+				// Increase Data Order
+				_Data_Order++;
+
+			}
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+		}
+
+		// Control for Response
+		if(strstr(_Response, "OK") != NULL) return (true);
+
+	}
+
+	// End Function
+	return (false);
+
+}
+
 
 // Modem ID Functions
 bool GE910::AT_CGSN(void) {
@@ -399,7 +474,8 @@ bool GE910::AT_CGSN(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CGSN")));
+	UART_IoT.print(F("AT+CGSN"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -459,7 +535,8 @@ bool GE910::AT_GSN(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+GSN")));
+	UART_IoT.print(F("AT+GSN"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -523,7 +600,9 @@ bool GE910::AT_SLED(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#SLED=")) + String(_SLED));
+	UART_IoT.print(F("AT#SLED="));
+	UART_IoT.print(_SLED);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -573,7 +652,9 @@ bool GE910::AT_TXMONMODE(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#TXMONMODE=")) + String(_TXMONMODE));
+	UART_IoT.print(F("AT#TXMONMODE="));
+	UART_IoT.print(_TXMONMODE);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -637,7 +718,8 @@ bool GE910::AT_CREG(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT+CREG=1")));
+		UART_IoT.print(F("AT+CREG=1"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -689,7 +771,8 @@ bool GE910::AT_CREG(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT+CREG?")));
+		UART_IoT.print(F("AT+CREG?"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -825,7 +908,8 @@ bool GE910::AT_CGREG(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT+CGREG=1")));
+		UART_IoT.print(F("AT+CGREG=1"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -877,7 +961,8 @@ bool GE910::AT_CGREG(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT+CGREG?")));
+		UART_IoT.print(F("AT+CGREG?"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -994,7 +1079,12 @@ bool GE910::AT_CGDCONT(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CGDCONT=1,\"")) + String(_PDP) + String(F("\",\"")) + String(_APN) + String(F("\"")));
+	UART_IoT.print(F("AT+CGDCONT=1,\""));
+	UART_IoT.print(_PDP);
+	UART_IoT.print(F("\",\""));
+	UART_IoT.print(_APN);
+	UART_IoT.print(F("\""));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1042,7 +1132,15 @@ bool GE910::AT_SCFG(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#SCFG=1,1,")) + String(_PktSz) + String(F(",")) + String(_MaxTo) + String(F(",")) + String(_ConnTo) + String(F(",")) + String(_TxTo));
+	UART_IoT.print(F("AT#SCFG=1,1,"));
+	UART_IoT.print(_PktSz);
+	UART_IoT.print(F(","));
+	UART_IoT.print(_MaxTo);
+	UART_IoT.print(F(","));
+	UART_IoT.print(_ConnTo);
+	UART_IoT.print(F(","));
+	UART_IoT.print(_TxTo);
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1103,7 +1201,8 @@ bool GE910::AT_SGACT(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT#SGACT=1,0")));
+		UART_IoT.print(F("AT#SGACT=1,0"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -1161,7 +1260,8 @@ bool GE910::AT_SGACT(void) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT#SGACT=1,1")));
+		UART_IoT.print(F("AT#SGACT=1,1"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -1287,7 +1387,8 @@ bool GE910::AT_CSQ(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT+CSQ")));
+	UART_IoT.print(F("AT+CSQ"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1353,7 +1454,8 @@ bool GE910::AT_SERVINFO(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#SERVINFO")));
+	UART_IoT.print(F("AT#SERVINFO"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1415,7 +1517,8 @@ bool GE910::AT_CCLK(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#CCLK?")));
+	UART_IoT.print(F("AT#CCLK?"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1497,7 +1600,10 @@ bool GE910::AT_NTP(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(String(F("AT#NTP=\"")) + String(_NTP_Server) + String(F("\",123,1,3")));
+	UART_IoT.print(F("AT#NTP=\""));
+	UART_IoT.print(_NTP_Server);
+	UART_IoT.print(F("\",123,1,3"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1539,7 +1645,8 @@ bool GE910::AT_CTZU(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.println(F("AT+CTZU=1"));
+	UART_IoT.print(F("AT+CTZU=1"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1589,11 +1696,12 @@ bool GE910::AT_HTTPCFG(void) {
 	UART_Clear();
 	
 	// Send UART Command
-	UART_IoT.print(String(F("AT#HTTPCFG=1,\"")));
-	UART_IoT.print(String(_HTTP_Server));
-	UART_IoT.print(String(F("\",")));
-	UART_IoT.print(String(_HTTP_Port));
-	UART_IoT.println(String(F(",0,\"\",\"\",0,60,1")));
+	UART_IoT.print(F("AT#HTTPCFG=1,\""));
+	UART_IoT.print(_HTTP_Server);
+	UART_IoT.print(F("\","));
+	UART_IoT.print(_HTTP_Port);
+	UART_IoT.print(F(",0,\"\",\"\",0,60,1"));
+	UART_IoT.print(F("\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -1627,7 +1735,7 @@ bool GE910::AT_HTTPCFG(void) {
 	// End Function
 	return (false);
 }
-bool GE910::AT_HTTPSND(String _Data) {
+bool GE910::AT_HTTPSND(const String& _Data) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPSND Command
@@ -1650,20 +1758,21 @@ bool GE910::AT_HTTPSND(String _Data) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.print(String(F("AT#HTTPSND=1,0,\"")));
-		UART_IoT.print(String(_HTTP_URL));
-		UART_IoT.print(String(F("\",")));
-		UART_IoT.print(String(_Data.length()));
-		UART_IoT.println(String(F(",\"application/json\"")));
+		UART_IoT.print(F("AT#HTTPSND=1,0,\"")); // 16
+		UART_IoT.print(_HTTP_URL);
+		UART_IoT.print(F("\",")); // 2
+		UART_IoT.print(_Data.length());
+		UART_IoT.print(F(",\"application/json\"")); // 19
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
 
 		// Declare Variables
-		uint8_t _Response_Length = 60;
+		uint8_t _Response_Length = 37 + String(_HTTP_URL).length() + String(_Data.length()).length();
 		
 		// Handle Response
-		if (Response_Wait(_Response_Length, 1000)) {
+		if (Response_Wait(_Response_Length, 2000)) {
 			
 			// Declare Variables
 			uint8_t _Read_Order = 0;
@@ -1703,7 +1812,7 @@ bool GE910::AT_HTTPSND(String _Data) {
 		uint8_t _Response_Length = 3;
 
 		// Handle Response
-		if (Response_Wait(_Response_Length, 150000)) {
+		if (Response_Wait(_Response_Length, 60000)) {
 			
 			// Declare Variables
 			uint8_t _Read_Order = 0;
@@ -1776,7 +1885,8 @@ bool GE910::AT_HTTPSND(String _Data) {
 		UART_Clear();
 		
 		// Send UART Command
-		UART_IoT.println(String(F("AT#HTTPRCV=1")));
+		UART_IoT.print(F("AT#HTTPRCV=1"));
+		UART_IoT.print(F("\r\n"));
 
 		// Wait for UART Data Send
 		UART_IoT.flush();
@@ -1868,450 +1978,460 @@ bool GE910::Response_Wait(uint8_t _Length, uint16_t _TimeOut) {
 // Public Functions
 bool GE910::Connect(void) {
 	
-	// Start AT Command Sequence
-	if (Connected == false) {
-		
-		// Declare Variable
-		bool _Process_Control = false;
-		bool AT_Command_Confirmation[16] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
-		
-		// ************************************************************
-		// 1- IoT AT Command
-		// ************************************************************
-		while (_Process_Control == false) {
+	// Control for Power Monitor
+	if (PowerMon == true) {
+
+		// Control for Connection
+		if (Connected == false) {
 			
-			// Process Command
-			if (AT() == true) {
+			// Declare Variable
+			bool _Process_Control = false;
+			bool AT_Command_Confirmation[16] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+			
+			// ************************************************************
+			// 1- IoT AT Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
+				// Process Command
+				if (AT() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[0] = true;
+					
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
+
+			}
+			
+			// Set Control Variable
+			_Process_Control = false;
+			
+			// ************************************************************
+			// 2- IoT CMEE Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Confirmation
-				AT_Command_Confirmation[0] = true;
-				
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				// Process Command
+				if (AT_CMEE() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[1] = true;
+
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-		
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 2- IoT CMEE Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_CMEE() == true) {
+			// ************************************************************
+			// 3- IoT FCLASS Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[1] = true;
+				// Process Command
+				if (AT_FCLASS() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[2] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 3- IoT FCLASS Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_FCLASS() == true) {
+			// ************************************************************
+			// 4- IoT K Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[2] = true;
+				// Process Command
+				if (AT_K() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[3] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 4- IoT K Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_K() == true) {
+			// ************************************************************
+			// 5- IoT CPIN Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[3] = true;
+				// Process Command
+				if (AT_CPIN() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[4] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
+			// Set Control Variable
+			_Process_Control = false;
 
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 5- IoT CPIN Command
-		// ************************************************************
-		while (_Process_Control == false) {
-			
-			// Process Command
-			if (AT_CPIN() == true) {
+			// ************************************************************
+			// 6- IoT CGSN Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[4] = true;
+				// Process Command
+				if (AT_CGSN() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[5] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
+			// Set Control Variable
+			_Process_Control = false;
 
-		// Set Control Variable
-		_Process_Control = false;
+			// ************************************************************
+			// 7- IoT GSN Command
+			// ************************************************************
+			while (_Process_Control == false) {
+				
+				// Process Command
+				if (AT_GSN() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[6] = true;
 
-		// ************************************************************
-		// 6- IoT CGSN Command
-		// ************************************************************
-		while (_Process_Control == false) {
-			
-			// Process Command
-			if (AT_CGSN() == true) {
-				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[5] = true;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				}
 
 			}
 
-		}
+			// Set Control Variable
+			_Process_Control = false;
 
-		// Set Control Variable
-		_Process_Control = false;
+			// ************************************************************
+			// 8- IoT CCID Command
+			// ************************************************************
+			while (_Process_Control == false) {
+				
+				// Process Command
+				if (AT_CCID() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[7] = true;
 
-		// ************************************************************
-		// 7- IoT GSN Command
-		// ************************************************************
-		while (_Process_Control == false) {
-			
-			// Process Command
-			if (AT_GSN() == true) {
-				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[6] = true;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				}
 
 			}
 
-		}
+			// Set Control Variable
+			_Process_Control = false;
 
-		// Set Control Variable
-		_Process_Control = false;
+			// ************************************************************
+			// 9- IoT SLED Command
+			// ************************************************************
+			while (_Process_Control == false) {
+				
+				// Process Command
+				if (AT_SLED() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[8] = true;
 
-		// ************************************************************
-		// 8- IoT CCID Command
-		// ************************************************************
-		while (_Process_Control == false) {
-			
-			// Process Command
-			if (AT_CCID() == true) {
-				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[7] = true;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-
-		// ************************************************************
-		// 9- IoT SLED Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_SLED() == true) {
+			// ************************************************************
+			// 10- IoT TXMONMODE Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[8] = true;
+				// Process Command
+				if (AT_TXMONMODE() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[9] = true;
+					
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 10- IoT TXMONMODE Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_TXMONMODE() == true) {
+			// ************************************************************
+			// 11- IoT CREG Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[9] = true;
-				
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				// Process Command
+				if (AT_CREG() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[10] = true;
+					
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 11- IoT CREG Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_CREG() == true) {
+			// ************************************************************
+			// 12- IoT CGREG Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[10] = true;
-				
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				// Process Command
+				if (AT_CGREG() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[11] = true;
+
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 12- IoT CGREG Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_CGREG() == true) {
+			// ************************************************************
+			// 13- IoT CGDCONT Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[11] = true;
+				// Process Command
+				if (AT_CGDCONT() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[12] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 13- IoT CGDCONT Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_CGDCONT() == true) {
+			// ************************************************************
+			// 14- IoT SCFG Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[12] = true;
+				// Process Command
+				if (AT_SCFG() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[13] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 14- IoT SCFG Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_SCFG() == true) {
+			// ************************************************************
+			// 15- IoT SGACT Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[13] = true;
+				// Process Command
+				if (AT_SGACT() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[14] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 15- IoT SGACT Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_SGACT() == true) {
+			// ************************************************************
+			// 16- IoT SERVINFO Command
+			// ************************************************************
+			while (_Process_Control == false) {
 				
-				// Set Command Response
-				_Process_Control = true;
-				
-				// Set Confirmation
-				AT_Command_Confirmation[14] = true;
+				// Process Command
+				if (AT_SERVINFO() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+					// Set Confirmation
+					AT_Command_Confirmation[15] = true;
 
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+				}
 
 			}
 
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// ************************************************************
-		// 16- IoT SERVINFO Command
-		// ************************************************************
-		while (_Process_Control == false) {
+			// Set Control Variable
+			_Process_Control = false;
 			
-			// Process Command
-			if (AT_SERVINFO() == true) {
+			// GSM Delay
+			delay(100);
+			
+			// Control for IoT AT Confirmation
+			if (AT_Command_Confirmation[0] and AT_Command_Confirmation[1] and AT_Command_Confirmation[2] and AT_Command_Confirmation[3] and AT_Command_Confirmation[4] and AT_Command_Confirmation[5] and AT_Command_Confirmation[6] and AT_Command_Confirmation[7] and AT_Command_Confirmation[8] and AT_Command_Confirmation[9] and AT_Command_Confirmation[10] and AT_Command_Confirmation[11] and AT_Command_Confirmation[12] and AT_Command_Confirmation[13]) {
 				
-				// Set Command Response
-				_Process_Control = true;
+				// Set Global Variable
+				Connected = true;
 				
-				// Set Confirmation
-				AT_Command_Confirmation[15] = true;
-
-			} else {
-				
-				// Set Command Response
-				_Process_Control = false;
+				// End Function
+				return(true);
 
 			}
-
-		}
-
-		// Set Control Variable
-		_Process_Control = false;
-		
-		// GSM Delay
-		delay(100);
-		
-		// Control for IoT AT Confirmation
-		if (AT_Command_Confirmation[0] and AT_Command_Confirmation[1] and AT_Command_Confirmation[2] and AT_Command_Confirmation[3] and AT_Command_Confirmation[4] and AT_Command_Confirmation[5] and AT_Command_Confirmation[6] and AT_Command_Confirmation[7] and AT_Command_Confirmation[8] and AT_Command_Confirmation[9] and AT_Command_Confirmation[10] and AT_Command_Confirmation[11] and AT_Command_Confirmation[12] and AT_Command_Confirmation[13]) {
 			
+		} else {
+
 			// Set Global Variable
 			Connected = true;
-			
+
 			// End Function
 			return(true);
 
 		}
-		
+
 	} else {
-
-		// Set Global Variable
-		Connected = true;
-
-		// End Function
-		return(true);
+		
+		// Reset Device
+		asm volatile ("  jmp 0");
 
 	}
 	
@@ -2328,5 +2448,11 @@ bool GE910::Time_Update(void) {
 	AT_CCLK();
 
 	Time_Updated = true;
+	
+}
+bool GE910::Phone_Number(void) {
+
+	// Time Zone Update
+	AT_CNUM();
 	
 }

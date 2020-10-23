@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.04.00
+ *	Revision			: 01.06.00
  *
  *********************************************************************************/
 
@@ -16,24 +16,6 @@
 // Software Definations
 #define 	UART_IoT			Serial
 #define 	UART_BAUD			115200
-
-// Power Variables
-#define 	Power_EN_DDR 		DDRB
-#define 	Power_EN_PORT 		PORTB
-#define 	Power_EN_PIN 		2
-#define 	Comm_EN_DDR 		DDRC
-#define 	Comm_EN_PORT 		PORTC
-#define 	Comm_EN_PIN 		0
-#define 	OnOff_DDR 			DDRC
-#define 	OnOff_PORT 			PORTC
-#define 	OnOff_PIN 			1
-#define 	SDown_DDR 			DDRC
-#define 	SDown_PORT 			PORTC
-#define 	SDown_PIN 			2
-#define 	PwrMon_DDR 			DDRC
-#define 	PwrMon_PORT 		PORTC
-#define 	PwrMon_PINS 		PINC
-#define 	PwrMon_PIN 			3
 	
 class GE910 {
 
@@ -44,13 +26,14 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.04.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.06.00";		// Library Firmware
 
 	// IoT Variables
 	char 					ID[11];				// 10 digit number
 	char 					IMEI[17];			// 17 digit number
 	char 					ICCID[20];			// 20 digit number
 	char 					IP[15];				// 15 digit string
+	char 					PHONE[15];			// 15 digit string
 	int 					Operator;			// 5 digit number
 	uint8_t 				RSSI;				// 2 digit number
 	uint8_t 				dBM;				// 2 digit number
@@ -64,7 +47,7 @@ public:
 	uint8_t 				Second;				// 2 digit Second Variable
 	
 	// Control Variables
-	bool					GE910_Power;		// GSM Power Variable
+	bool					PowerMon;			// GSM Power Variable
 	bool 					Connected;			// GSM Connected Variable
 	bool					Time_Updated;		// Time Updated Variable
 	bool					Recorded;			// Data Recorded Variable
@@ -74,7 +57,7 @@ public:
 	// ************************************************************
 	
 	// Power Functions
-	bool GSM_Module_ON(void);
+	bool Module_ON(void);
 	
 	// GSM Connection Functions
 	bool Connect(void);
@@ -82,9 +65,12 @@ public:
 	// GSM RTC Functions
 	bool Time_Update(void);
 	
+	// Phone Number Function
+	bool Phone_Number(void);
+	
 	// Data Functions
 	bool AT_HTTPCFG(void);
-	bool AT_HTTPSND(String _Data);
+	bool AT_HTTPSND(const String& _Data);
 	
 private:
 	
@@ -101,7 +87,8 @@ private:
 	// SIM Functions
 	bool AT_CPIN(void);
 	bool AT_CCID(void);
-
+	bool AT_CNUM(void);
+	
 	// Modem ID Functions
 	bool AT_CGSN(void);
 	bool AT_GSN(void);
