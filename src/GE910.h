@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.06.00
+ *	Revision			: 01.06.01
  *
  *********************************************************************************/
 
@@ -26,7 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.06.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.06.01";		// Library Firmware
 
 	// IoT Variables
 	char 					ID[11];				// 10 digit number
@@ -115,12 +115,14 @@ private:
 
 	// Utility Functions
 	void UART_Clear(void);
-	bool Response_Wait(uint8_t _Length, uint16_t _TimeOut);
+	bool Response_Wait(uint16_t _Length, uint16_t _TimeOut);
 		
 	// ************************************************************
 	// Private GSM Setting Variables
 	// ************************************************************
 		
+	// Module Variables
+	const PROGMEM uint8_t	_Command_Delay		= 10;				// Command Chain Delay
 	// CMEE Variables
 	const PROGMEM uint8_t 	_CMEE 				= 1;				// Set Numeric Error Format (1)
 
