@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.06.00
+ *	Revision			: 01.06.02
  *
  *********************************************************************************/
 
@@ -84,7 +84,7 @@ bool GE910::AT(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.00.01
 	 *	Command		: AT\r\n (4 byte)
 	 *	Response	: AT\r\n\r\nOK\r\n (10 byte)
 	 ******************************************************************************/
@@ -103,10 +103,12 @@ bool GE910::AT(void) {
 	uint8_t _Response_Length = 10;
 	
 	// Handle Response
-	if (Response_Wait(_Response_Length, 1000)) {
+	if (Response_Wait(_Response_Length, 50)) {	// Wait for 50ms, Measured 7ms
 		
-		// Declare Variables
+		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
+		
+		// Declare Response Variable
 		char _Response[_Response_Length];
 		
 		// Read UART Response
@@ -121,7 +123,12 @@ bool GE910::AT(void) {
 		}
 
 		// Control for Response
-		if(strstr(_Response, "OK") != NULL) return (true);
+		if(strstr(_Response, "OK") != NULL) {
+
+			// End Function
+			return (true);
+
+		}
 
 	}
 
@@ -133,13 +140,19 @@ bool GE910::AT_CMEE(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CMEE Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.00.01
 	 *	Command		: AT+CMEE=1\r\n (11 byte)
 	 *	Response	: AT+CMEE=1\r\n\r\nOK\r\n (17 byte)
 	 ******************************************************************************
 	 *	Parameter	: 0 Disable, 1 Numeric Format, 2 Verbose Format
 	 ******************************************************************************/
 
+	// Control for Parameter
+	if (_CMEE != 0 and _CMEE != 1 and _CMEE != 2) _CMEE = 1;
+	
+	// Command Chain Delay
+	delay(_Command_Delay);	// Advice by Telit
+	
 	// Clear UART Buffer
 	UART_Clear();
 	
@@ -155,12 +168,14 @@ bool GE910::AT_CMEE(void) {
 	uint8_t _Response_Length = 17;
 
 	// Handle Response
-	if (Response_Wait(_Response_Length, 1000)) {
-		
-		// Declare Variables
+	if (Response_Wait(_Response_Length, 50)) {	// Wait for 50ms, Measured 7ms
+
+		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
-		char _Response[_Response_Length];
 		
+		// Declare Response Variable
+		char _Response[_Response_Length];
+
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
 
@@ -173,7 +188,12 @@ bool GE910::AT_CMEE(void) {
 		}
 
 		// Control for Response
-		if(strstr(_Response, "OK") != NULL) return (true);
+		if(strstr(_Response, "OK") != NULL) {
+
+			// End Function
+			return (true);
+
+		}
 
 	}
 
@@ -185,13 +205,19 @@ bool GE910::AT_FCLASS(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT FCLASS Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.00.01
 	 *	Command		: AT+FCLASS=0\r\n (13 byte)
 	 *	Response	: AT+FCLASS=0\r\n\r\nOK\r\n (19 byte)
 	 ******************************************************************************
 	 *	Parameter	: 0 Data, 1 Fax, 8 Voice
 	 ******************************************************************************/
 
+	// Control for Parameter
+	if (_FCLASS != 0 and _FCLASS != 1 and _FCLASS != 8) _FCLASS = 0;
+	
+	// Command Chain Delay
+	delay(_Command_Delay);	// Advice by Telit
+	
 	// Clear UART Buffer
 	UART_Clear();
 	
@@ -207,12 +233,14 @@ bool GE910::AT_FCLASS(void) {
 	uint8_t _Response_Length = 19;
 
 	// Handle Response
-	if (Response_Wait(_Response_Length, 1000)) {
-		
-		// Declare Variables
+	if (Response_Wait(_Response_Length, 50)) {	// Wait for 50ms, Measured 10ms
+
+		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
-		char _Response[_Response_Length];
 		
+		// Declare Response Variable
+		char _Response[_Response_Length];
+
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
 
@@ -225,7 +253,12 @@ bool GE910::AT_FCLASS(void) {
 		}
 
 		// Control for Response
-		if(strstr(_Response, "OK") != NULL) return (true);
+		if(strstr(_Response, "OK") != NULL) {
+
+			// End Function
+			return (true);
+
+		}
 
 	}
 
@@ -237,12 +270,18 @@ bool GE910::AT_K(void) {
 
 	/******************************************************************************
 	 *	Function	: AT K Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.00.01
 	 *	Command		: AT&K0\r\n (7 byte)
 	 *	Response	: AT&K0\r\n\r\nOK\r\n (13 byte)
 	 ******************************************************************************
 	 *	Parameter	: 0 No Flow Control, 1, 2, 3, 4, 5, 6
 	 ******************************************************************************/
+
+	// Control for Parameter
+	if (_K != 0 and _K != 1 and _K != 2 and _K != 3 and _K != 4 and _K != 5 and _K != 6) _K = 0;
+	
+	// Command Chain Delay
+	delay(_Command_Delay);	// Advice by Telit
 
 	// Clear UART Buffer
 	UART_Clear();
@@ -259,12 +298,14 @@ bool GE910::AT_K(void) {
 	uint8_t _Response_Length = 13;
 
 	// Handle Response
-	if (Response_Wait(_Response_Length, 1000)) {
-		
-		// Declare Variables
+	if (Response_Wait(_Response_Length, 50)) {	// Wait for 50ms, Measured 10ms
+
+		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
-		char _Response[_Response_Length];
 		
+		// Declare Response Variable
+		char _Response[_Response_Length];
+
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
 
@@ -277,7 +318,12 @@ bool GE910::AT_K(void) {
 		}
 
 		// Control for Response
-		if(strstr(_Response, "OK") != NULL) return (true);
+		if(strstr(_Response, "OK") != NULL) {
+
+			// End Function
+			return (true);
+
+		}
 
 	}
 
@@ -1735,7 +1781,7 @@ bool GE910::AT_HTTPCFG(void) {
 	// End Function
 	return (false);
 }
-bool GE910::AT_HTTPSND(const String& _Data) {
+bool GE910::AT_HTTPSND(const String &_Data) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPSND Command
@@ -1946,18 +1992,18 @@ void GE910::UART_Clear(void) {
 	while(UART_IoT.available() > 0) {
 	
 		// Read Buffer
-		UART_IoT.read();
+		char i = UART_IoT.read();
 	
+		// Clear Delay
+		delay(1);
+
 	}
 	
-	// Clear Delay
-	delay(1);
-
 }
-bool GE910::Response_Wait(uint8_t _Length, uint16_t _TimeOut) {
+bool GE910::Response_Wait(uint16_t _Length, uint16_t _TimeOut) {
 	
 	// Read Current Time
-	long _Time = millis();
+	uint32_t _Time = millis();
 
 	// Wait for UART Available
 	while (UART_IoT.available() < _Length) {
@@ -1991,10 +2037,15 @@ bool GE910::Connect(void) {
 			// ************************************************************
 			// 1- IoT AT Command
 			// ************************************************************
+			
+			// Declare Variable
+			uint8_t _Error_WD = 0;
+			
+			// Process Command
 			while (_Process_Control == false) {
-				
+								
 				// Process Command
-				if (AT() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2007,20 +2058,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+					
 				}
+				
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 			
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 2- IoT CMEE Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CMEE() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CMEE() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2033,20 +2091,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 3- IoT FCLASS Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_FCLASS() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_FCLASS() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2059,20 +2124,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 4- IoT K Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_K() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_K() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2085,20 +2157,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 5- IoT CPIN Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CPIN() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CPIN() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2111,12 +2190,19 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
+			_Error_WD = 0;
 
 			// ************************************************************
 			// 6- IoT CGSN Command
@@ -2124,7 +2210,7 @@ bool GE910::Connect(void) {
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CGSN() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CGSN() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2137,12 +2223,19 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
+			_Error_WD = 0;
 
 			// ************************************************************
 			// 7- IoT GSN Command
@@ -2150,7 +2243,7 @@ bool GE910::Connect(void) {
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_GSN() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_GSN() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2163,12 +2256,19 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
+			_Error_WD = 0;
 
 			// ************************************************************
 			// 8- IoT CCID Command
@@ -2176,7 +2276,7 @@ bool GE910::Connect(void) {
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CCID() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CCID() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2189,12 +2289,19 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
+			_Error_WD = 0;
 
 			// ************************************************************
 			// 9- IoT SLED Command
@@ -2202,7 +2309,7 @@ bool GE910::Connect(void) {
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_SLED() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_SLED() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2215,20 +2322,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 10- IoT TXMONMODE Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_TXMONMODE() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_TXMONMODE() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2241,20 +2355,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 11- IoT CREG Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CREG() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CREG() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2267,20 +2388,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 12- IoT CGREG Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CGREG() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CGREG() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2293,20 +2421,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 13- IoT CGDCONT Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_CGDCONT() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_CGDCONT() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2319,20 +2454,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 14- IoT SCFG Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_SCFG() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_SCFG() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2345,20 +2487,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 15- IoT SGACT Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_SGACT() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_SGACT() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2371,20 +2520,27 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
 			// Set Control Variable
 			_Process_Control = false;
-			
+			_Error_WD = 0;
+
 			// ************************************************************
 			// 16- IoT SERVINFO Command
 			// ************************************************************
 			while (_Process_Control == false) {
 				
 				// Process Command
-				if (AT_SERVINFO() == true) {
+				if (((PINC & 0b00001000) == 0b00001000) and AT_SERVINFO() == true) {
 					
 					// Set Command Response
 					_Process_Control = true;
@@ -2397,13 +2553,16 @@ bool GE910::Connect(void) {
 					// Set Command Response
 					_Process_Control = false;
 
+					// Set WD Variable
+					_Error_WD++;
+
 				}
+
+				// Control for WD
+				if (_Error_WD > 5) asm volatile ("  jmp 0");
 
 			}
 
-			// Set Control Variable
-			_Process_Control = false;
-			
 			// GSM Delay
 			delay(100);
 			
