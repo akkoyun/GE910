@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.06.01
+ *	Revision			: 01.07.00
  *
  *********************************************************************************/
 
@@ -26,7 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.06.01";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.07.00";		// Library Firmware
 
 	// IoT Variables
 	char 					ID[11];				// 10 digit number
@@ -47,7 +47,10 @@ public:
 	uint8_t 				Second;				// 2 digit Second Variable
 	
 	// Control Variables
-	bool					PowerMon;			// GSM Power Variable
+	bool					Device_Error;		// GSM Device Error Variable
+	bool					PwrMon;				// GSM Power Variable
+	uint8_t					CREG;				// CREG Registration Status
+	uint8_t					CGREG;				// CGREG Registration Status
 	bool 					Connected;			// GSM Connected Variable
 	bool					Time_Updated;		// Time Updated Variable
 	bool					Recorded;			// Data Recorded Variable
@@ -98,6 +101,7 @@ private:
 	bool AT_TXMONMODE(void);
 
 	// GSM Connection Functions
+	bool AT_REGMODE(void);
 	bool AT_CREG(void);
 	bool AT_CGREG(void);
 	bool AT_CGDCONT(void);
@@ -127,7 +131,7 @@ private:
 	const PROGMEM uint8_t 	_CMEE 				= 1;				// Set Numeric Error Format (1)
 
 	// FCLASS Variables
-	const PROGMEM uint8_t 	_FCLASS 			= 0;				// Set Data Connection (0)
+	const PROGMEM uint8_t	_FCLASS 			= 0;				// Set Data Connection (0)
 
 	// K Variables
 	const PROGMEM uint8_t 	_K 					= 0;				// Set Flow Control (0)
@@ -155,6 +159,7 @@ private:
 	const PROGMEM char 		_HTTP_Server[23] 	= "agristat.aeyazilim.com";
 	const PROGMEM char 		_HTTP_URL[20] 		= "/api/airstatservice";
 	const PROGMEM uint8_t 	_HTTP_Port 			= 80;
+	
 };
 
 #endif /* defined(__GE910__) */
