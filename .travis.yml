@@ -1,4 +1,4 @@
-language: c++
+language: python
 
 cache:
   directories:
@@ -6,9 +6,16 @@ cache:
 
 install:
 - pip install -U platformio
+- platformio lib install 986 # LSM303
 
 env:
 - BOARD=uno
 - BOARD=leonardo
+- BOARD=micro
 - BOARD=megaatmega2560
-- BOARD=due
+- BOARD=yun
+
+script:
+- for e in examples/*; do
+    platformio ci --board=$BOARD --lib=. $e/*;
+  done
