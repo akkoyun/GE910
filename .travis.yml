@@ -1,4 +1,4 @@
-language: arduino
+language: c++
 
 cache:
   directories:
