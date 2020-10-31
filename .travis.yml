@@ -12,9 +12,3 @@ env:
 - BOARD=leonardo
 - BOARD=megaatmega2560
 - BOARD=due
-
-script:
-- set -eo pipefail;
-  for e in examples/*; do
-    platformio ci --board=$BOARD --lib=. $e/*;
-  done
