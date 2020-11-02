@@ -26,34 +26,34 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.08.00";		// Library Firmware
+	const PROGMEM char 		Version[9] = "01.08.00";
 
 	// IoT Variables
-	char 					ID[11];				// 10 digit number
-	char 					IMEI[17];			// 17 digit number
-	char 					ICCID[20];			// 20 digit number
-	char 					IP[15];				// 15 digit string
-	char 					PHONE[15];			// 15 digit string
-	int 					Operator;			// 5 digit number
-	uint8_t 				RSSI;				// 2 digit number
-	uint8_t 				dBM;				// 2 digit number
+	char 					ID[11];
+	char 					IMEI[17];
+	char 					ICCID[20];
+	char 					IP[15];
+	char 					PHONE[15];
+	int 					Operator;
+	uint8_t 				RSSI;
+	uint8_t 				dBM;
 
-	// CCLK Variables
-	uint8_t 				Day;				// 2 digit Day Variable
-	uint8_t 				Month;				// 2 digit Month Variable
-	uint8_t 				Year;				// 2 digit Year Variable
-	uint8_t 				Hour;				// 2 digit Hour Variable
-	uint8_t 				Minute;				// 2 digit Minute Variable
-	uint8_t 				Second;				// 2 digit Second Variable
+	// Time Variables
+	uint8_t 				Day;
+	uint8_t 				Month;
+	uint8_t 				Year;
+	uint8_t 				Hour;
+	uint8_t 				Minute;
+	uint8_t 				Second;
 	
 	// Control Variables
-	bool					Device_Error;		// GSM Device Error Variable
-	bool					PwrMon;				// GSM Power Variable
-	uint8_t					CREG;				// CREG Registration Status
-	uint8_t					CGREG;				// CGREG Registration Status
-	bool 					Connected;			// GSM Connected Variable
-	bool					Time_Updated;		// Time Updated Variable
-	bool					Recorded;			// Data Recorded Variable
+	bool					Device_Error;
+	bool					PwrMon;
+	uint8_t					CREG;
+	uint8_t					CGREG;
+	bool 					Connected;
+	bool					Time_Updated;
+	bool					Recorded;
 
 	// ************************************************************
 	// Public Functions
