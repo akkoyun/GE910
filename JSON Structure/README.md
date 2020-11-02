@@ -12,7 +12,7 @@ This library is a GSM based IoT library. IoT communication pack is a JSON pack.
 		"ID": "0001767661",
 		"Hardware": "01.01.04",
 		"Firmware": "01.04.02"
-	}
+	},
 	"Power": {
 		"Source": 1,
 		"Battery": {
