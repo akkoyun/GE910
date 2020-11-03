@@ -54,6 +54,9 @@ public:
 	bool 					Connected;
 	bool					Time_Updated;
 	bool					Recorded;
+	
+	// Measure Variables
+	uint8_t					Connection_Time;
 
 	// ************************************************************
 	// Public Functions
