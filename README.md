@@ -1,6 +1,6 @@
 # Telit GE910 GSM Modem AT Library.
 
-	Developed by M. Günce Akkoyun ![Twitter Follow](https://img.shields.io/twitter/follow/gunceakkoyun?label=Follow&style=social)
+Developed by M. Günce Akkoyun ![Twitter Follow](https://img.shields.io/twitter/follow/gunceakkoyun?label=Follow&style=social)
 
 Lorem ipsum
 
