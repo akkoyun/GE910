@@ -26,11 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-<<<<<<< HEAD
 	const PROGMEM char 		Version[9] = "01.08.03";
-=======
-	const PROGMEM char 		Version[9] = "01.08.00";
->>>>>>> 8d67350eca08244fc99ec46069614dce15df6b0d
 
 	// IoT Variables
 	char 					ID[11];
