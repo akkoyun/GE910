@@ -1875,7 +1875,7 @@ bool GE910::AT_CSQ(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CSQ Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.01.00
 	 *	Command		: AT+CSQ\r\n (9 byte)
 	 *	Response	: AT+CSQ\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
 	 ******************************************************************************/
@@ -1905,7 +1905,7 @@ bool GE910::AT_CSQ(void) {
 		char _Response[_Response_Length];
 
 		// Declare Buffer Variables
-		char _RSSI[3];
+		char _RSSI[2];
 
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
@@ -1914,7 +1914,7 @@ bool GE910::AT_CSQ(void) {
 			_Response[_Read_Order] = UART_IoT.read();
 			
 			// Handle Data
-			if ((_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) or _Response[_Read_Order] == 45) {
+			if (_Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
 				
 				// Get Data
 				_RSSI[_Data_Order] = _Response[_Read_Order];
@@ -1923,14 +1923,17 @@ bool GE910::AT_CSQ(void) {
 				_Data_Order++;
 
 			}
-			
+
+			// Handle ,
+			if (_Response[_Read_Order] == 44 ) break;
+
 			// Increase Read Order
 			_Read_Order++;
 			
 		}
 
 		// Convert Variable
-		RSSI = (uint8_t)atoi(_RSSI);
+		RSSI = atoi(_RSSI);
 
 		// Control for Response
 		if(strstr(_Response, "CSQ") != NULL) return (true);
@@ -1945,7 +1948,7 @@ bool GE910::AT_SERVINFO(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT SERVINFO Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.02.00
 	 *	Command 	: AT#SERVINFO\r\n (13 byte)
 	 *	Response	: AT#SERVINFO\r\n\r\n#SERVINFO: 42,-93,"Turkcell","28601",63,855E,03,1,,"II",01,6\r\n (83 byte)
 	 ******************************************************************************/
@@ -1966,10 +1969,17 @@ bool GE910::AT_SERVINFO(void) {
 	// Handle Response
 	if (Response_Wait(_Response_Length, 1000)) {
 		
-		// Declare Variables
-		uint8_t _Read_Order = 0;
+		// Declare Response Variable
 		char _Response[_Response_Length];
-		
+
+		// Declare Read Order Variable
+		uint8_t _Read_Order = 0;
+
+		// Declare DBM Variable
+		bool _Control_DBM = false;
+		char _Response_DBM[3];
+		uint8_t _Data_Order_DBM = 0;
+
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
 
@@ -1980,12 +1990,6 @@ bool GE910::AT_SERVINFO(void) {
 			_Read_Order++;
 			
 		}
-
-		// Parse DBM
-		char _Buffer[2];
-		_Buffer[0] = _Response[30];
-		_Buffer[1] = _Response[31];
-		dBM = (uint8_t)atoi(_Buffer);
 
 		// Parse Operator
 		if(strstr(_Response, "28601") != NULL) Operator = 28601;
@@ -3092,6 +3096,42 @@ bool GE910::Connect(void) {
 				if (_Error_WD > 5) return(false);
 
 			}
+			
+			// ************************************************************
+			// 18- IoT CSQ Command
+			// ************************************************************
+
+			// Set Control Variable
+			_Process_Control = false;
+			_Error_WD = 0;
+
+			while (_Process_Control == false) {
+				
+				// Process Command
+				if (AT_CSQ() == true) {
+					
+					// Set Command Response
+					_Process_Control = true;
+					
+				} else {
+					
+					// Set Command Response
+					_Process_Control = false;
+
+					// Set WD Variable
+					_Error_WD++;
+
+				}
+
+				// Control for WD
+				if (_Error_WD > 5) return(false);
+
+			}
+			
+			
+			
+			
+			
 
 			
 			// Control for IoT AT Confirmation

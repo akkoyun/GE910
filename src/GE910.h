@@ -26,17 +26,20 @@ public:
 	// ************************************************************
 
 	// Function Variables
+<<<<<<< HEAD
+	const PROGMEM char 		Version[9] = "01.08.03";
+=======
 	const PROGMEM char 		Version[9] = "01.08.00";
+>>>>>>> 8d67350eca08244fc99ec46069614dce15df6b0d
 
 	// IoT Variables
 	char 					ID[11];
 	char 					IMEI[17];
-	char 					ICCID[20];
+	char 					ICCID[21];
 	char 					IP[15];
 	char 					PHONE[15];
 	int 					Operator;
-	uint8_t 				RSSI;
-	uint8_t 				dBM;
+	int		 				RSSI;
 
 	// Time Variables
 	uint8_t 				Day;
@@ -130,6 +133,7 @@ private:
 		
 	// Module Variables
 	const PROGMEM uint8_t	_Command_Delay		= 10;				// Command Chain Delay
+	
 	// CMEE Variables
 	const PROGMEM uint8_t 	_CMEE 				= 1;				// Set Numeric Error Format (1)
 
@@ -147,7 +151,7 @@ private:
 
 	// CGDCONT Variables
 	const PROGMEM char 		_PDP[3] 			= "IP";				// Set PDP Variable (IP)
-	const PROGMEM char 		_APN[9] 			= "internet";		// Set APN Variable (internet)
+	const PROGMEM char 		_APN[15] 			= "internet";		// Set APN Variable (internet/statikip)
 
 	// SCFG Variables
 	const PROGMEM uint8_t 	_PktSz	 			= 0;				// Set PktSz Variable (0-Auto)
