@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.07.02
+ *	Revision			: 01.08.00
  *
  *********************************************************************************/
 
@@ -2406,10 +2406,10 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 		UART_IoT.flush();
 
 		// Declare Variables
-		uint8_t _Response_Length = 52;
+		uint8_t _Response_Length = 46;
 		
 		// Handle Response
-		if (Response_Wait(_Response_Length, 1000)) {
+		if (Response_Wait(_Response_Length, 3000)) {
 			
 			// Declare Variables
 			uint8_t _Read_Order = 0;
@@ -2436,6 +2436,9 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 				// Set Variable
 				Recorded = true;
 				
+				// End Function
+				return(true);
+
 			}
 			if(strstr(_Response, "\"result\":\"2\"") != NULL) return(false);
 
@@ -2447,6 +2450,9 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 		}
 		
 	}
+
+	// Set Variable
+	Recorded = true;
 
 	// End Function
 	return(true);
@@ -2876,6 +2882,9 @@ bool GE910::Connect(void) {
 
 			}
 
+			// Read Current Time
+			uint32_t _CTime = millis();
+			
 			// ************************************************************
 			// 12- IoT CREG Command
 			// ************************************************************
@@ -2918,6 +2927,10 @@ bool GE910::Connect(void) {
 			_Process_Control = false;
 			_Error_WD = 0;
 
+			// Read Current Time
+			uint32_t _CRTime = millis() - _CTime;
+			Connection_Time = uint8_t(_CRTime / 1000);
+			
 			while (_Process_Control == false and CGREG != 1) {
 				
 				// Process Command
