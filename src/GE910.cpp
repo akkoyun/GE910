@@ -2253,7 +2253,7 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPSND Command
-	 *	Revision	: 01.00.00
+	 *	Revision	: 01.00.01
 	 *	Command		:  (4 byte)
 	 *	Response	:  (10 byte)
 	 ******************************************************************************/
@@ -2369,7 +2369,7 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 	while (_HTTP_Ring == false) {
 
 		// Control For WD
-		if (_WD > 10) return(false);
+		if (_WD > 1) return(false);
 		
 		// Declare Variables
 		uint8_t _Response_Length = 56;
@@ -2393,11 +2393,17 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 			}
 
 			// Control for Response
-			if(strstr(_Response, "200") != NULL) _HTTP_Ring = true;
-			if(strstr(_Response, "404") != NULL) return(false);
-			if(strstr(_Response, "400") != NULL) return(false);
-			if(strstr(_Response, "405") != NULL) return(false);
-			if(strstr(_Response, "408") != NULL) return(false);
+			if(strstr(_Response, "200") != NULL) {
+				
+				// Handle Variable
+				_HTTP_Ring = true;
+				
+			} else {
+				
+				// End Function
+				return(false);
+				
+			}
 
 		}
 		
