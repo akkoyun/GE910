@@ -2361,9 +2361,16 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 		
 	}
 
+	// Define Watchdog Variable
+	uint8_t _WD = 0;
+	
+	
 	// Control for Ring
 	while (_HTTP_Ring == false) {
 
+		// Control For WD
+		if (_WD > 10) return(false);
+		
 		// Declare Variables
 		uint8_t _Response_Length = 56;
 
@@ -2393,6 +2400,9 @@ bool GE910::AT_HTTPSND(const String &_Data) {
 			if(strstr(_Response, "408") != NULL) return(false);
 
 		}
+		
+		// Increase WD
+		_WD++;
 		
 	}
 	
