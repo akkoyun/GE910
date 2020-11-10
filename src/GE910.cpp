@@ -1875,7 +1875,7 @@ bool GE910::AT_CSQ(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CSQ Command
-	 *	Revision	: 01.01.00
+	 *	Revision	: 01.01.01
 	 *	Command		: AT+CSQ\r\n (9 byte)
 	 *	Response	: AT+CSQ\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
 	 ******************************************************************************/
@@ -1894,7 +1894,7 @@ bool GE910::AT_CSQ(void) {
 	UART_IoT.flush();
 
 	// Declare Variables
-	uint8_t _Response_Length = 28;
+	uint8_t _Response_Length = 27;
 
 	// Handle Response
 	if (Response_Wait(_Response_Length, 1000)) {
