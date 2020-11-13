@@ -1197,7 +1197,7 @@ bool GE910::AT_CREG(void) {
 		_Error_WD++;
 
 		// Handle for Error
-		if (_Error_WD >= 10) return(false);
+		if (_Error_WD >= 3) return(false);
 		
 	}
 
@@ -2935,7 +2935,7 @@ bool GE910::Connect(void) {
 				}
 
 				// Control for WD
-				if (_Error_WD > 5) return(false);
+				if (_Error_WD > 3) return(false);
 
 			}
 
