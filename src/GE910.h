@@ -147,7 +147,7 @@ private:
 
 	// CGDCONT Variables
 	const PROGMEM char 		_PDP[3] 			= "IP";				// Set PDP Variable (IP)
-	const PROGMEM char 		_APN[15] 			= "statikip";		// Set APN Variable (internet/statikip)
+	const PROGMEM char 		_APN[15] 			= "internet";		// Set APN Variable (internet/statikip)
 
 	// SCFG Variables
 	const PROGMEM uint8_t 	_PktSz	 			= 0;				// Set PktSz Variable (0-Auto)
