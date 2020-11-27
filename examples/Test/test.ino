@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
 
-	/ Control for Connection
+	// Control for Connection
 	if (GSM.Connected == true and GSM.CREG == 1 and GSM.CGREG == 1) {
 		
 		// Update GSM RTC
