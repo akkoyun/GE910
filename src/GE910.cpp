@@ -4,7 +4,7 @@
  *
  *	Library				: Telit GE910 Library.
  *	Code Developer		: Mehmet Gunce Akkoyun (akkoyun@me.com)
- *	Revision			: 01.08.00
+ *	Revision			: 01.09.00
  *
  *********************************************************************************/
 
@@ -12,113 +12,79 @@
 #include "GE910.h"
 
 // Power Functions
-bool GE910::Module_ON(void) {
+bool GE910::B100AA_Power(bool Status) {
 
 	// IoT Signal Pins
 	// ---------------------------------------------------------------
-	// Power EN			- Output [Active HIGH] (Pull-up) 	- PB1
-	// Comm EN			- Output [Active LOW] (Pull-up) 	- PC0
-	// On/Off			- Output [Active HIGH] (Pull-down) 	- PC1
-	// SDown			- Output [Active HIGH] (Pull-down) 	- PC2
-	// PwrMon			- Input [Active HIGH] (Pull-down) 	- PC3
+	// GSM Power EN		- Output [Active HIGH] (Pull-Down) 	- PH2
+	// GSM Comm EN 		- Output [Active LOW] (Pull-Up)		- PH3
+	// GSM LED EN		- Output [Active LOW] (Pull-Up)		- PH4
+	// On/Off			- Output [Active HIGH] (Pull-down) 	- PH5
+	// SDown			- Output [Active HIGH] (Pull-down) 	- PH6
+	// PwrMon			- Input [Active HIGH] (Pull-down) 	- PH7
 	// ---------------------------------------------------------------
-	DDRB	|= 0b00000010;	PORTB	&= 0b11111101;
-	DDRC	|= 0b00000001;	PORTC	|= 0b00000001;
-	DDRC	|= 0b00000010;	PORTC	&= 0b11111101;
-	DDRC	|= 0b00000100;	PORTC	&= 0b11111011;
-	DDRC	&= 0b11110111;	PORTC	&= 0b11110111;
-	DDRD	|= 0b00100000;	PORTD	&= 0b11011111;
-
-	// Reset Variables
-	PwrMon = false;
-	Device_Error = false;
-
-	// Boot Delay
-	delay(200);
-
-	// Begin UART Communication
-	UART_IoT.begin(115200);
-
-	// Set Communication Signal LOW
-	PORTC &= 0b11111110;
 
 	// Set GSM Power Signal EN HIGH
-	PORTB |= 0b00000010;
+	GSM_Power_EN(true);
 
-	// Control for PWMon (PC3)
-	if ((PINC & 0b00001000) == 0b00001000) {
+	// Set GSM LED Power EN
+	GSM_LED_EN(true);
+	
+	// Set Communication Signal LOW
+	GSM_Comm_EN(true);
+
+	// GSM Boot Delay
+	delay(2000);
+
+	// Turn On Modem
+	if (GSM_PWRMON) {
 		
-		// Delay
-		delay(300);
+		// Power Monitor 3V3 HIGH
+
+		// Set Variable
+		PwrMon = true;
+		Device_Error = false;
+
+		// End Function
+		return(PwrMon);
+
+	} else {
 		
-		// Init AT Command
-		if (AT() == true) {
+		// Power Monitor 3V3 LOW
+		
+		// Send On Off Signal
+		GSM_OnOff();
+		
+		// Control for PWMon (PH7)
+		if (GSM_PWRMON) {
 			
+			// Power Monitor 3V3 HIGH
+
 			// Set Variable
 			PwrMon = true;
+			Device_Error = false;
 
 			// End Function
-			return(true);
+			return(PwrMon);
 
-		}
-		
-	} else {
-
-		// Set On/Off Signal High [PC1]
-		PORTC |= 0b00000010;
-
-		// Command Delay
-		delay(5000);
-		
-		// Set On/Off Signal Low [PC1]
-		PORTC &= 0b11111101;
-
-		// Control for PWMon (PC3)
-		if ((PINC & 0b00001000) == 0b00001000) {
-
-			// Delay
-			delay(300);
+		} else {
 			
-			// Init AT Command
-			if (AT() == true) {
-				
-				// Set Variable
-				PwrMon = true;
-
-				// End Function
-				return(true);
-
-			}
+			// Power Monitor 3V3 LOW
+			
+			// Send Shut Down Signal
+			GSM_SDown();
 
 		}
 		
 	}
-
-	// HW unconditional ShutDown Delay
-	delay(20);
-
-	// Set ShutDown Signal High [PC2]
-	PORTC |= 0b00000100;
-
-	// Command Delay
-	delay(300);
-
-	// Set ShutDown Signal Low [PC2]
-	PORTC &= 0b11111011;
-
-	// Control for PWMon (PC3)
-	if ((PINC & 0b00001000) == 0b00001000) {
+	// Set Variable
+	PwrMon = false;
+	Device_Error = true;
+	Connected = false;
 	
-		// Set Error Variable
-		Device_Error = true;
-		
-	} else {
-	
-		// Reset Device
-		asm volatile ("  jmp 0");
+	// End Function
+	return(PwrMon);
 
-	}
-	
 }
 
 // Modem Set Functions
@@ -2515,6 +2481,75 @@ bool GE910::Response_Wait(uint16_t _Length, uint16_t _TimeOut) {
 
 }
 
+// Hardware Functions
+void GE910::GSM_LED_EN(bool State) {
+	
+	// Set GSM LED Power EN
+	if (State == true) PORTH &= 0b11101111;
+
+	// Set GSM LED Power EN
+	if (State == false) PORTH |= 0b00010000;
+
+}
+void GE910::GSM_Comm_EN(bool State) {
+	
+	// Set GSM Comm EN
+	if (State == true) PORTH &= 0b11110111;
+
+	// Set GSM Comm EN
+	if (State == false) PORTH |= 0b00001000;
+
+}
+void GE910::GSM_Power_EN(bool State) {
+	
+	// Set GSM Comm EN
+	if (State == true) PORTH |= 0b00000100;
+
+	// Set GSM Comm EN
+	if (State == false) PORTH &= 0b11111011;
+
+}
+bool GE910::GSM_PWRMON(void) {
+	
+	// Control for PWMon (PH7)
+	if ( (PINH & (1 << PINH7)) == (1 << PINH7) ) {
+		
+		// Power Monitor 3V3 HIGH
+		return(true);
+
+	} else {
+		
+		// Power Monitor 3V3 LOW
+		return(false);
+	
+	}
+
+}
+void GE910::GSM_OnOff(void) {
+	
+	// Set On/Off Signal HIGH [PH5]
+	PORTH |= 0b00100000;
+
+	// Command Delay
+	delay(5000);
+	
+	// Set On/Off Signal LOW [PH5]
+	PORTH &= 0b11011111;
+
+}
+void GE910::GSM_SDown(void) {
+	
+	// Set Shut Down Signal HIGH [PH6]
+	PORTH |= 0b01000000;
+
+	// Command Delay
+	delay(200);
+	
+	// Set Shut Down Signal LOW [PH6]
+	PORTH &= 0b10111111;
+	
+}
+
 // Public Functions
 bool GE910::Connect(void) {
 	
@@ -2537,7 +2572,7 @@ bool GE910::Connect(void) {
 			
 			// Process Command
 			while (_Process_Control == false) {
-								
+				
 				// Process Command
 				if (AT() == true) {
 					

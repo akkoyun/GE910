@@ -26,7 +26,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	const PROGMEM char 		Version[9] = "01.08.06";
+	const PROGMEM char 		Version[9] = "01.09.00";
 
 	// IoT Variables
 	char 					ID[11];
@@ -62,8 +62,8 @@ public:
 	// ************************************************************
 	
 	// Power Functions
-	bool Module_ON(void);
-	
+	bool B100AA_Power(bool Status);
+
 	// GSM Connection Functions
 	bool Connect(void);
 	
@@ -83,6 +83,15 @@ private:
 	// Private Functions
 	// ************************************************************
 
+	// Hardware Functions
+	void GSM_LED_EN(bool State);
+	void GSM_Comm_EN(bool State);
+	void GSM_Power_EN(bool State);
+	bool GSM_PWRMON(void);
+	void GSM_OnOff(void);
+	void GSM_SDown(void);
+	
+	
 	// Modem Set Functions
 	bool AT(void);
 	bool AT_CMEE(void);
@@ -147,7 +156,7 @@ private:
 
 	// CGDCONT Variables
 	const PROGMEM char 		_PDP[3] 			= "IP";				// Set PDP Variable (IP)
-	const PROGMEM char 		_APN[15] 			= "internet";		// Set APN Variable (internet/statikip)
+	const PROGMEM char 		_APN[15] 			= "statikip";		// Set APN Variable (internet/statikip)
 
 	// SCFG Variables
 	const PROGMEM uint8_t 	_PktSz	 			= 0;				// Set PktSz Variable (0-Auto)
