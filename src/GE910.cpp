@@ -37,7 +37,7 @@ bool GE910::B100AA_Power(bool Status) {
 	delay(2000);
 
 	// Turn On Modem
-	if (GSM_PWRMON) {
+	if (GSM_PWRMON()) {
 		
 		// Power Monitor 3V3 HIGH
 
@@ -56,7 +56,7 @@ bool GE910::B100AA_Power(bool Status) {
 		GSM_OnOff();
 		
 		// Control for PWMon (PH7)
-		if (GSM_PWRMON) {
+		if (GSM_PWRMON()) {
 			
 			// Power Monitor 3V3 HIGH
 
