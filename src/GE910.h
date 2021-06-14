@@ -14,7 +14,7 @@
 #include <Arduino.h>
 
 // Software Definations
-#define 	UART_IoT			Serial
+#define 	UART_IoT			Serial3
 #define 	UART_BAUD			115200
 	
 class GE910 {
@@ -46,7 +46,6 @@ public:
 	uint8_t 				Second;
 	
 	// Control Variables
-	bool					Device_Error;
 	bool					PwrMon;
 	uint8_t					CREG;
 	uint8_t					CGREG;
@@ -77,21 +76,6 @@ public:
 	bool AT_HTTPCFG(void);
 	bool AT_HTTPSND(const String& _Data);
 	
-private:
-	
-	// ************************************************************
-	// Private Functions
-	// ************************************************************
-
-	// Hardware Functions
-	void GSM_LED_EN(bool State);
-	void GSM_Comm_EN(bool State);
-	void GSM_Power_EN(bool State);
-	bool GSM_PWRMON(void);
-	void GSM_OnOff(void);
-	void GSM_SDown(void);
-	
-	
 	// Modem Set Functions
 	bool AT(void);
 	bool AT_CMEE(void);
@@ -118,6 +102,7 @@ private:
 	bool AT_CGDCONT(void);
 	bool AT_SCFG(void);
 	bool AT_SGACT(void);
+	bool Connection_Control(void);
 
 	// Operotor Functions
 	bool AT_SERVINFO(void);
@@ -131,6 +116,17 @@ private:
 	// Utility Functions
 	void UART_Clear(void);
 	bool Response_Wait(uint16_t _Length, uint16_t _TimeOut);
+	
+	// Power Functions
+	bool AT_SHDN(void);
+	
+private:
+	
+	// ************************************************************
+	// Private Functions
+	// ************************************************************
+
+
 		
 	// ************************************************************
 	// Private GSM Setting Variables
@@ -168,8 +164,8 @@ private:
 	const PROGMEM char 		_NTP_Server[15] 	= "85.199.214.98";	// Set NTP Server Variable (NASA)
 	
 	// HTTP Variables
-	const PROGMEM char 		_HTTP_Server[23] 	= "agristat.aeyazilim.com";
-	const PROGMEM char 		_HTTP_URL[20] 		= "/api/airstatservice";
+	const PROGMEM char 		_HTTP_Server[20] 	= "54.216.226.171";
+	const PROGMEM char 		_HTTP_URL[18] 		= "/api/v1.0/p511ba";
 	const PROGMEM uint8_t 	_HTTP_Port 			= 80;
 	
 };
