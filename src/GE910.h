@@ -80,6 +80,11 @@ public:
 		NOT_POWERED,		// 0
 		POWERED				// 1
 	};
+	enum GSM_CommandStatus {
+		NOT_OK,				// 0
+		NOT_COMMAND,		// 1
+		TIME_OUT			// 2
+	};
 
 	// ************************************************************
 	// Public Functions
