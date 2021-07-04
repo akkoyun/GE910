@@ -5,7 +5,7 @@
 GE910 GSM;
 
 // Define UART Names
-#define UART_IoT    Serial
+#define UART_IoT    Serial1
 
 void setup() {
  
@@ -14,7 +14,7 @@ void setup() {
   delay(1000);
   
   // Activate IoT Modem
-  GSM.B104_ON();
+  GSM.Connect();
 
 }
 
