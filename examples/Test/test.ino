@@ -27,8 +27,6 @@ void loop() {
     GSM.Time_Update();
     
     
-    }
-    
   }
   
 }
