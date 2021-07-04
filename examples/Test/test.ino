@@ -26,9 +26,7 @@ void loop() {
     // Update GSM RTC
     GSM.Time_Update();
     
-    // Control for HTTPConfig
-    if (GSM.AT_HTTPCFG() == true) {
-
+    
     }
     
   }
