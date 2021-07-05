@@ -25,7 +25,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	char 					Version[9] 				= "01.14.01";		// Version Variable
+	char 					Version[9] 				= "01.15.01";		// Version Variable
 
 	// IoT Variables
 	char 					ID[11]					= "";				// ID Variable
@@ -59,6 +59,7 @@ public:
 	char					Command_Response[255]	= "";				// Full Command Response
 	bool					Message					= false;			// Incomming Message Variable
 	int						Request					= 0;				// Server Request Variable
+	int						Socket_Incomming_Length = 0;
 
 	// ************************************************************
 	// Public Enum Definations
@@ -130,7 +131,7 @@ private:
 	bool AT_CREG(void);
 	bool AT_CGREG(void);
 	bool AT_CGDCONT(char *_PDP, char *_APN);
-	bool AT_SCFG(uint8_t _PktSz, uint8_t _MaxTo, uint8_t _ConnTo, uint8_t _TxTo);
+	bool AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _ConnTo, uint8_t _TxTo);
 	bool AT_SGACT(void);
 	bool AT_CSQ(void);
 	bool AT_SERVINFO(void);
@@ -142,6 +143,7 @@ private:
 	bool AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port);
 	bool AT_FRWL(const String &_IP);
 	bool AT_SA(void);
+	bool AT_SH(void);
 	bool AT_SHDN(void);
 	bool AT_SRECV(void);
 	bool AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepalive);
@@ -188,7 +190,7 @@ private:
 		0,										// (TXMONMODE) Set Tx LED Software Control (1)
 		0,										// (REGMODE)
 		"IP",									// (PDP) Set PDP Variable (IP)
-		"statikip",								// (APN) Set APN Variable (internet/statikip)
+		"mgbs",									// (APN) Set APN Variable (internet/statikip/mgbs)
 		0,										// (PktSz) Set PktSz Variable (0-Auto)
 		0,										// (MaxTo) Set MaxTo Variable (0-No Timeout)
 		150,									// (ConnTo) Set ConnTo Variable (150 nS)
@@ -198,9 +200,9 @@ private:
 		"54.216.226.171",						// (HTTP_Server) Cloud Server IP
 		"/api/v1.0/p511ba",						// (HTTP_URL) Cloud Server URL
 		80,										// (HTTP_Port) Cloud Server Port
-		2,
+		1,
 		0,
-		0
+		1
 	};
 
 	// ************************************************************************************************************************
@@ -223,7 +225,8 @@ private:
 		bool AT_CREG;			// AT+CREG Command Control Variable
 		bool AT_CGREG;			// AT+CGREG Command Control Variable
 		bool AT_CGDCONT;		// AT+CGDCONT Command Control Variable
-		bool AT_SCFG;			// AT+SCFG Command Control Variable
+		bool AT_SCFG1;			// AT+SCFG Command Control Variable
+		bool AT_SCFG2;			// AT+SCFG Command Control Variable
 		bool AT_SGACT;			// AT+SGACT Command Control Variable
 		bool AT_SERVINFO;		// AT+SERVINFO Command Control Variable
 		bool AT_CSQ;			// AT+CSQ Command Control Variable
@@ -235,13 +238,14 @@ private:
 		bool AT_SL;				// AT#SL Command Control Variable
 		bool AT_FRWL;			// AT#FRWL Command Control Variable
 		bool AT_SA;				// AT#SA Command Control Variable
+		bool AT_SH;				// AT#SH Command Control Variable
 		bool AT_SRECV;			// AT#RECV Command Control Variable
 		bool AT_SCFGEXT;
 		bool AT_SHDN;
 		//------------------------------------------------------------------
 
 	}; Control_Struct Control {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 	// ************************************************************************************************************************
 
