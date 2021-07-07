@@ -25,7 +25,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	char 					Version[9] 				= "01.15.01";		// Version Variable
+	char 					Version[9] 				= "01.16.01";		// Version Variable
 
 	// IoT Variables
 	char 					ID[11]					= "";				// ID Variable
@@ -100,7 +100,8 @@ public:
 	void Connect(void);													// Connection Function
 	bool Send(const String &_Data);										// Data Send Function
 	bool RSSI_Refresh(void);											// RSSI Refresh Function
-	bool Listen(void);													// Listen UART
+	void Listen(void);													// Listen UART
+	void Socket_Get_Command(void);
 	bool Activate(bool Status);
 
 private:
@@ -147,6 +148,7 @@ private:
 	bool AT_SHDN(void);
 	bool AT_SRECV(void);
 	bool AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepalive);
+	bool AT_E2SLRI(void);
 	
 	// Batch Functions
 	bool Connection_AT_Batch(void);
@@ -242,10 +244,11 @@ private:
 		bool AT_SRECV;			// AT#RECV Command Control Variable
 		bool AT_SCFGEXT;
 		bool AT_SHDN;
+		bool AT_E2SLRI;
 		//------------------------------------------------------------------
 
 	}; Control_Struct Control {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};
 	// ************************************************************************************************************************
 

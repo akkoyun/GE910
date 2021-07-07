@@ -16,7 +16,7 @@ bool GE910::AT(void) {
 		
 	/******************************************************************************
 	 *	Function	: AT Command
-	 *	Revision	: 02.00.00
+	 *	Revision	: 02.00.03
 	 *	Command		: AT\r\n (4 byte)
 	 *	Response	: AT\r\n\r\nOK\r\n (10 byte)
 	 ******************************************************************************/
@@ -62,20 +62,9 @@ bool GE910::AT(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
+			
 		}
 
 		// Control for Command
@@ -132,15 +121,12 @@ bool GE910::AT(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_CMEE(uint8_t _CMEE) {
 	
 	/******************************************************************************
 	 *	Function	: AT CMEE Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.03
 	 *	Command		: AT+CMEE=1\r\n (11 byte)
 	 *	Response	: AT+CMEE=1\r\n\r\nOK\r\n (17 byte)
 	 ******************************************************************************
@@ -191,19 +177,8 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -261,15 +236,12 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 	
 	/******************************************************************************
 	 *	Function	: AT FCLASS Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT+FCLASS=0\r\n (13 byte)
 	 *	Response	: AT+FCLASS=0\r\n\r\nOK\r\n (19 byte)
 	 ******************************************************************************
@@ -320,19 +292,8 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -390,15 +351,12 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_K(uint8_t _K) {
 
 	/******************************************************************************
 	 *	Function	: AT K Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.03
 	 *	Command		: AT&K0\r\n (7 byte)
 	 *	Response	: AT&K0\r\n\r\nOK\r\n (13 byte)
 	 ******************************************************************************
@@ -449,19 +407,8 @@ bool GE910::AT_K(uint8_t _K) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -519,15 +466,12 @@ bool GE910::AT_K(uint8_t _K) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_CPIN(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CPIN Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.03
 	 *	Command		: AT+CPIN?\r\n (10 byte)
 	 *	Response	: AT+CPIN?\r\n\r\n+CPIN: READY\r\n\r\nOK\r\n (32 byte)
 	 ******************************************************************************/
@@ -575,20 +519,9 @@ bool GE910::AT_CPIN(void) {
 			
 			// Increase Read Order
 			_Read_Order++;
-			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
 		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -657,15 +590,12 @@ bool GE910::AT_CPIN(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_CCID(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CCID Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT#CCID\r\n (9 byte)
 	 *	Response	: AT#CCID\r\n\r\n#CCID: 0000000000000000000\r\n\r\nOK\r\n (45 byte)
 	 ******************************************************************************/
@@ -731,19 +661,8 @@ bool GE910::AT_CCID(void) {
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -819,7 +738,7 @@ bool GE910::AT_CGSN(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT CGSN Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT+CGSN\r\n (9 byte)
 	 *	Response	: AT+CGSN\r\n\r\n000000000000000\r\n\r\nOK\r\n (34 byte)
 	 ******************************************************************************/
@@ -882,19 +801,8 @@ bool GE910::AT_CGSN(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -952,15 +860,12 @@ bool GE910::AT_CGSN(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_GSN(void) {
 	
 	/******************************************************************************
 	 *	Function	: AT GSN Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT+GSN\r\n (8 byte)
 	 *	Response	: AT+GSN\r\n\r\n0000000000\r\n\r\nOK\r\n (28 byte)
 	 ******************************************************************************/
@@ -1023,19 +928,8 @@ bool GE910::AT_GSN(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -1093,15 +987,12 @@ bool GE910::AT_GSN(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_SLED(uint8_t _SLED) {
 
 	/******************************************************************************
 	 *	Function	: AT SLED Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT#SLED=2\r\n (11 byte)
 	 *	Response	: AT#SLED=2\r\n\r\nOK\r\n (17 byte)
 	 ******************************************************************************
@@ -1152,19 +1043,8 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -1222,15 +1102,12 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 
 	/******************************************************************************
 	 *	Function	: AT TXMONMODE Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT#TXMONMODE=1\r\n (16 byte)
 	 *	Response	: AT#TXMONMODE=1\r\n\r\nOK\r\n (22 byte)
 	 ******************************************************************************
@@ -1281,19 +1158,8 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -1351,15 +1217,12 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 
 	/******************************************************************************
 	 *	Function	: AT REGMODE Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 *	Command		: AT#REGMODE=1\r\n (14 byte)
 	 *	Response	: AT#REGMODE=1\r\n\r\nOK\r\n (20 byte)
 	 ******************************************************************************/
@@ -1408,19 +1271,8 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -1478,15 +1330,12 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_CREG(void) {
 
 	/******************************************************************************
 	 *	Function	: AT CREG Command
-	 *	Revision	: 02.00.01
+	 *	Revision	: 02.00.02
 	 ******************************************************************************/
 	
 	// Command Chain Delay (Advice by Telit)
@@ -1549,19 +1398,8 @@ bool GE910::AT_CREG(void) {
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -1637,19 +1475,8 @@ bool GE910::AT_CREG(void) {
 				// Increase Read Order
 				_Read_Order++;
 
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -1837,19 +1664,8 @@ bool GE910::AT_CGREG(void) {
 					// Increase Read Order
 					_Read_Order++;
 					
-				}
-
-				// Clear UART Buffer
-				while(UART_IoT.available() > 0) {
-				
-					// Read Buffer
-					char *_Buffer = (char*)UART_IoT.read();
-				
-					// Clear Delay
+					// Stream Delay
 					delay(1);
-
-					// Clear Buffer Variable
-					memset(_Buffer, 0, sizeof(_Buffer));
 
 				}
 
@@ -1925,19 +1741,8 @@ bool GE910::AT_CGREG(void) {
 					// Increase Read Order
 					_Read_Order++;
 
-				}
-
-				// Clear UART Buffer
-				while(UART_IoT.available() > 0) {
-				
-					// Read Buffer
-					char *_Buffer = (char*)UART_IoT.read();
-				
-					// Clear Delay
+					// Stream Delay
 					delay(1);
-
-					// Clear Buffer Variable
-					memset(_Buffer, 0, sizeof(_Buffer));
 
 				}
 
@@ -2101,7 +1906,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 		UART_IoT.flush();
 
 		// Handle Response
-		if (Response_Wait(30, 1000)) {
+		if (Response_Wait(32, 1000)) {
 
 			// Declare Read Order Variable
 			uint8_t _Read_Order = 0;
@@ -2118,19 +1923,8 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -2188,9 +1982,6 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 
 		}
 
-		// End Function
-		return (false);
-		
 	}
 	
 	// End Function
@@ -2263,19 +2054,8 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -2337,14 +2117,8 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 
 		}
 
-		// End Function
-		return (false);
-		
 	}
 
-	// End Function
-	return (false);
-	
 }
 bool GE910::AT_SGACT(void) {
 	
@@ -2415,19 +2189,8 @@ bool GE910::AT_SGACT(void) {
 					// Increase Read Order
 					_Read_Order++;
 					
-				}
-
-				// Clear UART Buffer
-				while(UART_IoT.available() > 0) {
-				
-					// Read Buffer
-					char *_Buffer = (char*)UART_IoT.read();
-				
-					// Clear Delay
+					// Stream Delay
 					delay(1);
-
-					// Clear Buffer Variable
-					memset(_Buffer, 0, sizeof(_Buffer));
 
 				}
 
@@ -2515,19 +2278,8 @@ bool GE910::AT_SGACT(void) {
 					// Increase Read Order
 					_Read_Order++;
 					
-				}
-
-				// Clear UART Buffer
-				while(UART_IoT.available() > 0) {
-				
-					// Read Buffer
-					char *_Buffer = (char*)UART_IoT.read();
-				
-					// Clear Delay
+					// Stream Delay
 					delay(1);
-
-					// Clear Buffer Variable
-					memset(_Buffer, 0, sizeof(_Buffer));
 
 				}
 
@@ -2607,19 +2359,8 @@ bool GE910::AT_SGACT(void) {
 					// Increase Read Order
 					_Read_Order++;
 					
-				}
-
-				// Clear UART Buffer
-				while(UART_IoT.available() > 0) {
-				
-					// Read Buffer
-					char *_Buffer = (char*)UART_IoT.read();
-				
-					// Clear Delay
+					// Stream Delay
 					delay(1);
-
-					// Clear Buffer Variable
-					memset(_Buffer, 0, sizeof(_Buffer));
 
 				}
 
@@ -2772,22 +2513,8 @@ bool GE910::AT_CSQ(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Convert Variable
-		RSSI = atoi(_RSSI);
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -2796,6 +2523,9 @@ bool GE910::AT_CSQ(void) {
 
 			// Set Response Variable
 			strcpy(Command_Response, _Response);
+
+			// Convert Variable
+			RSSI = atoi(_RSSI);
 
 			// Set Control Variable
 			Control.AT_CSQ = true;
@@ -2829,9 +2559,6 @@ bool GE910::AT_CSQ(void) {
 
 	}
 
-	// End Function
-	return (false);
-	
 }
 bool GE910::AT_SERVINFO(void) {
 	
@@ -2886,19 +2613,8 @@ bool GE910::AT_SERVINFO(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -2992,14 +2708,10 @@ bool GE910::AT_SERVINFO(void) {
 		return (false);
 
 	}
-
-	// End Function
-	return (false);
 	
 }
 bool GE910::AT_CTZU(uint8_t _Ctzu) {
-	
-	
+
 	// Clear Response Variable
 	memset(Command_Response, 0, sizeof(Command_Response));
 
@@ -3024,7 +2736,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(15, 1000)) {
+	if (Response_Wait(17, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -3041,19 +2753,8 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -3111,9 +2812,6 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_NTP(char *_NTP_Server) {
 	
@@ -3151,16 +2849,19 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 	UART_IoT.flush();
 	
 	// Declare Variables
-	uint8_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
+	uint16_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
 	
 	// Handle Response
-	if (Response_Wait(_Response_Length, 10000)) {
+	if (Response_Wait(19, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
 
 		// Declare Response Variable
 		char _Response[UART_IoT.available()];
+		
+		// Request Delay
+		delay(3000);
 		
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
@@ -3171,19 +2872,8 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -3240,29 +2930,16 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 				// End Function
 				return (true);
 
-			} else if (strstr(_Response, "+CME ERROR: 563") != NULL) {
-				
-				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
-
-				// Set Control Variable
-				Control.AT_NTP = false;
-
-				// End Function
-				return (false);
-				
-			} else {
-
-				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
-
-				// Set Control Variable
-				Control.AT_NTP = false;
-
-				// End Function
-				return (false);
-
 			}
+
+			// Set Response Variable
+			strcpy(Command_Response, (char*)NOT_OK);
+
+			// Set Control Variable
+			Control.AT_NTP = false;
+
+			// End Function
+			return (false);
 
 		} else {
 
@@ -3290,9 +2967,6 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 
 	}
 
-	// End Function
-	return (false);
-		
 }
 bool GE910::AT_CCLK(void) {
 	
@@ -3344,19 +3018,8 @@ bool GE910::AT_CCLK(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -3452,16 +3115,13 @@ bool GE910::AT_CCLK(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPCFG Command
 	 *	Revision	: 02.00.01
-	 *	Command 	: AT#HTTPCFG=1,"xxx.xxx.xxx.xxx",80,0,"","",0,60,1\r\n ( byte)
+	 *	Command 	: AT#HTTPCFG=1,"xxx.xxx.xxx.xxx",80,0,"","",0,60,1\r\n (49 byte)
 	 *	Response	: AT#CCLK?\r\n\r\n#CCLK: "20/10/16,08:55:58+00.0"\r\n\r\nOK\r\n (51 byte)
 	 ******************************************************************************/
 
@@ -3514,19 +3174,8 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -3596,9 +3245,6 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 
 	}
 
-	// End Function
-	return (false);
-	
 }
 bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 	
@@ -3671,19 +3317,8 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -3735,13 +3370,13 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Increase Read Order
 				_Read_Order++;
 				
+				// Stream Delay
+				delay(1);
+
 			}
 
 			// Control for Command
 			if(strstr(_Response, ">>>") != NULL) {
-
-				// Set Control Variable
-				_Control = true;
 				
 				// Send Delay
 				delay(50);
@@ -3749,10 +3384,41 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Print Data
 				UART_IoT.print(Data);
 
-			} else {
+				// Send Delay
+				delay(50);
 
-				// Set Control Variable
-				_Control = false;
+				// Handle Response
+				if (Response_Wait(6, 5000)) {
+				
+					// Declare Read Order Variable
+					uint8_t _Read_Order = 0;
+
+					// Declare Response Variable
+					char _Response[UART_IoT.available()];
+					
+					// Read UART Response
+					while(UART_IoT.available() > 0) {
+
+						// Read Serial Char
+						_Response[_Read_Order] = UART_IoT.read();
+						
+						// Increase Read Order
+						_Read_Order++;
+						
+						// Stream Delay
+						delay(1);
+
+					}
+
+					// Control for Command
+					if(strstr(_Response, "\r\nOK\r\n") != NULL) {
+
+						// Set Control Variable
+						_Control = true;
+
+					}
+
+				}
 
 			}
 
@@ -3776,15 +3442,15 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 		// Handle Response
 		if (Response_Wait(40, 6000)) {
 
-			// UART Delay
-			delay(100);
-			
 			// Declare Read Order Variable
 			uint8_t _Read_Order = 0;
 
 			// Declare Response Variable
-			char _Response[UART_IoT.available()];
-			
+			char _Response[45];
+
+			// UART Delay
+			delay(100);
+
 			// Read UART Response
 			while(UART_IoT.available() > 0) {
 
@@ -3794,6 +3460,9 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Increase Read Order
 				_Read_Order++;
 				
+				// Stream Delay
+				delay(1);
+
 			}
 
 			// Control for Command
@@ -3818,7 +3487,7 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 		_Error_WD++;
 
 		// Handle for Error
-		if (_Error_WD >= 10) return(false);
+		if (_Error_WD >= 3) return(false);
 
 	}
 
@@ -3883,19 +3552,8 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Increase Read Order
 				_Read_Order++;
 				
-			}
-
-			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
+				// Stream Delay
 				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
 
 			}
 
@@ -4006,19 +3664,8 @@ bool GE910::AT_SHDN(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4082,9 +3729,6 @@ bool GE910::AT_SHDN(void) {
 
 	}
 
-	// End Function
-	return (false);
-	
 }
 bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 	
@@ -4128,7 +3772,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(22, 1000)) {
+	if (Response_Wait(24, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -4145,19 +3789,8 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4214,9 +3847,6 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 		return (false);
 
 	}
-
-	// End Function
-	return (false);
 
 }
 bool GE910::AT_FRWL(const String &_IP) {
@@ -4277,19 +3907,8 @@ bool GE910::AT_FRWL(const String &_IP) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4347,9 +3966,6 @@ bool GE910::AT_FRWL(const String &_IP) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_SA(void) {
 	
@@ -4384,7 +4000,7 @@ bool GE910::AT_SA(void) {
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(31, 1000)) {
+	if (Response_Wait(33, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -4404,35 +4020,28 @@ bool GE910::AT_SA(void) {
 			_Response[_Read_Order] = UART_IoT.read();
 			
 			// Handle Data
-			if (_Comma == true and _Read_Order > 20 and _Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
-				
-				// Get Data
-				_Incomming_Length[_Data_Order] = _Response[_Read_Order];
+			if (_Read_Order > 20) {
 
-				// Increase Data Order
-				_Data_Order++;
+				if (_Comma == true and _Response[_Read_Order] < 58 and _Response[_Read_Order] > 47) {
+					
+					// Get Data
+					_Incomming_Length[_Data_Order] = _Response[_Read_Order];
+
+					// Increase Data Order
+					_Data_Order++;
+
+				}
+
+				// Handle ,
+				if (_Response[_Read_Order] == 44 ) _Comma = true;
 
 			}
-
-			// Handle ,
-			if (_Response[_Read_Order] == 44 ) _Comma = true;
-
+			
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4480,9 +4089,6 @@ bool GE910::AT_SA(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_SRECV(void) {
 	
@@ -4516,8 +4122,14 @@ bool GE910::AT_SRECV(void) {
 	// Wait for UART Data Send
 	UART_IoT.flush();
 
+	// Declare Response Length Variable
+	uint16_t _Length = Socket_Incomming_Length + 41;
+	
+	// Command Delay
+	delay(30);
+	
 	// Handle Response
-	if (Response_Wait(156, 1000)) {
+	if (Response_Wait(_Length, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -4549,20 +4161,9 @@ bool GE910::AT_SRECV(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
+			
 		}
 
 		// Handle Update
@@ -4579,7 +4180,7 @@ bool GE910::AT_SRECV(void) {
 
 				// Set Control Variable
 				Control.AT_SRECV = true;
-				
+
 				// End Function
 				return (true);
 
@@ -4622,17 +4223,14 @@ bool GE910::AT_SRECV(void) {
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepalive) {
 	
 	/******************************************************************************
 	 *	Function	: AT SCFGEXT Command
 	 *	Revision	: 01.00.01
-	 *	Command		:
-	 *	Response	:
+	 *	Command		: AT#SCFGEXT=2,1,0,1\r\n (20 byte)
+	 *	Response	: AT#SCFGEXT=2,1,0,1\r\n\r\nOK\r\n (26 byte)
 	 ******************************************************************************/
 
 	// Command Chain Delay (Advice by Telit)
@@ -4685,19 +4283,8 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4755,9 +4342,6 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 
 	}
 
-	// End Function
-	return (false);
-
 }
 bool GE910::AT_SH(void) {
 	
@@ -4795,7 +4379,7 @@ bool GE910::AT_SH(void) {
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(15, 1000)) {
+	if (Response_Wait(15, 4000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -4812,19 +4396,8 @@ bool GE910::AT_SH(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -4882,8 +4455,115 @@ bool GE910::AT_SH(void) {
 
 	}
 
-	// End Function
-	return (false);
+}
+bool GE910::AT_E2SLRI(void) {
+		
+	/******************************************************************************
+	 *	Function	: AT E2SLRI Command
+	 *	Revision	: 01.00.01
+	 *	Command		:
+	 *	Response	:
+	 ******************************************************************************/
+
+	// Clear Response Variable
+	memset(Command_Response, 0, sizeof(Command_Response));
+
+	// Clear UART Buffer
+	while(UART_IoT.available() > 0) {
+	
+		// Read Buffer
+		char *_Buffer = (char*)UART_IoT.read();
+	
+		// Clear Delay
+		delay(1);
+
+		// Clear Buffer Variable
+		memset(_Buffer, 0, sizeof(_Buffer));
+
+	}
+
+	// Send UART Command
+	UART_IoT.print(F("AT#E2SLRI=1150\r\n"));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Handle Response
+	if (Response_Wait(21, 1000)) {
+
+		// Declare Read Order Variable
+		uint8_t _Read_Order = 0;
+
+		// Declare Response Variable
+		char _Response[UART_IoT.available()];
+		
+		// Read UART Response
+		while(UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+			
+			// Increase Read Order
+			_Read_Order++;
+			
+			// Stream Delay
+			delay(1);
+			
+		}
+
+		// Control for Command
+		if(strstr(_Response, "#E2SLRI=") != NULL) {
+
+			// Control for Response
+			if(strstr(_Response, "OK") != NULL) {
+
+				// Set Response Variable
+				strcpy(Command_Response, _Response);
+
+				// Set Control Variable
+				Control.AT_E2SLRI = true;
+				
+				// End Function
+				return (true);
+
+			} else {
+
+				// Set Response Variable
+				strcpy(Command_Response, (char*)NOT_OK);
+
+				// Set Control Variable
+				Control.AT_E2SLRI = false;
+
+				// End Function
+				return (false);
+
+			}
+
+		} else {
+
+			// Set Response Variable
+			strcpy(Command_Response, (char*)NOT_COMMAND);
+
+			// Set Control Variable
+			Control.AT_E2SLRI = false;
+
+			// End Function
+			return (false);
+
+		}
+
+	} else {
+
+		// Set Response Variable
+		strcpy(Command_Response, (char*)TIME_OUT);
+
+		// Set Control Variable
+		Control.AT_E2SLRI = false;
+
+		// End Function
+		return (false);
+
+	}
 
 }
 
@@ -4929,7 +4609,7 @@ bool GE910::Time_Update(void) {
 		_Error_WD++;
 
 		// Control for WD
-		if (_Error_WD > 5) break;
+		if (_Error_WD > 2) break;
 
 	}
 
@@ -4949,7 +4629,7 @@ bool GE910::Time_Update(void) {
 		_Error_WD++;
 
 		// Control for WD
-		if (_Error_WD > 5) break;
+		if (_Error_WD > 2) break;
 
 	}
 
@@ -5021,19 +4701,8 @@ bool GE910::Connection_Control(void) {
 			// Increase Read Order
 			_Read_Order++;
 			
-		}
-
-		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
+			// Stream Delay
 			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
 
 		}
 
@@ -5587,7 +5256,7 @@ bool GE910::Connection_AT_Batch(void) {
 bool GE910::Recieve_AT_Batch(void) {
 	
 	// ************************************************************
-	// 1- Socket Listen Command
+	// Socket Listen Command
 	// ************************************************************
 
 	// Declare WD Error Variable
@@ -5607,7 +5276,7 @@ bool GE910::Recieve_AT_Batch(void) {
 	}
 
 	// ************************************************************
-	// 2- Firewall Config Command
+	// Firewall Config Command
 	// ************************************************************
 
 	// Declare WD Error Variable
@@ -5617,6 +5286,26 @@ bool GE910::Recieve_AT_Batch(void) {
 		
 		// Process Command
 		AT_FRWL("213.14.250.214");
+		
+		// Set WD Variable
+		_Error_WD++;
+
+		// Control for WD
+		if (_Error_WD > 3) break;
+
+	}
+
+	// ************************************************************
+	// SL Ring Config Command
+	// ************************************************************
+
+	// Declare WD Error Variable
+	_Error_WD = 0;
+
+	while (!Control.AT_E2SLRI) {
+		
+		// Process Command
+		AT_E2SLRI();
 		
 		// Set WD Variable
 		_Error_WD++;
@@ -5714,7 +5403,7 @@ bool GE910::RSSI_Refresh(void) {
 		}
 
 		// Control for WD
-		if (_Error_WD > 5) break;
+		if (_Error_WD > 2) break;
 
 	}
 	
@@ -5725,7 +5414,7 @@ bool GE910::RSSI_Refresh(void) {
 	return(false);
 	
 }
-bool GE910::Listen(void) {
+void GE910::Listen(void) {
 
 	/******************************************************************************
 	 *	Function	: GSM UART Listen Function
@@ -5744,24 +5433,17 @@ bool GE910::Listen(void) {
 		// Declare Response Variable
 		char _Response[UART_IoT.available()];
 
-		// Handle Variable Defination
-		bool _Handle = false;
-
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
 
 			// Read Serial Char
 			_Response[_Read_Order] = UART_IoT.read();
 			
-			// Handle Response
-			if (_Response[_Read_Order] == 123) _Handle = true;
-			if (_Response[_Read_Order] == 125) _Handle = false;
-
-			// Response String
-			if (_Handle) Response += _Response[_Read_Order];
-
 			// Increase Read Order
 			_Read_Order++;
+
+			// Stream Delay
+			delay(1);
 
 		}
 
@@ -5770,56 +5452,103 @@ bool GE910::Listen(void) {
 
 		// Control for Response
 		if(strstr(_Response, "SRING: 2") != NULL) {
-			
+
+			// Reset Variable
+			Request = 0;
+
 			// Socket Answer Command
 			AT_SA();
 
 			// Socket Recieve Command
 			AT_SRECV();
+			
+			// Start Pump Command
+			if (strstr(Command_Response, "{\"Event\":256}") != NULL) Request = 256;
+			
+			// Stop Pump Command
+			if (strstr(Command_Response, "{\"Event\":257}") != NULL) Request = 257;
+			
+			// Update Data
+			if (strstr(Command_Response, "{\"Event\":262}") != NULL) Request = 262;
 
-			// Socket Close Command
+			// Close Socket Command
 			AT_SH();
 
-			// Process Command
+			// ReOpen Socket Command
 			AT_SL(2, true, 80);
-			
-			// Control for Command
-			if (strstr(Command_Response, "{\"Event\":256}") != NULL) {
-			
-				// P85 - Uzaktan Manuel Yıkama
-				// {"Request":{"Event":256}}
-
-				// Set Command
-				Request = 256;
-				
-			} else if (strstr(Command_Response, "{\"Event\":262}") != NULL) {
-
-				// P83 - Basınç Güncelleme
-				// {"Request":{"Event":262}}
-
-				// Set Command
-				Request = 262;
-
-			}
-
-			// End Function
-			return(true);
 
 		} else {
 
 			// Set Request Variable
 			Request = 0;
 
-			// End Function
-			return(false);
-
 		}
 				
 	}
-	
-	// End Function
-	return(false);
 
+}
+void GE910::Socket_Get_Command(void) {
+	
+	// Clear Response Variable
+	memset(Command_Response, 0, sizeof(Command_Response));
+
+	// Declare Read Order Variable
+	uint8_t _Read_Order = 0;
+
+	// Declare Response Variable
+	char _Response[UART_IoT.available()];
+
+	// Read UART Response
+	while(UART_IoT.available() > 0) {
+
+		// Read Serial Char
+		_Response[_Read_Order] = UART_IoT.read();
+		
+		// Increase Read Order
+		_Read_Order++;
+
+		// Stream Delay
+		delay(1);
+
+	}
+
+	// Set Response Variable
+	strcpy(Command_Response, _Response);
+
+	// Control for Response
+	if(strstr(_Response, "SRING: 2") != NULL) {
+
+		// Reset Variable
+		Request = 0;
+
+		// Socket Answer Command
+		AT_SA();
+
+		// Socket Recieve Command
+		AT_SRECV();
+		
+		// Start Pump Command
+		if (strstr(Command_Response, "{\"Event\":256}") != NULL) Request = 256;
+		
+		// Stop Pump Command
+		if (strstr(Command_Response, "{\"Event\":257}") != NULL) Request = 257;
+		
+		// Update Data
+		if (strstr(Command_Response, "{\"Event\":262}") != NULL) Request = 262;
+
+		// Close Socket Command
+		AT_SH();
+
+		// ReOpen Socket Command
+		AT_SL(2, true, 80);
+
+	} else {
+
+		// Set Request Variable
+		Request = 0;
+
+	}
+	
 }
 
 // Hardware Functions
