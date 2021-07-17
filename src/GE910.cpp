@@ -4205,7 +4205,7 @@ bool GE910::AT_E2SLRI(void) {
 }
 
 // Utility Functions
-bool GE910::Response_Wait(uint16_t _Length, uint16_t _TimeOut) {
+bool GE910::Response_Wait(uint16_t _Length, uint32_t _TimeOut) {
 	
 	// Read Current Time
 	uint32_t _Time = millis();
