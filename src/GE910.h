@@ -243,7 +243,7 @@ private:
 	bool Recieve_AT_Batch(void);
 		
 	// Utility Functions
-	bool Response_Wait(uint16_t _Length, uint16_t _TimeOut);
+	bool Response_Wait(uint16_t _Length, uint32_t _TimeOut);
 
 };
 
