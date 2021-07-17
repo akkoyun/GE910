@@ -5778,4 +5778,6 @@ bool GE910::Activate(bool Status) {
 	
 }
 
+GE910 GSM;
+
 // 1903
