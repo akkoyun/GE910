@@ -25,15 +25,7 @@ bool GE910::AT(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT\r\n"));
@@ -137,18 +129,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+CMEE=")); UART_IoT.print(String(_CMEE)); UART_IoT.print(F("\r\n"));
@@ -252,18 +233,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+FCLASS=")); UART_IoT.print(String(_FCLASS)); UART_IoT.print(F("\r\n"));
@@ -367,18 +337,7 @@ bool GE910::AT_K(uint8_t _K) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT&K")); UART_IoT.print(String(_K)); UART_IoT.print(F("\r\n"));
@@ -480,18 +439,7 @@ bool GE910::AT_CPIN(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+CPIN?\r\n"));
@@ -607,18 +555,7 @@ bool GE910::AT_CCID(void) {
 		memset(Command_Response, 0, sizeof(Command_Response));
 
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT#CCID\r\n"));
@@ -747,18 +684,7 @@ bool GE910::AT_CGSN(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+CGSN\r\n"));
@@ -874,18 +800,7 @@ bool GE910::AT_GSN(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+GSN\r\n"));
@@ -1003,18 +918,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SLED=")); UART_IoT.print(String(_SLED)); UART_IoT.print(F("\r\n"));
@@ -1118,18 +1022,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#TXMONMODE=")); UART_IoT.print(String(_TXMONMODE)); UART_IoT.print(F("\r\n"));
@@ -1231,18 +1124,7 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#REGMODE=")); UART_IoT.print(String(_REGMODE)); UART_IoT.print(F("\r\n"));
@@ -1358,18 +1240,7 @@ bool GE910::AT_CREG(void) {
 	while (!_Control) {
 	
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT+CREG=1\r\n"));
@@ -1624,18 +1495,7 @@ bool GE910::AT_CGREG(void) {
 		while (!_Control) {
 		
 			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
-				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
-
-			}
+			while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 			// Send UART Command
 			UART_IoT.print(F("AT+CGREG=1\r\n"));
@@ -1878,18 +1738,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 		memset(Command_Response, 0, sizeof(Command_Response));
 
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT+CGDCONT=1,\""));
@@ -2004,18 +1853,7 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 		memset(Command_Response, 0, sizeof(Command_Response));
 
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT#SCFG="));
@@ -2148,18 +1986,7 @@ bool GE910::AT_SGACT(void) {
 		while (_Control == false) {
 
 			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
-				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
-
-			}
+			while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 			// Send UART Command
 			UART_IoT.print(F("AT#SGACT=1,0"));
@@ -2237,18 +2064,7 @@ bool GE910::AT_SGACT(void) {
 		while (_Control == false) {
 		
 			// Clear UART Buffer
-			while(UART_IoT.available() > 0) {
-			
-				// Read Buffer
-				char *_Buffer = (char*)UART_IoT.read();
-			
-				// Clear Delay
-				delay(1);
-
-				// Clear Buffer Variable
-				memset(_Buffer, 0, sizeof(_Buffer));
-
-			}
+			while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 			// Send UART Command
 			UART_IoT.print(F("AT#SGACT=1,1"));
@@ -2449,18 +2265,7 @@ bool GE910::AT_CSQ(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+CSQ\r\n"));
@@ -2573,18 +2378,7 @@ bool GE910::AT_SERVINFO(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SERVINFO\r\n"));
@@ -2713,18 +2507,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT+CTZU=")); UART_IoT.print(String(_Ctzu)); UART_IoT.print(F("\r\n"));
@@ -2824,18 +2607,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#NTP=\""));
@@ -2978,18 +2750,7 @@ bool GE910::AT_CCLK(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#CCLK?\r\n"));
@@ -3126,18 +2887,7 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#HTTPCFG=1,\""));
@@ -3269,18 +3019,7 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 	while (_Control == false) {
 	
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT#HTTPSND=1,0,\"")); // 16
@@ -3496,18 +3235,7 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 	while (_Control == false) {
 	
 		// Clear UART Buffer
-		while(UART_IoT.available() > 0) {
-		
-			// Read Buffer
-			char *_Buffer = (char*)UART_IoT.read();
-		
-			// Clear Delay
-			delay(1);
-
-			// Clear Buffer Variable
-			memset(_Buffer, 0, sizeof(_Buffer));
-
-		}
+		while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 		// Send UART Command
 		UART_IoT.print(F("AT#HTTPRCV=1\r\n"));
@@ -3624,18 +3352,7 @@ bool GE910::AT_SHDN(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SHDN\r\n"));
@@ -3743,18 +3460,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SL="));
@@ -3862,18 +3568,7 @@ bool GE910::AT_FRWL(const String &_IP) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#FRWL=1,\""));
@@ -3977,18 +3672,7 @@ bool GE910::AT_SA(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SA=2,1\r\n"));
@@ -4098,18 +3782,7 @@ bool GE910::AT_SRECV(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SRECV=2,"));
@@ -4237,18 +3910,7 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SCFGEXT=2,"));
@@ -4356,18 +4018,7 @@ bool GE910::AT_SH(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SH=2\r\n"));
@@ -4466,18 +4117,7 @@ bool GE910::AT_E2SLRI(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-	
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-	
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#E2SLRI=1150\r\n"));
@@ -4661,18 +4301,7 @@ bool GE910::Connection_Control(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while(UART_IoT.available() > 0) {
-
-		// Read Buffer
-		char *_Buffer = (char*)UART_IoT.read();
-
-		// Clear Delay
-		delay(1);
-
-		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
-
-	}
+	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT#SGACT?\r\n"));
