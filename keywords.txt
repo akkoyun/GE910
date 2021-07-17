@@ -6,63 +6,86 @@
 # Datatypes (KEYWORD1)
 #######################################
 GE910						KEYWORD1
+GSM							KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
+LED							KEYWORD2
+Communication				KEYWORD2
+Power						KEYWORD2
+OnOff						KEYWORD2
+ShutDown					KEYWORD2
+PowerMonitor				KEYWORD2
 AT							KEYWORD2
 AT_CMEE						KEYWORD2
 AT_FCLASS					KEYWORD2
 AT_K						KEYWORD2
-AT_CGSN						KEYWORD2
-AT_GSN						KEYWORD2
 AT_CPIN						KEYWORD2
 AT_CCID						KEYWORD2
-AT_CNUM						KEYWORD2
+AT_CGSN						KEYWORD2
+AT_GSN						KEYWORD2
+AT_SLED						KEYWORD2
+AT_TXMONMODE				KEYWORD2
 AT_REGMODE					KEYWORD2
 AT_CREG						KEYWORD2
 AT_CGREG					KEYWORD2
 AT_CGDCONT					KEYWORD2
 AT_SCFG						KEYWORD2
 AT_SGACT					KEYWORD2
+AT_CSQ						KEYWORD2
 AT_SERVINFO					KEYWORD2
-AT_SLED						KEYWORD2
-AT_TXMONMODE				KEYWORD2
 AT_CCLK						KEYWORD2
 AT_NTP						KEYWORD2
-AT_CSQ						KEYWORD2
 AT_CTZU						KEYWORD2
 AT_HTTPCFG					KEYWORD2
 AT_HTTPSND					KEYWORD2
-Module_ON					KEYWORD2
-Phone_Number				KEYWORD2
-UART_Clear					KEYWORD2
-Response_Wait				KEYWORD2
-Connect						KEYWORD2
+AT_SL						KEYWORD2
+AT_FRWL						KEYWORD2
+AT_SA						KEYWORD2
+AT_SH						KEYWORD2
+AT_SHDN						KEYWORD2
+AT_SRECV					KEYWORD2
+AT_SCFGEXT					KEYWORD2
+AT_E2SLRI					KEYWORD2
 Time_Update					KEYWORD2
+Connection_Control			KEYWORD2
+Connect						KEYWORD2
+Send						KEYWORD2
+RSSI_Refresh				KEYWORD2
+Listen						KEYWORD2
+Socket_Get_Command			KEYWORD2
+Activate					KEYWORD2
 		
 #######################################
 # Constants (LITERAL1)
 #######################################
-Firmware					LITERAL1
+Version						LITERAL1
 ID							LITERAL1
 IMEI						LITERAL1
 ICCID						LITERAL1
 IP							LITERAL1
 Operator					LITERAL1
 RSSI						LITERAL1
-dBM							LITERAL1
 Day							LITERAL1
 Month						LITERAL1
 Year						LITERAL1
 Hour						LITERAL1
 Minute						LITERAL1
 Second						LITERAL1
-Connected					LITERAL1
-PHONE						LITERAL1
-Device_Error				LITERAL1
 PwrMon						LITERAL1
 CREG						LITERAL1
 CGREG						LITERAL1
-Time_Updated				LITERAL1
-Recorded					LITERAL1
+SGACT						LITERAL1
+Connected					LITERAL1
+HTTP_CFG					LITERAL1
+Server_Response				LITERAL1
+Response					LITERAL1
+Connection_Time				LITERAL1
+RTC_Update					LITERAL1
+Command_Response			LITERAL1
+Message						LITERAL1
+Request						LITERAL1
+Socket_Incomming_Length		LITERAL1
+Parameter					LITERAL1
+Control						LITERAL1
