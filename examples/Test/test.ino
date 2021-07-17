@@ -1,9 +1,6 @@
 // Define Ovoo Libraries
 #include "GE910.h"
 
-// Define Object
-GE910 GSM;
-
 void setup() {
  
  
