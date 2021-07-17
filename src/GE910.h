@@ -38,7 +38,7 @@ public:
 	// Time Variables
 	uint8_t 				Day						= 29;				// Day Variable
 	uint8_t 				Month					= 10;				// Month Variable
-	uint8_t 				Year					= 1923;				// Year Variable
+	uint16_t 				Year					= 1923;				// Year Variable
 	uint8_t 				Hour					= 0;				// Hour Variable
 	uint8_t 				Minute					= 0;				// Minute Variable
 	uint8_t 				Second					= 0;				// Second Variable

@@ -34,7 +34,7 @@ bool GE910::AT(void) {
 		delay(1);
 
 		// Clear Buffer Variable
-		memset(_Buffer, 0, sizeof(_Buffer));
+		//memset(_Buffer, 0, sizeof(_Buffer));
 
 	}
 

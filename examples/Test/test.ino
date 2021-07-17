@@ -4,9 +4,6 @@
 // Define Object
 GE910 GSM;
 
-// Define UART Names
-#define UART_IoT    Serial1
-
 void setup() {
  
  
