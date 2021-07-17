@@ -4211,7 +4211,7 @@ bool GE910::Response_Wait(uint16_t _Length, uint32_t _TimeOut) {
 	uint32_t _Time = millis();
 
 	// Wait for UART Available
-	while (UART_IoT.available() < _Length) {
+	while ((uint16_t)UART_IoT.available() < _Length) {
 		
 		// Wait delay
 		delay(1);
