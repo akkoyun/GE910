@@ -1326,7 +1326,7 @@ bool GE910::AT_CREG(void) {
 	while (!_Control) {
 	
 		// Handle Response
-		if (Response_Wait(12, 300000)) {
+		if (Response_Wait(12, (uint32_t)300000)) {
 
 			// Declare Read Order Variable
 			uint8_t _Read_Order = 0;
@@ -2618,7 +2618,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 	UART_IoT.flush();
 	
 	// Declare Variables
-	uint16_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
+	//uint16_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
 	
 	// Handle Response
 	if (Response_Wait(19, 1000)) {
