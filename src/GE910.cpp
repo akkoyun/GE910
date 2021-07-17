@@ -74,7 +74,7 @@ bool GE910::AT(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, NOT_OK);
 
 				// Set Control Variable
 				Control.AT = false;
@@ -87,7 +87,7 @@ bool GE910::AT(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, NOT_COMMAND);
 
 			// Set Control Variable
 			Control.AT = false;
