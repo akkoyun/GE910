@@ -1954,6 +1954,9 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _C
 
 	}
 
+	// End Function
+	return (false);
+
 }
 bool GE910::AT_SGACT(void) {
 	
@@ -2500,6 +2503,9 @@ bool GE910::AT_SERVINFO(void) {
 
 	}
 	
+	// End Function
+	return (false);
+
 }
 bool GE910::AT_CTZU(uint8_t _Ctzu) {
 
