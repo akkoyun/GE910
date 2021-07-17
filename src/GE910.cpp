@@ -4883,7 +4883,10 @@ bool GE910::Connection_AT_Batch(void) {
 		}
 
 	}
-	
+
+	// End Function
+	return(false);
+
 }
 bool GE910::Recieve_AT_Batch(void) {
 	
@@ -5408,6 +5411,9 @@ bool GE910::Activate(bool Status) {
 		
 	}
 	
+	// End Function
+	return(false);
+
 }
 
 GE910 GSM;
