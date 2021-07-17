@@ -28,8 +28,11 @@ bool GE910::AT(void) {
 	while(UART_IoT.available() > 0) {
 	
 		// Read Buffer
-		char * _Buffer = (char)*UART_IoT.read();
+		uint8_t _Buffer = UART_IoT.read();
 	
+		// Clear Buffer
+		_Buffer = "";
+		
 		// Clear Delay
 		delay(1);
 
