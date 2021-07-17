@@ -74,7 +74,7 @@ bool GE910::AT(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT = false;
@@ -100,7 +100,7 @@ bool GE910::AT(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT = false;
@@ -178,7 +178,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_CMEE = false;
@@ -191,7 +191,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CMEE = false;
@@ -204,7 +204,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CMEE = false;
@@ -282,7 +282,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_FCLASS = false;
@@ -295,7 +295,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_FCLASS = false;
@@ -308,7 +308,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_FCLASS = false;
@@ -386,7 +386,7 @@ bool GE910::AT_K(uint8_t _K) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_K = false;
@@ -399,7 +399,7 @@ bool GE910::AT_K(uint8_t _K) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_K = false;
@@ -412,7 +412,7 @@ bool GE910::AT_K(uint8_t _K) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_K = false;
@@ -499,7 +499,7 @@ bool GE910::AT_CPIN(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_CPIN = false;
@@ -512,7 +512,7 @@ bool GE910::AT_CPIN(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CPIN = false;
@@ -525,7 +525,7 @@ bool GE910::AT_CPIN(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CPIN = false;
@@ -618,7 +618,7 @@ bool GE910::AT_CCID(void) {
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_OK);
+					strcpy(Command_Response, "0");
 
 					// Set Control Variable
 					Control.AT_CCID = false;
@@ -631,7 +631,7 @@ bool GE910::AT_CCID(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_COMMAND);
+				strcpy(Command_Response, "1");
 
 				// Set Control Variable
 				Control.AT_CCID = false;
@@ -644,7 +644,7 @@ bool GE910::AT_CCID(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)TIME_OUT);
+			strcpy(Command_Response, "2");
 
 			// Set Control Variable
 			Control.AT_CCID = false;
@@ -747,7 +747,7 @@ bool GE910::AT_CGSN(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_CGSN = false;
@@ -760,7 +760,7 @@ bool GE910::AT_CGSN(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CGSN = false;
@@ -773,7 +773,7 @@ bool GE910::AT_CGSN(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CGSN = false;
@@ -863,7 +863,7 @@ bool GE910::AT_GSN(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_GSN = false;
@@ -876,7 +876,7 @@ bool GE910::AT_GSN(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_GSN = false;
@@ -889,7 +889,7 @@ bool GE910::AT_GSN(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_GSN = false;
@@ -967,7 +967,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SLED = false;
@@ -980,7 +980,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SLED = false;
@@ -993,7 +993,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SLED = false;
@@ -1071,7 +1071,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_TXMONMODE = false;
@@ -1084,7 +1084,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_TXMONMODE = false;
@@ -1097,7 +1097,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_TXMONMODE = false;
@@ -1173,7 +1173,7 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_REGMODE = false;
@@ -1186,7 +1186,7 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_REGMODE = false;
@@ -1199,7 +1199,7 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_REGMODE = false;
@@ -1792,7 +1792,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_OK);
+					strcpy(Command_Response, "0");
 
 					// Set Control Variable
 					Control.AT_CGDCONT = false;
@@ -1805,7 +1805,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_COMMAND);
+				strcpy(Command_Response, "1");
 
 				// Set Control Variable
 				Control.AT_CGDCONT = false;
@@ -1818,7 +1818,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)TIME_OUT);
+			strcpy(Command_Response, "2");
 
 			// Set Control Variable
 			Control.AT_CGDCONT = false;
@@ -1913,7 +1913,7 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_OK);
+					strcpy(Command_Response, "0");
 
 					// Set Control Variable
 					Control.AT_SCFG1 = false;
@@ -1927,7 +1927,7 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_COMMAND);
+				strcpy(Command_Response, "1");
 
 				// Set Control Variable
 				Control.AT_SCFG1 = false;
@@ -1941,7 +1941,7 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _Co
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)TIME_OUT);
+			strcpy(Command_Response, "2");
 
 			// Set Control Variable
 			Control.AT_SCFG1 = false;
@@ -2027,14 +2027,14 @@ bool GE910::AT_SGACT(void) {
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_COMMAND);
+					strcpy(Command_Response, "1");
 
 				}
 
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)TIME_OUT);
+				strcpy(Command_Response, "2");
 
 			}
 			
@@ -2105,14 +2105,14 @@ bool GE910::AT_SGACT(void) {
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_COMMAND);
+					strcpy(Command_Response, "1");
 
 				}
 
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)TIME_OUT);
+				strcpy(Command_Response, "2");
 
 			}
 
@@ -2211,7 +2211,7 @@ bool GE910::AT_SGACT(void) {
 				} else {
 
 					// Set Response Variable
-					strcpy(Command_Response, (char*)NOT_COMMAND);
+					strcpy(Command_Response, "1");
 
 					// Set Control Variable
 					Control.AT_SGACT = false;
@@ -2227,7 +2227,7 @@ bool GE910::AT_SGACT(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)TIME_OUT);
+				strcpy(Command_Response, "2");
 
 				// Set Control Variable
 				Control.AT_SGACT = false;
@@ -2338,7 +2338,7 @@ bool GE910::AT_CSQ(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CSQ = false;
@@ -2351,7 +2351,7 @@ bool GE910::AT_CSQ(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CSQ = false;
@@ -2477,7 +2477,7 @@ bool GE910::AT_SERVINFO(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SERVINFO = false;
@@ -2490,7 +2490,7 @@ bool GE910::AT_SERVINFO(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SERVINFO = false;
@@ -2556,7 +2556,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_CTZU = false;
@@ -2569,7 +2569,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CTZU = false;
@@ -2582,7 +2582,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CTZU = false;
@@ -2702,7 +2702,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 			}
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_OK);
+			strcpy(Command_Response, "0");
 
 			// Set Control Variable
 			Control.AT_NTP = false;
@@ -2713,7 +2713,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_NTP = false;
@@ -2726,7 +2726,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_NTP = false;
@@ -2837,7 +2837,7 @@ bool GE910::AT_CCLK(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_CCLK = false;
@@ -2850,7 +2850,7 @@ bool GE910::AT_CCLK(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_CCLK = false;
@@ -2863,7 +2863,7 @@ bool GE910::AT_CCLK(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_CCLK = false;
@@ -2947,7 +2947,7 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_HTTPCFG = false;
@@ -2963,7 +2963,7 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_HTTPCFG = false;
@@ -2979,7 +2979,7 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_HTTPCFG = false;
@@ -3407,7 +3407,7 @@ bool GE910::AT_SHDN(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SHDN = false;
@@ -3420,7 +3420,7 @@ bool GE910::AT_SHDN(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SHDN = false;
@@ -3433,7 +3433,7 @@ bool GE910::AT_SHDN(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SHDN = false;
@@ -3515,7 +3515,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SL = false;
@@ -3528,7 +3528,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SL = false;
@@ -3541,7 +3541,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SL = false;
@@ -3622,7 +3622,7 @@ bool GE910::AT_FRWL(const String &_IP) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_FRWL = false;
@@ -3635,7 +3635,7 @@ bool GE910::AT_FRWL(const String &_IP) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_FRWL = false;
@@ -3648,7 +3648,7 @@ bool GE910::AT_FRWL(const String &_IP) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_FRWL = false;
@@ -3747,7 +3747,7 @@ bool GE910::AT_SA(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_OK);
+			strcpy(Command_Response, "0");
 
 			// Set Control Variable
 			Control.AT_SA = false;
@@ -3760,7 +3760,7 @@ bool GE910::AT_SA(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SA = false;
@@ -3857,7 +3857,7 @@ bool GE910::AT_SRECV(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SRECV = false;
@@ -3870,7 +3870,7 @@ bool GE910::AT_SRECV(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SRECV = false;
@@ -3883,7 +3883,7 @@ bool GE910::AT_SRECV(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SRECV = false;
@@ -3965,7 +3965,7 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SCFGEXT = false;
@@ -3978,7 +3978,7 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SCFGEXT = false;
@@ -3991,7 +3991,7 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SCFGEXT = false;
@@ -4067,7 +4067,7 @@ bool GE910::AT_SH(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SH = false;
@@ -4080,7 +4080,7 @@ bool GE910::AT_SH(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SH = false;
@@ -4093,7 +4093,7 @@ bool GE910::AT_SH(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SH = false;
@@ -4166,7 +4166,7 @@ bool GE910::AT_E2SLRI(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_E2SLRI = false;
@@ -4179,7 +4179,7 @@ bool GE910::AT_E2SLRI(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_E2SLRI = false;
@@ -4192,7 +4192,7 @@ bool GE910::AT_E2SLRI(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_E2SLRI = false;
@@ -4373,7 +4373,7 @@ bool GE910::Connection_Control(void) {
 			} else {
 
 				// Set Response Variable
-				strcpy(Command_Response, (char*)NOT_OK);
+				strcpy(Command_Response, "0");
 
 				// Set Control Variable
 				Control.AT_SGACT = false;
@@ -4386,7 +4386,7 @@ bool GE910::Connection_Control(void) {
 		} else {
 
 			// Set Response Variable
-			strcpy(Command_Response, (char*)NOT_COMMAND);
+			strcpy(Command_Response, "1");
 
 			// Set Control Variable
 			Control.AT_SGACT = false;
@@ -4399,7 +4399,7 @@ bool GE910::Connection_Control(void) {
 	} else {
 
 		// Set Response Variable
-		strcpy(Command_Response, (char*)TIME_OUT);
+		strcpy(Command_Response, "2");
 
 		// Set Control Variable
 		Control.AT_SGACT = false;
