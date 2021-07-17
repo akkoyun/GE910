@@ -204,7 +204,7 @@ public:
 	bool AT_CREG(void);
 	bool AT_CGREG(void);
 	bool AT_CGDCONT(char *_PDP, char *_APN);
-	bool AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _ConnTo, uint8_t _TxTo);
+	bool AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _ConnTo, uint8_t _TxTo);
 	bool AT_SGACT(void);
 	bool AT_CSQ(void);
 	bool AT_SERVINFO(void);

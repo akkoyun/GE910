@@ -1834,7 +1834,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 	return (false);
 
 }
-bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint8_t _ConnTo, uint8_t _TxTo) {
+bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _ConnTo, uint8_t _TxTo) {
 	
 	/******************************************************************************
 	 *	Function	: AT SCFG Command
@@ -4214,7 +4214,7 @@ bool GE910::Response_Wait(uint16_t _Length, uint32_t _TimeOut) {
 	while ((uint16_t)UART_IoT.available() < _Length) {
 		
 		// Wait delay
-		delay(1);
+		delay(3);
 		
 		// Handle for timeout
 		if (millis() - _Time >= _TimeOut) return(false);
@@ -4770,7 +4770,7 @@ bool GE910::Connection_AT_Batch(void) {
 			while (!Control.AT_SCFG2) {
 				
 				// Process Command
-				AT_SCFG(2, 0, 0, 400, 0);
+				AT_SCFG((uint8_t)2, (uint8_t)0, (uint8_t)0, (uint16_t)400, (uint8_t)0);
 				
 				// Set WD Variable
 				_Error_WD++;
