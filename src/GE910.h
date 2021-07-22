@@ -44,7 +44,7 @@ public:
 	uint8_t 				Second					= 0;				// Second Variable
 	
 	// Control Variables
-	bool					PwrMon					= NOT_POWERED;		// Power Monitor Test Variable
+	bool					PwrMon					= false;			// Power Monitor Test Variable
 	uint8_t					CREG					= NOT_REGISTERED;	// CREG Test Variable
 	uint8_t					CGREG					= NOT_REGISTERED;	// CGREG Test Variable
 	uint8_t					SGACT					= 0;				// SGACT Test Variable
