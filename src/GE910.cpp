@@ -2599,7 +2599,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 	}
 
 }
-bool GE910::AT_NTP(char *_NTP_Server) {
+bool GE910::AT_NTP(String _NTP_Server) {
 	
 	/******************************************************************************
 	 *	Function	: AT NTP Command
@@ -2624,19 +2624,16 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 	UART_IoT.flush();
 	
 	// Declare Variables
-	//uint16_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
+	uint16_t _Response_Length = 50 + String(Parameter.NTP_Server).length();
 	
 	// Handle Response
-	if (Response_Wait(19, 1000)) {
+	if (Response_Wait(_Response_Length, 3000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
 
 		// Declare Response Variable
 		char _Response[UART_IoT.available()];
-		
-		// Request Delay
-		delay(3000);
 		
 		// Read UART Response
 		while(UART_IoT.available() > 0) {
@@ -2648,7 +2645,7 @@ bool GE910::AT_NTP(char *_NTP_Server) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(2);
 
 		}
 
@@ -2880,7 +2877,7 @@ bool GE910::AT_CCLK(void) {
 	}
 
 }
-bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
+bool GE910::AT_HTTPCFG(String _HTTP_Server, uint8_t _Port) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPCFG Command
@@ -2999,7 +2996,7 @@ bool GE910::AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port) {
 	}
 
 }
-bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
+bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPSND Command
@@ -3203,7 +3200,7 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -3216,6 +3213,14 @@ bool GE910::AT_HTTPSND(char *_URL, const String &Data) {
 				// Send Delay
 				delay(50);
 				
+			} else if (strstr(_Response, "500") != NULL) {
+
+				// Set Control Variable
+				_Control = true;
+				
+				// Send Delay
+				delay(50);
+
 			} else {
 
 				// Set Control Variable

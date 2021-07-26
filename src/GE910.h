@@ -29,10 +29,10 @@ public:
 
 	// IoT Variables
 	char 					ID[11]					= "";				// ID Variable
-	char 					IMEI[17]				= "";				// IMEI Variable
+	char 					IMEI[17]					= "";				// IMEI Variable
 	char 					ICCID[21]				= "";				// ICCID Variable
 	char 					IP[15]					= "";				// IP Variable
-	int 					Operator				= 0;				// Operator Variable
+	int 						Operator				= 0;				// Operator Variable
 	uint8_t					RSSI					= 0;				// RSSI Variable
 
 	// Time Variables
@@ -44,20 +44,20 @@ public:
 	uint8_t 				Second					= 0;				// Second Variable
 	
 	// Control Variables
-	bool					PwrMon					= false;			// Power Monitor Test Variable
+	bool						PwrMon					= false;			// Power Monitor Test Variable
 	uint8_t					CREG					= NOT_REGISTERED;	// CREG Test Variable
 	uint8_t					CGREG					= NOT_REGISTERED;	// CGREG Test Variable
 	uint8_t					SGACT					= 0;				// SGACT Test Variable
 	bool 					Connected				= NOT_CONNECTED;	// Connected Test Variable
-	bool					HTTP_CFG				= false;			// HTTPCFG Variable
+	bool						HTTP_CFG				= false;			// HTTPCFG Variable
 	int						Server_Response 		= 0;				// Server Response Variable
 	String					Response				= "";
 	uint8_t					Connection_Time			= 0;				// CREG and CGREG time Variable
-	bool					RTC_Update				= false;
+	bool						RTC_Update				= false;
 	
 	// New Versipn Variables
-	char					Command_Response[255]	= "";				// Full Command Response
-	bool					Message					= false;			// Incomming Message Variable
+	char						Command_Response[255]	= "";				// Full Command Response
+	bool						Message					= false;			// Incomming Message Variable
 	int						Request					= 0;				// Server Request Variable
 	int						Socket_Incomming_Length = 0;
 
@@ -99,15 +99,15 @@ public:
 		uint8_t 			TXMONMODE;			// Set Tx LED Software Control (1)
 		uint8_t 			REGMODE;			//
 		char 				PDP[3];				// Set PDP Variable (IP)
-		char 				APN[15];			// Set APN Variable (internet/statikip)
+		char 				APN[15];				// Set APN Variable (internet/statikip)
 		uint8_t 			PktSz;				// Set PktSz Variable (0-Auto)
 		uint8_t 			MaxTo;				// Set MaxTo Variable (0-No Timeout)
 		uint8_t 			ConnTo;				// Set ConnTo Variable (150 nS)
 		uint8_t 			TxTo;				// Set TxTo Variable (0-No Timeout)
 		uint8_t 			Ctzu;				//
-		char 				NTP_Server[15];		// Set NTP Server Variable (NASA)
-		char 				HTTP_Server[20];	// Cloud Server IP
-		char 				HTTP_URL[18];		// Cloud Server URL
+		String 				NTP_Server;			// Set NTP Server Variable (NASA)
+		String 				HTTP_Server;		// Cloud Server IP
+		String 				HTTP_URL;			// Cloud Server URL
 		uint8_t 			HTTP_Port;			// Cloud Server Port
 		uint8_t				srMode;
 		uint8_t				recvDataMode;
@@ -125,12 +125,12 @@ public:
 		"mgbs",									// (APN) Set APN Variable (internet/statikip/mgbs)
 		0,										// (PktSz) Set PktSz Variable (0-Auto)
 		0,										// (MaxTo) Set MaxTo Variable (0-No Timeout)
-		150,									// (ConnTo) Set ConnTo Variable (150 nS)
+		150,										// (ConnTo) Set ConnTo Variable (150 nS)
 		0,										// (TxTo) Set TxTo Variable (0-No Timeout)
 		1,										// (CTZU)
-		"85.199.214.98",						// (NTP_Server) Set NTP Server Variable (NASA)
-		"54.216.226.171",						// (HTTP_Server) Cloud Server IP
-		"/api/v1.0/p401",						// (HTTP_URL) Cloud Server URL
+		"85.199.214.98",							// (NTP_Server) Set NTP Server Variable (NASA)
+		"54.216.226.171",							// (HTTP_Server) Cloud Server IP
+		"/api/v1.0/p401",							// (HTTP_URL) Cloud Server URL
 		80,										// (HTTP_Port) Cloud Server Port
 		1,
 		0,
@@ -209,10 +209,10 @@ public:
 	bool AT_CSQ(void);
 	bool AT_SERVINFO(void);
 	bool AT_CCLK(void);
-	bool AT_NTP(char *_NTP_Server);
+	bool AT_NTP(String _NTP_Server);
 	bool AT_CTZU(uint8_t _Ctzu);
-	bool AT_HTTPCFG(char *_HTTP_Server, uint8_t _Port);
-	bool AT_HTTPSND(char *_URL, const String &Data);
+	bool AT_HTTPCFG(String _HTTP_Server, uint8_t _Port);
+	bool AT_HTTPSND(String _URL, const String &Data);
 	bool AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port);
 	bool AT_FRWL(const String &_IP);
 	bool AT_SA(void);
