@@ -130,7 +130,7 @@ public:
 		1,										// (CTZU)
 		"85.199.214.98",							// (NTP_Server) Set NTP Server Variable (NASA)
 		"54.216.226.171",							// (HTTP_Server) Cloud Server IP
-		"/api/v1.0/p401",							// (HTTP_URL) Cloud Server URL
+		"/api/v1.1/p401",							// (HTTP_URL) Cloud Server URL
 		80,										// (HTTP_Port) Cloud Server Port
 		1,
 		0,
