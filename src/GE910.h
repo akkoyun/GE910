@@ -92,26 +92,26 @@ public:
 	// ************************************************************************************************************************
 	struct Parameter_Struct {
 		//------------------------------------------------------------------
-		uint8_t 			CMEE;				// Set Numeric Error Format (1)
-		uint8_t				FCLASS;				// Set Data Connection (0)
-		uint8_t 			K;					// Set Flow Control (0)
-		uint8_t 			SLED;				// Set Status LED Software Control (2)
-		uint8_t 			TXMONMODE;			// Set Tx LED Software Control (1)
-		uint8_t 			REGMODE;			//
-		char 				PDP[3];				// Set PDP Variable (IP)
-		char 				APN[15];				// Set APN Variable (internet/statikip)
-		uint8_t 			PktSz;				// Set PktSz Variable (0-Auto)
-		uint8_t 			MaxTo;				// Set MaxTo Variable (0-No Timeout)
-		uint8_t 			ConnTo;				// Set ConnTo Variable (150 nS)
-		uint8_t 			TxTo;				// Set TxTo Variable (0-No Timeout)
-		uint8_t 			Ctzu;				//
-		String 				NTP_Server;			// Set NTP Server Variable (NASA)
-		String 				HTTP_Server;		// Cloud Server IP
-		String 				HTTP_URL;			// Cloud Server URL
-		uint8_t 			HTTP_Port;			// Cloud Server Port
-		uint8_t				srMode;
-		uint8_t				recvDataMode;
-		uint8_t				keepalive;
+		const uint8_t 		CMEE;				// Set Numeric Error Format (1)
+		const uint8_t		FCLASS;				// Set Data Connection (0)
+		const uint8_t 		K;					// Set Flow Control (0)
+		const uint8_t 		SLED;				// Set Status LED Software Control (2)
+		const uint8_t 		TXMONMODE;			// Set Tx LED Software Control (1)
+		const uint8_t 		REGMODE;			//
+		const char 			PDP[3];				// Set PDP Variable (IP)
+		const char 			APN[15];			// Set APN Variable (internet/statikip)
+		const uint8_t 		PktSz;				// Set PktSz Variable (0-Auto)
+		const uint8_t 		MaxTo;				// Set MaxTo Variable (0-No Timeout)
+		const uint8_t 		ConnTo;				// Set ConnTo Variable (150 nS)
+		const uint8_t 		TxTo;				// Set TxTo Variable (0-No Timeout)
+		const uint8_t 		Ctzu;				//
+		const char 			NTP_Server[16];		// Set NTP Server Variable (NASA)
+		const char 			HTTP_Server[16];	// Cloud Server IP
+		const char 			HTTP_URL[20];		// Cloud Server URL
+		const uint8_t 		HTTP_Port;			// Cloud Server Port
+		const uint8_t		srMode;
+		const uint8_t		recvDataMode;
+		const uint8_t		keepalive;
 		//------------------------------------------------------------------
 
 	}; Parameter_Struct Parameter {
@@ -191,35 +191,35 @@ public:
 
 	// Modem AT Command Functions
 	bool AT(void);
-	bool AT_CMEE(uint8_t _CMEE);
-	bool AT_FCLASS(uint8_t _FCLASS);
-	bool AT_K(uint8_t _K);
+	bool AT_CMEE(const uint8_t _CMEE);
+	bool AT_FCLASS(const uint8_t _FCLASS);
+	bool AT_K(const uint8_t _K);
 	bool AT_CPIN(void);
 	bool AT_CCID(void);
 	bool AT_CGSN(void);
 	bool AT_GSN(void);
-	bool AT_SLED(uint8_t _SLED);
-	bool AT_TXMONMODE(uint8_t _TXMONMODE);
-	bool AT_REGMODE(uint8_t _REGMODE);
+	bool AT_SLED(const uint8_t _SLED);
+	bool AT_TXMONMODE(const uint8_t _TXMONMODE);
+	bool AT_REGMODE(const uint8_t _REGMODE);
 	bool AT_CREG(void);
 	bool AT_CGREG(void);
-	bool AT_CGDCONT(char *_PDP, char *_APN);
-	bool AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _ConnTo, uint8_t _TxTo);
+	bool AT_CGDCONT(const char *_PDP, const char *_APN);
+	bool AT_SCFG(const uint8_t _ConnID, const uint8_t _PktSz, const uint8_t _MaxTo, const uint16_t _ConnTo, const uint8_t _TxTo);
 	bool AT_SGACT(void);
 	bool AT_CSQ(void);
 	bool AT_SERVINFO(void);
 	bool AT_CCLK(void);
-	bool AT_NTP(String _NTP_Server);
-	bool AT_CTZU(uint8_t _Ctzu);
-	bool AT_HTTPCFG(String _HTTP_Server, uint8_t _Port);
-	bool AT_HTTPSND(String _URL, const String &Data);
-	bool AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port);
-	bool AT_FRWL(const String &_IP);
+	bool AT_NTP(const char *_NTP_Server);
+	bool AT_CTZU(const uint8_t _Ctzu);
+	bool AT_HTTPCFG(const char *_HTTP_Server, const uint8_t _Port);
+	bool AT_HTTPSND(const char *_URL, const String &Data);
+	bool AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port);
+	bool AT_FRWL(const char *_IP);
 	bool AT_SA(void);
 	bool AT_SH(void);
 	bool AT_SHDN(void);
 	bool AT_SRECV(void);
-	bool AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepalive);
+	bool AT_SCFGEXT(const uint8_t _srMode, const uint8_t _recvDataMode, const uint8_t _keepalive);
 	bool AT_E2SLRI(void);
 	
 	// Batch Functions

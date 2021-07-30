@@ -52,7 +52,7 @@ bool GE910::AT(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 			
 		}
 
@@ -111,7 +111,7 @@ bool GE910::AT(void) {
 	}
 
 }
-bool GE910::AT_CMEE(uint8_t _CMEE) {
+bool GE910::AT_CMEE(const uint8_t _CMEE) {
 	
 	/******************************************************************************
 	 *	Function	: AT CMEE Command
@@ -156,7 +156,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -215,7 +215,7 @@ bool GE910::AT_CMEE(uint8_t _CMEE) {
 	}
 
 }
-bool GE910::AT_FCLASS(uint8_t _FCLASS) {
+bool GE910::AT_FCLASS(const uint8_t _FCLASS) {
 	
 	/******************************************************************************
 	 *	Function	: AT FCLASS Command
@@ -260,7 +260,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -319,7 +319,7 @@ bool GE910::AT_FCLASS(uint8_t _FCLASS) {
 	}
 
 }
-bool GE910::AT_K(uint8_t _K) {
+bool GE910::AT_K(const uint8_t _K) {
 
 	/******************************************************************************
 	 *	Function	: AT K Command
@@ -364,7 +364,7 @@ bool GE910::AT_K(uint8_t _K) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -466,7 +466,7 @@ bool GE910::AT_CPIN(void) {
 			_Read_Order++;
 		
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -596,7 +596,7 @@ bool GE910::AT_CCID(void) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -725,7 +725,7 @@ bool GE910::AT_CGSN(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -841,7 +841,7 @@ bool GE910::AT_GSN(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -900,7 +900,7 @@ bool GE910::AT_GSN(void) {
 	}
 
 }
-bool GE910::AT_SLED(uint8_t _SLED) {
+bool GE910::AT_SLED(const uint8_t _SLED) {
 
 	/******************************************************************************
 	 *	Function	: AT SLED Command
@@ -945,7 +945,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -1004,7 +1004,7 @@ bool GE910::AT_SLED(uint8_t _SLED) {
 	}
 
 }
-bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
+bool GE910::AT_TXMONMODE(const uint8_t _TXMONMODE) {
 
 	/******************************************************************************
 	 *	Function	: AT TXMONMODE Command
@@ -1049,7 +1049,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -1108,7 +1108,7 @@ bool GE910::AT_TXMONMODE(uint8_t _TXMONMODE) {
 	}
 
 }
-bool GE910::AT_REGMODE(uint8_t _REGMODE) {
+bool GE910::AT_REGMODE(const uint8_t _REGMODE) {
 
 	/******************************************************************************
 	 *	Function	: AT REGMODE Command
@@ -1151,7 +1151,7 @@ bool GE910::AT_REGMODE(uint8_t _REGMODE) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -1267,7 +1267,7 @@ bool GE910::AT_CREG(void) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -1344,7 +1344,7 @@ bool GE910::AT_CREG(void) {
 				_Read_Order++;
 
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -1522,7 +1522,7 @@ bool GE910::AT_CGREG(void) {
 					_Read_Order++;
 					
 					// Stream Delay
-					delay(1);
+					delay(3);
 
 				}
 
@@ -1599,7 +1599,7 @@ bool GE910::AT_CGREG(void) {
 					_Read_Order++;
 
 					// Stream Delay
-					delay(1);
+					delay(3);
 
 				}
 
@@ -1719,7 +1719,7 @@ bool GE910::AT_CGREG(void) {
 	return(false);
 	
 }
-bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
+bool GE910::AT_CGDCONT(const char *_PDP, const char *_APN) {
 	
 	/******************************************************************************
 	 *	Function	: AT CGDCONT Command
@@ -1770,7 +1770,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -1834,7 +1834,7 @@ bool GE910::AT_CGDCONT(char *_PDP, char *_APN) {
 	return (false);
 
 }
-bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _ConnTo, uint8_t _TxTo) {
+bool GE910::AT_SCFG(const uint8_t _ConnID, const uint8_t _PktSz, const uint8_t _MaxTo, const uint16_t _ConnTo, const uint8_t _TxTo) {
 	
 	/******************************************************************************
 	 *	Function	: AT SCFG Command
@@ -1890,7 +1890,7 @@ bool GE910::AT_SCFG(uint8_t _ConnID, uint8_t _PktSz, uint8_t _MaxTo, uint16_t _C
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -2017,7 +2017,7 @@ bool GE910::AT_SGACT(void) {
 					_Read_Order++;
 					
 					// Stream Delay
-					delay(1);
+					delay(3);
 
 				}
 
@@ -2095,7 +2095,7 @@ bool GE910::AT_SGACT(void) {
 					_Read_Order++;
 					
 					// Stream Delay
-					delay(1);
+					delay(3);
 
 				}
 
@@ -2144,7 +2144,7 @@ bool GE910::AT_SGACT(void) {
 		while (_Control == false) {
 			
 			// Handle Response
-			if (Response_Wait(25, 2000)) {
+			if (Response_Wait(25, 150000)) {
 
 				// Declare Read Order Variable
 				uint8_t _Read_Order = 0;
@@ -2176,7 +2176,7 @@ bool GE910::AT_SGACT(void) {
 					_Read_Order++;
 					
 					// Stream Delay
-					delay(1);
+					delay(3);
 
 				}
 
@@ -2241,7 +2241,7 @@ bool GE910::AT_SGACT(void) {
 			_Error_WD++;
 
 			// Handle for Error
-			if (_Error_WD >= 10) return(false);
+			if (_Error_WD > 1) return(false);
 
 		}
 		
@@ -2319,7 +2319,7 @@ bool GE910::AT_CSQ(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -2408,7 +2408,7 @@ bool GE910::AT_SERVINFO(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -2507,7 +2507,7 @@ bool GE910::AT_SERVINFO(void) {
 	return (false);
 
 }
-bool GE910::AT_CTZU(uint8_t _Ctzu) {
+bool GE910::AT_CTZU(const uint8_t _Ctzu) {
 
 	// Clear Response Variable
 	memset(Command_Response, 0, sizeof(Command_Response));
@@ -2540,7 +2540,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -2599,7 +2599,7 @@ bool GE910::AT_CTZU(uint8_t _Ctzu) {
 	}
 
 }
-bool GE910::AT_NTP(String _NTP_Server) {
+bool GE910::AT_NTP(const char *_NTP_Server) {
 	
 	/******************************************************************************
 	 *	Function	: AT NTP Command
@@ -2780,7 +2780,7 @@ bool GE910::AT_CCLK(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -2877,7 +2877,7 @@ bool GE910::AT_CCLK(void) {
 	}
 
 }
-bool GE910::AT_HTTPCFG(String _HTTP_Server, uint8_t _Port) {
+bool GE910::AT_HTTPCFG(const char *_HTTP_Server, const uint8_t _Port) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPCFG Command
@@ -2925,7 +2925,7 @@ bool GE910::AT_HTTPCFG(String _HTTP_Server, uint8_t _Port) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -2996,7 +2996,7 @@ bool GE910::AT_HTTPCFG(String _HTTP_Server, uint8_t _Port) {
 	}
 
 }
-bool GE910::AT_HTTPSND(String _URL, const String &Data) {
+bool GE910::AT_HTTPSND(const char *_URL, const String &Data) {
 	
 	/******************************************************************************
 	 *	Function	: AT HTTPSND Command
@@ -3057,7 +3057,7 @@ bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -3110,7 +3110,7 @@ bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -3145,7 +3145,7 @@ bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 						_Read_Order++;
 						
 						// Stream Delay
-						delay(1);
+						delay(3);
 
 					}
 
@@ -3161,6 +3161,14 @@ bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 
 			}
 
+			// Control for error
+			if(strstr(_Response, "+CME ERROR: 562") != NULL) {
+				
+				// End Function
+				return(false);
+				
+			}
+			
 		}
 		
 		// Count for Error
@@ -3289,7 +3297,7 @@ bool GE910::AT_HTTPSND(String _URL, const String &Data) {
 				_Read_Order++;
 				
 				// Stream Delay
-				delay(1);
+				delay(3);
 
 			}
 
@@ -3390,7 +3398,7 @@ bool GE910::AT_SHDN(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -3455,7 +3463,7 @@ bool GE910::AT_SHDN(void) {
 	}
 
 }
-bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
+bool GE910::AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port) {
 	
 	/******************************************************************************
 	 *	Function	: AT SL Command
@@ -3504,7 +3512,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -3563,7 +3571,7 @@ bool GE910::AT_SL(uint8_t _ConnID, bool _State, uint8_t _Port) {
 	}
 
 }
-bool GE910::AT_FRWL(const String &_IP) {
+bool GE910::AT_FRWL(const char *_IP) {
 	
 	/******************************************************************************
 	 *	Function	: AT FRWL Command
@@ -3611,7 +3619,7 @@ bool GE910::AT_FRWL(const String &_IP) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -3692,7 +3700,7 @@ bool GE910::AT_SA(void) {
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(33, 1000)) {
+	if (Response_Wait(30, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -3733,7 +3741,7 @@ bool GE910::AT_SA(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -3843,7 +3851,7 @@ bool GE910::AT_SRECV(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 			
 		}
 
@@ -3905,7 +3913,7 @@ bool GE910::AT_SRECV(void) {
 	}
 
 }
-bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepalive) {
+bool GE910::AT_SCFGEXT(const uint8_t _srMode, const uint8_t _recvDataMode, const uint8_t _keepalive) {
 	
 	/******************************************************************************
 	 *	Function	: AT SCFGEXT Command
@@ -3954,7 +3962,7 @@ bool GE910::AT_SCFGEXT(uint8_t _srMode, uint8_t _recvDataMode, uint8_t _keepaliv
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -4056,7 +4064,7 @@ bool GE910::AT_SH(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -4155,7 +4163,7 @@ bool GE910::AT_E2SLRI(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 			
 		}
 
@@ -4339,7 +4347,7 @@ bool GE910::Connection_Control(void) {
 			_Read_Order++;
 			
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -5083,7 +5091,7 @@ void GE910::Listen(void) {
 			_Read_Order++;
 
 			// Stream Delay
-			delay(1);
+			delay(3);
 
 		}
 
@@ -5148,7 +5156,7 @@ void GE910::Socket_Get_Command(void) {
 		_Read_Order++;
 
 		// Stream Delay
-		delay(1);
+		delay(3);
 
 	}
 
@@ -5166,15 +5174,15 @@ void GE910::Socket_Get_Command(void) {
 
 		// Socket Recieve Command
 		AT_SRECV();
-		
+		Serial1.println(Command_Response);
 		// Start Pump Command
-		if (strstr(Command_Response, "{\"Event\":256}") != NULL) Request = 256;
+		if (strstr(Command_Response, "256") != NULL) Request = 256;
 		
 		// Stop Pump Command
-		if (strstr(Command_Response, "{\"Event\":257}") != NULL) Request = 257;
+		if (strstr(Command_Response, "257") != NULL) Request = 257;
 		
 		// Update Data
-		if (strstr(Command_Response, "{\"Event\":262}") != NULL) Request = 262;
+		if (strstr(Command_Response, "262") != NULL) Request = 262;
 
 		// Close Socket Command
 		AT_SH();
