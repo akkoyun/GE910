@@ -3754,6 +3754,9 @@ bool GE910::AT_SA(void) {
 			// Convert Variable
 			Socket_Incomming_Length = atoi(_Incomming_Length);
 
+			// Handle Length
+			if (Socket_Incomming_Length < 80) Socket_Incomming_Length = 80;
+			
 			// Set Response Variable
 			strcpy(Command_Response, _Response);
 
