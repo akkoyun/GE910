@@ -4142,13 +4142,13 @@ bool GE910::AT_E2SLRI(void) {
 	while(UART_IoT.available() > 0) UART_IoT.read();delay(3);
 
 	// Send UART Command
-	UART_IoT.print(F("AT#E2SLRI=1150\r\n"));
+	UART_IoT.print(F("AT#E2SLRI=50\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
 
 	// Handle Response
-	if (Response_Wait(21, 1000)) {
+	if (Response_Wait(20, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -4258,6 +4258,9 @@ bool GE910::Time_Update(void) {
 	// Declare Variable
 	uint8_t _Error_WD = 0;
 
+	// Print GSM Command
+	Serial.print(F("AT+CTZU=1..................................."));
+
 	// Process Command
 	while (!Control.AT_CTZU) {
 
@@ -4272,12 +4275,18 @@ bool GE910::Time_Update(void) {
 
 	}
 
+	// Print Command State
+	if (GSM.Control.AT_CTZU) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 	// ************************************************************
 	// 1- IoT NTP Command
 	// ************************************************************
 
 	// Reset WD Error Variable
 	_Error_WD = 0;
+
+	// Print GSM Command
+	Serial.print(F("AT+NTP......................................"));
 
 	while (!Control.AT_NTP) {
 		
@@ -4291,6 +4300,9 @@ bool GE910::Time_Update(void) {
 		if (_Error_WD > 2) break;
 
 	}
+
+	// Print Command State
+	if (GSM.Control.AT_NTP) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
 
 	// ************************************************************
 	// End Function
@@ -4456,6 +4468,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// Declare Variable
 			uint8_t _Error_WD = 0;
 
+			// Print GSM Command
+			Serial.print(F("AT.........................................."));
+
 			// Process Command
 			while (!Control.AT) {
 
@@ -4473,12 +4488,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CMEE Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+			
+			// Print GSM Command
+			Serial.print(F("AT+CMEE=1..................................."));
 
 			while (!Control.AT_CMEE) {
 				
@@ -4496,12 +4517,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CMEE) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CMEE) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT FCLASS Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+FCLASS=0................................."));
 
 			while (!Control.AT_FCLASS) {
 				
@@ -4519,12 +4546,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_FCLASS) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_FCLASS) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT K Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT&K0......................................."));
 
 			while (!Control.AT_K) {
 				
@@ -4543,12 +4576,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_K) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_K) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CPIN Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+CPIN?...................................."));
 
 			while (!Control.AT_CPIN) {
 				
@@ -4566,12 +4605,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CPIN) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CPIN) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CGSN Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+CGSN....................................."));
 
 			while (!Control.AT_CGSN) {
 				
@@ -4589,12 +4634,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CGSN) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CGSN) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT GSN Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+GSN......................................"));
 
 			while (!Control.AT_GSN) {
 				
@@ -4612,12 +4663,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_GSN) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_GSN) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CCID Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT#CCID....................................."));
 
 			while (!Control.AT_CCID) {
 				
@@ -4635,12 +4692,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CCID) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CCID) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SLED Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT#SLED=2..................................."));
 
 			while (!Control.AT_SLED) {
 				
@@ -4658,12 +4721,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SLED) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SLED) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT TXMONMODE Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT#TXMONMODE=0.............................."));
 
 			while (!Control.AT_TXMONMODE) {
 				
@@ -4681,6 +4750,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_TXMONMODE) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_TXMONMODE) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CREG Command
 			// ************************************************************
@@ -4690,6 +4762,9 @@ bool GE910::Connection_AT_Batch(void) {
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+CREG=1..................................."));
 
 			while (!Control.AT_CREG) {
 				
@@ -4707,12 +4782,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CREG) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CREG) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT CGREG Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+CGREG=1.................................."));
 
 			while (!Control.AT_CGREG) {
 				
@@ -4730,9 +4811,17 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CGREG) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CGREG) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// Read Current Time
 			uint32_t _CRTime = millis() - _CTime;
 			Connection_Time = uint8_t(_CRTime / 1000);
+
+			// Print GSM Command
+			Serial.print(F("GSM Connection Time...........................["));
+			Serial.print(Connection_Time);
+			Serial.println(F("]"));
 
 			// ************************************************************
 			// IoT CGDCONT Command
@@ -4740,6 +4829,9 @@ bool GE910::Connection_AT_Batch(void) {
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+CGDCONT=1,\"IP\",\"mgbs\"....................."));
 
 			while (!Control.AT_CGDCONT) {
 				
@@ -4757,6 +4849,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_CGDCONT) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_CGDCONT) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SCFG Command 1
 			// ************************************************************
@@ -4764,6 +4859,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// Reset WD Error Variable
 			_Error_WD = 0;
 			Control.AT_SCFG1 = false;
+
+			// Print GSM Command
+			Serial.print(F("AT+SCFG1=0,0,150,0,1........................"));
 
 			while (!Control.AT_SCFG1) {
 				
@@ -4781,6 +4879,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SCFG1) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SCFG1) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SCFG Command 2
 			// ************************************************************
@@ -4788,6 +4889,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// Reset WD Error Variable
 			_Error_WD = 0;
 			Control.AT_SCFG2 = false;
+
+			// Print GSM Command
+			Serial.print(F("AT+SCFG2=2,0,0,400,0........................"));
 
 			while (!Control.AT_SCFG2) {
 				
@@ -4805,12 +4909,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SCFG2) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SCFG2) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SCFGEXT Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+SCFGEXT=1,0,1............................"));
 
 			while (!Control.AT_SCFGEXT) {
 				
@@ -4828,12 +4938,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SCFGEXT) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SCFGEXT) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SGACT Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+SGACT...................................."));
 
 			while (!Control.AT_SGACT) {
 				
@@ -4851,12 +4967,18 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SGACT) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SGACT) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// IoT SERVINFO Command
 			// ************************************************************
 
 			// Reset WD Error Variable
 			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+SERVINFO................................."));
 
 			while (!Control.AT_SERVINFO) {
 				
@@ -4874,6 +4996,9 @@ bool GE910::Connection_AT_Batch(void) {
 			// End Function
 			if (!Control.AT_SERVINFO) return(false);
 
+			// Print Command State
+			if (GSM.Control.AT_SERVINFO) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 			// ************************************************************
 			// End Function
 			// ************************************************************
@@ -4883,6 +5008,10 @@ bool GE910::Connection_AT_Batch(void) {
 				// Set Variable
 				Connected = CONNECTED;
 				
+				// Print GSM Command
+				Serial.print(F("Device IP Address...................."));
+				Serial.println(GSM.IP);
+
 				// End Function
 				return(true);
 				
@@ -4913,6 +5042,9 @@ bool GE910::Recieve_AT_Batch(void) {
 	// Declare WD Error Variable
 	uint8_t _Error_WD = 0;
 
+	// Print GSM Command
+	Serial.print(F("AT+SL......................................."));
+
 	while (!Control.AT_SL) {
 		
 		// Process Command
@@ -4926,12 +5058,18 @@ bool GE910::Recieve_AT_Batch(void) {
 
 	}
 
+	// Print Command State
+	if (GSM.Control.AT_SL) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 	// ************************************************************
 	// Firewall Config Command
 	// ************************************************************
 
 	// Declare WD Error Variable
 	_Error_WD = 0;
+
+	// Print GSM Command
+	Serial.print(F("AT+FRWL=213.14.250.214......................"));
 
 	while (!Control.AT_FRWL) {
 		
@@ -4946,12 +5084,18 @@ bool GE910::Recieve_AT_Batch(void) {
 
 	}
 
+	// Print Command State
+	if (GSM.Control.AT_FRWL) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
 	// ************************************************************
 	// SL Ring Config Command
 	// ************************************************************
 
 	// Declare WD Error Variable
 	_Error_WD = 0;
+
+	// Print GSM Command
+	Serial.print(F("AT+E2SLRI..................................."));
 
 	while (!Control.AT_E2SLRI) {
 		
@@ -4965,6 +5109,9 @@ bool GE910::Recieve_AT_Batch(void) {
 		if (_Error_WD > 3) break;
 
 	}
+
+	// Print Command State
+	if (GSM.Control.AT_E2SLRI) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
 
 	// ************************************************************
 	// End Function
@@ -5012,7 +5159,7 @@ bool GE910::Send(const String &_Data) {
 		if (!HTTP_CFG) AT_HTTPCFG(Parameter.HTTP_Server, Parameter.HTTP_Port);
 
 		// Check For UART
-		Listen();
+		//Listen();
 		
 		// Send Data
 		AT_HTTPSND(Parameter.HTTP_URL, _Data);
@@ -5147,7 +5294,7 @@ void GE910::Socket_Get_Command(void) {
 	uint8_t _Read_Order = 0;
 
 	// Declare Response Variable
-	char _Response[UART_IoT.available()];
+	char _Response[100];
 
 	// Read UART Response
 	while(UART_IoT.available() > 0) {
@@ -5166,6 +5313,8 @@ void GE910::Socket_Get_Command(void) {
 	// Set Response Variable
 	strcpy(Command_Response, _Response);
 
+	Serial.println(Command_Response);
+	
 	// Control for Response
 	if(strstr(_Response, "SRING: 2") != NULL) {
 
@@ -5177,7 +5326,7 @@ void GE910::Socket_Get_Command(void) {
 
 		// Socket Recieve Command
 		AT_SRECV();
-		Serial1.println(Command_Response);
+		
 		// Start Pump Command
 		if (strstr(Command_Response, "256") != NULL) Request = 256;
 		
@@ -5215,10 +5364,10 @@ void GE910::LED(bool State) {
 void GE910::Communication(bool State) {
 	
 	// Set GSM Comm EN
-	if (State == true) PORTH &= 0b11110111;
+	if (State == true) PORTJ &= 0b11101111;
 
 	// Set GSM Comm EN
-	if (State == false) PORTH |= 0b00001000;
+	if (State == false) PORTJ |= 0b00010000;
 
 }
 void GE910::Power(bool State) {
@@ -5232,8 +5381,8 @@ void GE910::Power(bool State) {
 }
 bool GE910::PowerMonitor(void) {
 	
-	// Control for PWMon (PH7)
-	if ((PINH & (1 << PINH7)) == (1 << PINH7)) {
+	// Control for PWMon (PJ3)
+	if ((PINJ & (1 << PINJ3)) == (1 << PINJ3)) {
 		
 		// Set Variable
 		PwrMon = POWERED;
@@ -5254,27 +5403,27 @@ bool GE910::PowerMonitor(void) {
 }
 void GE910::OnOff(int Time_) {
 	
-	// Set On/Off Signal HIGH [PH5]
-	PORTH |= 0b00100000;
+	// Set On/Off Signal HIGH [PJ6]
+	PORTJ |= 0b01000000;
 
 	// Command Delay
 	delay(Time_);
 	
-	// Set On/Off Signal LOW [PH5]
-	PORTH &= 0b11011111;
+	// Set On/Off Signal LOW [PJ6]
+	PORTJ &= 0b10111111;
 
 }
 void GE910::ShutDown(int Time_) {
 	
-	// Set Shut Down Signal HIGH [PH6]
-	PORTH |= 0b01000000;
+	// Set Shut Down Signal HIGH [PJ5]
+	PORTJ |= 0b00100000;
 
 	// Command Delay
 	delay(Time_);
 	
-	// Set Shut Down Signal LOW [PH6]
-	PORTH &= 0b10111111;
-	
+	// Set Shut Down Signal LOW [PJ5]
+	PORTJ &= 0b11011111;
+
 }
 bool GE910::Activate(bool Status) {
 
@@ -5294,10 +5443,10 @@ bool GE910::Activate(bool Status) {
 		UART_IoT.begin(UART_BAUD);
 		
 		// Set GSM Power Signal EN HIGH
-		Power(true);
+		//Power(true);
 
 		// Set GSM LED Power EN
-		LED(true);
+		//LED(true);
 		
 		// Set Communication Signal LOW
 		Communication(true);
@@ -5362,19 +5511,20 @@ bool GE910::Activate(bool Status) {
 			// Power Monitor 3V3 HIGH
 
 			// Send On Off Signal
-			AT_SHDN();
+			//AT_SHDN();
+			ShutDown(200);
 			
 			// Set GSM LED Power EN
-			LED(false);
+			//LED(false);
 			
 			// Set Communication Signal LOW
-			Communication(false);
+			//Communication(false);
 
 			// Set GSM Power Signal EN HIGH
-			Power(false);
+			//Power(false);
 
 			// Command Delay
-			delay(5000);
+			delay(1000);
 
 			// Set Variable
 			PwrMon = NOT_POWERED;

@@ -29,10 +29,10 @@ public:
 
 	// IoT Variables
 	char 					ID[11]					= "";				// ID Variable
-	char 					IMEI[17]					= "";				// IMEI Variable
+	char 					IMEI[17]				= "";				// IMEI Variable
 	char 					ICCID[21]				= "";				// ICCID Variable
 	char 					IP[15]					= "";				// IP Variable
-	int 						Operator				= 0;				// Operator Variable
+	int 					Operator				= 0;				// Operator Variable
 	uint8_t					RSSI					= 0;				// RSSI Variable
 
 	// Time Variables
@@ -44,20 +44,20 @@ public:
 	uint8_t 				Second					= 0;				// Second Variable
 	
 	// Control Variables
-	bool						PwrMon					= false;			// Power Monitor Test Variable
+	bool					PwrMon					= false;			// Power Monitor Test Variable
 	uint8_t					CREG					= NOT_REGISTERED;	// CREG Test Variable
 	uint8_t					CGREG					= NOT_REGISTERED;	// CGREG Test Variable
 	uint8_t					SGACT					= 0;				// SGACT Test Variable
 	bool 					Connected				= NOT_CONNECTED;	// Connected Test Variable
-	bool						HTTP_CFG				= false;			// HTTPCFG Variable
+	bool					HTTP_CFG				= false;			// HTTPCFG Variable
 	int						Server_Response 		= 0;				// Server Response Variable
 	String					Response				= "";
 	uint8_t					Connection_Time			= 0;				// CREG and CGREG time Variable
-	bool						RTC_Update				= false;
+	bool					RTC_Update				= false;
 	
 	// New Versipn Variables
-	char						Command_Response[255]	= "";				// Full Command Response
-	bool						Message					= false;			// Incomming Message Variable
+	char					Command_Response[255]	= "";				// Full Command Response
+	bool					Message					= false;			// Incomming Message Variable
 	int						Request					= 0;				// Server Request Variable
 	int						Socket_Incomming_Length = 0;
 
