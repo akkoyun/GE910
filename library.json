@@ -1,6 +1,6 @@
 {
 	"name": "Telit GE910 GSM Library",
-	"version": "1.17.1",
+	"version": "1.18.0",
 	"keywords": "Telit, GE910, GSM, IoT, 2G, JSON, IMEI, ICCID, CREG, Socket, Connection",
 	"description": "Use this library to connect internet through the GPRS network. You can either use cloud using JSON. This library is best use with Ovoo modules",
 	"authors":

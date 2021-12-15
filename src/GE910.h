@@ -10,12 +10,18 @@
 #ifndef __GE910__
 #define __GE910__
 
+// Define Arduino Library
+#ifndef __Arduino__
 #include <Arduino.h>
+#endif
 
-// Software Definations
-#define 	UART_IoT			Serial3
-#define 	UART_BAUD			115200
+// Define Library Structures
+#ifndef __GE910_Structures__
+#include "GE910_Structures.h"
+#endif
 	
+#include <avr/pgmspace.h>
+
 class GE910 {
 
 public:
@@ -25,7 +31,7 @@ public:
 	// ************************************************************
 
 	// Function Variables
-	char 					Version[9] 				= "01.17.01";		// Version Variable
+	char 					Version[9] 				= "01.18.00";		// Version Variable
 
 	// IoT Variables
 	char 					ID[11]					= "";				// ID Variable
@@ -61,60 +67,12 @@ public:
 	int						Request					= 0;				// Server Request Variable
 	int						Socket_Incomming_Length = 0;
 
-	// ************************************************************
-	// Public Enum Definations
-	// ************************************************************
-
-	enum GSM_Stat {
-		NOT_REGISTERED,		// 0
-		HOME_REGISTERED,	// 1
-		SEARCHING,			// 2
-		DENIED,				// 3
-		UNKNOWN,			// 4
-		ROAMING_REGISTERED	// 5
-	};
-	enum GSM_Status {
-		NOT_CONNECTED,		// 0
-		CONNECTED			// 1
-	};
-	enum GSM_Power {
-		NOT_POWERED,		// 0
-		POWERED				// 1
-	};
-	enum GSM_CommandStatus {
-		NOT_OK,				// 0
-		NOT_COMMAND,		// 1
-		TIME_OUT			// 2
-	};
-
 	// ************************************************************************************************************************
 	// Public GSM Setting Variables
 	// ************************************************************************************************************************
-	struct Parameter_Struct {
-		//------------------------------------------------------------------
-		const uint8_t 		CMEE;				// Set Numeric Error Format (1)
-		const uint8_t		FCLASS;				// Set Data Connection (0)
-		const uint8_t 		K;					// Set Flow Control (0)
-		const uint8_t 		SLED;				// Set Status LED Software Control (2)
-		const uint8_t 		TXMONMODE;			// Set Tx LED Software Control (1)
-		const uint8_t 		REGMODE;			//
-		const char 			PDP[3];				// Set PDP Variable (IP)
-		const char 			APN[15];			// Set APN Variable (internet/statikip)
-		const uint8_t 		PktSz;				// Set PktSz Variable (0-Auto)
-		const uint8_t 		MaxTo;				// Set MaxTo Variable (0-No Timeout)
-		const uint8_t 		ConnTo;				// Set ConnTo Variable (150 nS)
-		const uint8_t 		TxTo;				// Set TxTo Variable (0-No Timeout)
-		const uint8_t 		Ctzu;				//
-		const char 			NTP_Server[16];		// Set NTP Server Variable (NASA)
-		const char 			HTTP_Server[16];	// Cloud Server IP
-		const char 			HTTP_URL[20];		// Cloud Server URL
-		const uint8_t 		HTTP_Port;			// Cloud Server Port
-		const uint8_t		srMode;
-		const uint8_t		recvDataMode;
-		const uint8_t		keepalive;
-		//------------------------------------------------------------------
 
-	}; Parameter_Struct Parameter {
+	// Parameter Variable Structure
+	Parameter_Struct Parameter {
 		1,										// (CMEE) Set Numeric Error Format (1)
 		0,										// (FCLASS) Set Data Connection (0)
 		0,										// (K) Set Flow Control (0)
@@ -125,56 +83,52 @@ public:
 		"mgbs",									// (APN) Set APN Variable (internet/statikip/mgbs)
 		0,										// (PktSz) Set PktSz Variable (0-Auto)
 		0,										// (MaxTo) Set MaxTo Variable (0-No Timeout)
-		150,										// (ConnTo) Set ConnTo Variable (150 nS)
+		150,									// (ConnTo) Set ConnTo Variable (150 nS)
 		0,										// (TxTo) Set TxTo Variable (0-No Timeout)
 		1,										// (CTZU)
-		"85.199.214.98",							// (NTP_Server) Set NTP Server Variable (NASA)
-		"54.216.226.171",							// (HTTP_Server) Cloud Server IP
-		"/api/v1.1/p401",							// (HTTP_URL) Cloud Server URL
+		"85.199.214.98",						// (NTP_Server) Set NTP Server Variable (NASA)
+		"54.216.226.171",						// (HTTP_Server) Cloud Server IP
+		"/api/v1.1/p401",						// (HTTP_URL) Cloud Server URL
 		80,										// (HTTP_Port) Cloud Server Port
 		1,
 		0,
 		1
 	};
-	struct Control_Struct {
 
-		//------------------------------------------------------------------
-		bool AT;				// AT Command Control Variable
-		bool AT_CMEE;			// AT+CMEE Command Control Variable
-		bool AT_FCLASS;			// AT+FCLASS Command Control Variable
-		bool AT_K;				// AT&K Command Control Variable
-		bool AT_CPIN;			// AT+CPIN Command Control Variable
-		bool AT_CCID;			// AT+CCID Command Control Variable
-		bool AT_CGSN;			// AT+CGSN Command Control Variable
-		bool AT_GSN;			// AT+GSN Command Control Variable
-		bool AT_SLED;			// AT#SLED Command Control Variable
-		bool AT_TXMONMODE;		// AT#MONMODE Command Control Variable
-		bool AT_REGMODE;		// AT#REGMODE Command Control Variable
-		bool AT_CREG;			// AT+CREG Command Control Variable
-		bool AT_CGREG;			// AT+CGREG Command Control Variable
-		bool AT_CGDCONT;		// AT+CGDCONT Command Control Variable
-		bool AT_SCFG1;			// AT+SCFG Command Control Variable
-		bool AT_SCFG2;			// AT+SCFG Command Control Variable
-		bool AT_SGACT;			// AT+SGACT Command Control Variable
-		bool AT_SERVINFO;		// AT+SERVINFO Command Control Variable
-		bool AT_CSQ;			// AT+CSQ Command Control Variable
-		bool AT_CTZU;			// AT+CTZU Command Control Variable
-		bool AT_NTP;			// AT+NTP Command Control Variable
-		bool AT_CCLK;			// AT+CCLK Command Control Variable
-		bool AT_HTTPCFG;		// AT+HTTPCFG Command Control Variable
-		bool AT_HTTPSND;		// AT+HTTPSND Command Control Variable
-		bool AT_SL;				// AT#SL Command Control Variable
-		bool AT_FRWL;			// AT#FRWL Command Control Variable
-		bool AT_SA;				// AT#SA Command Control Variable
-		bool AT_SH;				// AT#SH Command Control Variable
-		bool AT_SRECV;			// AT#RECV Command Control Variable
-		bool AT_SCFGEXT;
-		bool AT_SHDN;
-		bool AT_E2SLRI;
-		//------------------------------------------------------------------
-
-	}; Control_Struct Control {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	// Control Variable Structure
+	Control_Struct Control { 
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
 	};
 
 	// ************************************************************
@@ -191,7 +145,7 @@ public:
 
 	// Modem AT Command Functions
 	bool AT(void);
-	bool AT_CMEE(const uint8_t _CMEE);
+	bool AT_CMEE(uint8_t _CMEE);
 	bool AT_FCLASS(const uint8_t _FCLASS);
 	bool AT_K(const uint8_t _K);
 	bool AT_CPIN(void);
