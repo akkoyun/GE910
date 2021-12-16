@@ -1,0 +1,46 @@
+{
+    "Device": {
+        "Type": "P402",
+        "ID": "702D011D010000EC",
+        "Hardware": "01.00.00",
+        "Firmware": "01.00.00"
+    },
+    "Power": {
+        "Battery": {
+            "Firmware": "01.00.00",
+            "IV": 3.89,
+            "T": 25.43,
+            "AC": -51.72,
+            "SOC": 17.97,
+            "FB": 4000,
+            "IB": 718,
+            "CYC": 32
+        }
+    },
+    "IoT": {
+        "GSM": {
+            "Firmware": "01.00.00",
+            "Module": {
+                "Model": "xxxxxxx",
+                "Revision": "xxxx",
+                "Firmware": "xxxxxxx",
+                "Serial": "0001767646",
+                "IMEI": "353613080341053"
+            },
+            "SIM": {
+                "SIM_Type": 1,
+                "Iccid": "8990011901130266075"
+            },
+            "Operator": {
+                "Code": 28601,
+                "RSSI": 11,
+                "Conn_Time": 22
+            }
+        }
+    },
+    "Data": {
+        "DeviceStatus": 0,
+        "FaultStatus": 0,
+        "TimeStamp": "2020-10-23  14:18:28"
+    }
+}

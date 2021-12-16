@@ -49,7 +49,6 @@ struct Parameter_Struct {
 	const uint8_t 			srMode;
 	const uint8_t 			recvDataMode;
 	const uint8_t 			keepalive;
-	
 	const uint8_t			Pulse_Duration;		// E2SLRI Pulse Duration (Ring)		[50]
 };
 
@@ -87,6 +86,7 @@ struct Control_Struct {
 	bool 					AT_SCFGEXT;
 	bool 					AT_SHDN;
 	bool 					AT_E2SLRI;
+	bool					AT_GMI;
 };
 
 #endif

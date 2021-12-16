@@ -560,6 +560,35 @@ bool GE910::Connection_AT_Batch(void) {
 			if (GSM.Control.AT_CCID) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
 
 			// ************************************************************
+			// IoT GMI Command
+			// ************************************************************
+
+			// Reset WD Error Variable
+			_Error_WD = 0;
+
+			// Print GSM Command
+			Serial.print(F("AT+GMI......................................"));
+
+			while (!Control.AT_GMI) {
+
+				// Process Command
+				AT_GMI();
+
+				// Set WD Variable
+				_Error_WD++;
+
+				// Control for WD
+				if (_Error_WD > 5) break;
+
+			}
+
+			// End Function
+			if (!Control.AT_GMI) return (false);
+
+			// Print Command State
+			if (GSM.Control.AT_GMI) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
+
+			// ************************************************************
 			// IoT SLED Command
 			// ************************************************************
 
@@ -2272,6 +2301,112 @@ bool GE910::AT_GSN(void) {
 		// End Function
 		return (false);
 	}
+}
+
+// AT+GMI command function (Modem manufacturer get command)
+bool GE910::AT_GMI(void) {
+
+	/******************************************************************************
+	 *	Function	: AT GMI Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT+GMI\r\n (8 byte)
+	 *	Response	: Telit\r\n\r\nOK\r\n (13 byte)
+	 ******************************************************************************/
+
+	// Command Chain Delay (Advice by Telit)
+	delay(10);
+
+	// Clear Response Variable
+	memset(Command_Response, 0, sizeof(Command_Response));
+
+	// Clear UART Buffer
+	while (UART_IoT.available() > 0) UART_IoT.read(); delay(3);
+
+	// Send UART Command
+	UART_IoT.print(F("AT+GMI\r\n"));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Handle Response
+	if (Response_Wait(23, 1000)) {
+
+		// Declare Read Order Variable
+		uint8_t _Read_Order = 0;
+
+		// Declare Response Variable
+		char _Response[UART_IoT.available()];
+
+		// Read UART Response
+		while (UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+
+			// Increase Read Order
+			_Read_Order++;
+
+			// Stream Delay
+			delay(3);
+		}
+
+		// Control for Command
+		if (strstr(_Response, "Telit") != NULL) {
+
+			// Control for Response
+			if (strstr(_Response, "OK") != NULL) {
+
+				// Set Manufacturer Variable
+				GMI = 1;
+
+				// Set Response Variable
+				strcpy(Command_Response, _Response);
+
+				// Set Control Variable
+				Control.AT_GMI = true;
+
+				// End Function
+				return (true);
+
+			} else {
+
+				// Set Response Variable
+				strcpy(Command_Response, "0");
+
+				// Set Control Variable
+				Control.AT_GMI = false;
+
+				// End Function
+				return (false);
+
+			}
+
+		} else {
+
+			// Set Response Variable
+			strcpy(Command_Response, "1");
+
+			// Set Control Variable
+			Control.AT_GMI = false;
+
+			// End Function
+			return (false);
+
+		}
+
+	} else {
+
+		// Set Response Variable
+		strcpy(Command_Response, "2");
+
+		// Set Control Variable
+		Control.AT_GMI = false;
+
+		// End Function
+		return (false);
+
+	}
+
 }
 
 // AT#SLED command function (Modem status LED update command)

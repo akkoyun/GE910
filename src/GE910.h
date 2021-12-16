@@ -41,6 +41,7 @@ public:
 	char 					IP[15]					= "";				// IP Variable
 	int 					Operator				= 0;				// Operator Variable
 	uint8_t					RSSI					= 0;				// RSSI Variable
+	uint8_t					GMI						= 0;				// GMI Variable
 
 	// Time Variables
 	uint8_t 				Day						= 29;				// Day Variable
@@ -67,6 +68,10 @@ public:
 	bool					Message					= false;			// Incomming Message Variable
 	int						Request					= 0;				// Server Request Variable
 	int						Socket_Incomming_Length = 0;
+
+	// JSON Variables
+	String					JSON_P01				= "";				// P01 JSON Pack
+	uint16_t				JSON_P01_Length			= 0;				// P01 JSON Pack Length
 
 	// ************************************************************
 	// Public GSM Setting Variables
@@ -99,6 +104,7 @@ public:
 
 	// Control Variable Structure
 	Control_Struct Control { 
+		false,
 		false,
 		false,
 		false,
@@ -174,6 +180,7 @@ private:
 	bool AT_CCID(void);
 	bool AT_CGSN(void);
 	bool AT_GSN(void);
+	bool AT_GMI(void);
 	bool AT_SLED(const uint8_t _SLED);
 	bool AT_TXMONMODE(const uint8_t _TXMONMODE);
 	bool AT_REGMODE(const uint8_t _REGMODE);
