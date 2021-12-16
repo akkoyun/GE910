@@ -49,6 +49,8 @@ struct Parameter_Struct {
 	const uint8_t 			srMode;
 	const uint8_t 			recvDataMode;
 	const uint8_t 			keepalive;
+	
+	const uint8_t			Pulse_Duration;		// E2SLRI Pulse Duration (Ring)		[50]
 };
 
 // Control Variable Structure

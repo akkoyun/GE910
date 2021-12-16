@@ -15,12 +15,13 @@
 #include <Arduino.h>
 #endif
 
+// Define PGMspace Function
+#include <avr/pgmspace.h>
+
 // Define Library Structures
 #ifndef __GE910_Structures__
 #include "GE910_Structures.h"
 #endif
-	
-#include <avr/pgmspace.h>
 
 class GE910 {
 
@@ -67,9 +68,9 @@ public:
 	int						Request					= 0;				// Server Request Variable
 	int						Socket_Incomming_Length = 0;
 
-	// ************************************************************************************************************************
+	// ************************************************************
 	// Public GSM Setting Variables
-	// ************************************************************************************************************************
+	// ************************************************************
 
 	// Parameter Variable Structure
 	Parameter_Struct Parameter {
@@ -92,7 +93,8 @@ public:
 		80,										// (HTTP_Port) Cloud Server Port
 		1,
 		0,
-		1
+		1,
+		50										// (Pulse_Duration) E2SLRI Pulse Duration
 	};
 
 	// Control Variable Structure
@@ -136,14 +138,34 @@ public:
 	// ************************************************************
 	
 	// Hardware Functions
-	void LED(bool State);
+
 	void Communication(bool State);
-	void Power(bool State);
+	bool PowerMonitor(void);
 	void OnOff(int Time_);
 	void ShutDown(int Time_);
-	bool PowerMonitor(void);
+	void Power(bool State);
+	void LED(bool State);
+	bool Activate(bool Status);
 
+	// Batch Functions
+
+	void Connect(void);
+	bool Connection_AT_Batch(void);
+	bool Time_Update(void);
+	bool Recieve_AT_Batch(void);
+	bool RSSI_Refresh(void);
+	bool Connection_Control(void);
+	bool Send(const String &_Data);
+	void Listen(void);
+
+private:
+	
+	// ************************************************************
+	// Private Functions
+	// ************************************************************
+	
 	// Modem AT Command Functions
+
 	bool AT(void);
 	bool AT_CMEE(uint8_t _CMEE);
 	bool AT_FCLASS(const uint8_t _FCLASS);
@@ -158,45 +180,26 @@ public:
 	bool AT_CREG(void);
 	bool AT_CGREG(void);
 	bool AT_CGDCONT(const char *_PDP, const char *_APN);
-	bool AT_SCFG(const uint8_t _ConnID, const uint8_t _PktSz, const uint8_t _MaxTo, const uint16_t _ConnTo, const uint8_t _TxTo);
+	bool AT_SCFG(const uint8_t _ConnID, const uint8_t _CID, const uint8_t _PktSz, const uint8_t _MaxTo, const uint16_t _ConnTo, const uint8_t _TxTo);
 	bool AT_SGACT(void);
 	bool AT_CSQ(void);
 	bool AT_SERVINFO(void);
 	bool AT_CCLK(void);
-	bool AT_NTP(const char *_NTP_Server);
+	bool AT_NTP(const char *_NTP_Server, const uint16_t _NTP_Port, bool _Update, const uint8_t _TimeOut, const uint8_t _TimeZone);
 	bool AT_CTZU(const uint8_t _Ctzu);
-	bool AT_HTTPCFG(const char *_HTTP_Server, const uint8_t _Port);
-	bool AT_HTTPSND(const char *_URL, const String &Data);
+	bool AT_HTTPCFG(const uint8_t _ProfID, const char *_HTTP_Server, const uint8_t _Port, const uint8_t _AuthType, const char *_Username, const char *_Password, const uint8_t _SSL, const uint8_t _TimeOut, const uint8_t _Cid);
+	bool AT_HTTPSND(const uint8_t _ProfID, const uint8_t _Command, const char *_URL, const String &Data);
 	bool AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port);
-	bool AT_FRWL(const char *_IP);
-	bool AT_SA(void);
-	bool AT_SH(void);
+	bool AT_FRWL(const uint8_t _Action, const char *_IP);
+	bool AT_SA(const uint8_t _ConnID, const uint8_t _ConnMode);
+	bool AT_SH(const uint8_t _ConnID);
 	bool AT_SHDN(void);
-	bool AT_SRECV(void);
-	bool AT_SCFGEXT(const uint8_t _srMode, const uint8_t _recvDataMode, const uint8_t _keepalive);
-	bool AT_E2SLRI(void);
+	bool AT_SRECV(const uint8_t _ConnID);
+	bool AT_SCFGEXT(const uint8_t _ConnID, const uint8_t _srMode, const uint8_t _recvDataMode, const uint8_t _keepalive);
+	bool AT_E2SLRI(const uint8_t _Pulse_Duration);
 	
-	// Batch Functions
-	bool Time_Update(void);												// GSM Embedded RTC Time Update Function
-	bool Connection_Control(void);										// Connection Control Function
-	void Connect(void);													// Connection Function
-	bool Send(const String &_Data);										// Data Send Function
-	bool RSSI_Refresh(void);											// RSSI Refresh Function
-	void Listen(void);													// Listen UART
-	void Socket_Get_Command(void);
-	bool Activate(bool Status);
-
-private:
-	
-	// ************************************************************
-	// Private Functions
-	// ************************************************************
-	
-	// Batch Functions
-	bool Connection_AT_Batch(void);
-	bool Recieve_AT_Batch(void);
-		
 	// Utility Functions
+
 	bool Response_Wait(uint16_t _Length, uint32_t _TimeOut);
 
 };
