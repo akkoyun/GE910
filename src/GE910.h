@@ -71,7 +71,8 @@ public:
 
 	// JSON Variables
 	String					JSON_P01				= "";				// P01 JSON Pack
-	uint16_t				JSON_P01_Length			= 0;				// P01 JSON Pack Length
+	String					JSON_P02				= "";				// P02 JSON Pack
+	String					JSON_P03				= "";				// P03 JSON Pack
 
 	// ************************************************************
 	// Public GSM Setting Variables
@@ -94,7 +95,7 @@ public:
 		1,										// (CTZU)
 		"85.199.214.98",						// (NTP_Server) Set NTP Server Variable (NASA)
 		"54.216.226.171",						// (HTTP_Server) Cloud Server IP
-		"/api/v1.1/p401",						// (HTTP_URL) Cloud Server URL
+		"/api/v1.1/p402",						// (HTTP_URL) Cloud Server URL
 		80,										// (HTTP_Port) Cloud Server Port
 		1,
 		0,

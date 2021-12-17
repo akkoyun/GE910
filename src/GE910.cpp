@@ -1274,10 +1274,10 @@ bool GE910::Send(const String &_Data) {
 		if (!HTTP_CFG) AT_HTTPCFG(1, Parameter.HTTP_Server, Parameter.HTTP_Port, 0, "", "", 0, 60, 1);
 
 		// Send Data
-		AT_HTTPSND(1, 0, Parameter.HTTP_URL, _Data);
+		bool Data_Send = AT_HTTPSND(1, 0, Parameter.HTTP_URL, _Data);
 
 		// End Function
-		return (true);
+		return (Data_Send);
 
 	}
 
