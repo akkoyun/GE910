@@ -232,52 +232,49 @@ bool GE910::Activate(bool Status) {
 			// Command Delay
 			delay(1000);
 
-			// Set Variable
-			PwrMon = NOT_POWERED;
-			Connected = NOT_CONNECTED;
+		} 
 
-			// Set Control Variables
-			Control.AT 				= false;
-			Control.AT_CMEE 		= false;
-			Control.AT_FCLASS 		= false;
-			Control.AT_K 			= false;
-			Control.AT_CPIN 		= false;
-			Control.AT_CCID 		= false;
-			Control.AT_CGSN 		= false;
-			Control.AT_GSN 			= false;
-			Control.AT_SLED 		= false;
-			Control.AT_TXMONMODE 	= false;
-			Control.AT_REGMODE 		= false;
-			Control.AT_CREG 		= false;
-			Control.AT_CGREG 		= false;
-			Control.AT_CGDCONT 		= false;
-			Control.AT_SCFG1 		= false;
-			Control.AT_SCFG2 		= false;
-			Control.AT_SGACT 		= false;
-			Control.AT_SERVINFO 	= false;
-			Control.AT_CSQ 			= false;
-			Control.AT_CTZU 		= false;
-			Control.AT_NTP 			= false;
-			Control.AT_CCLK 		= false;
-			Control.AT_HTTPCFG 		= false;
-			Control.AT_HTTPSND 		= false;
-			Control.AT_SL 			= false;
-			Control.AT_FRWL 		= false;
-			Control.AT_SA 			= false;
+		// Set Variable
+		PwrMon = NOT_POWERED;
+		Connected = NOT_CONNECTED;
 
-			// End Function
-			return (true);
+		// Set Control Variables
+		Control.AT 				= false;
+		Control.AT_CMEE 		= false;
+		Control.AT_FCLASS 		= false;
+		Control.AT_K 			= false;
+		Control.AT_CPIN 		= false;
+		Control.AT_CCID 		= false;
+		Control.AT_CGSN 		= false;
+		Control.AT_GSN 			= false;
+		Control.AT_SLED 		= false;
+		Control.AT_TXMONMODE 	= false;
+		Control.AT_REGMODE 		= false;
+		Control.AT_CREG 		= false;
+		Control.AT_CGREG 		= false;
+		Control.AT_CGDCONT 		= false;
+		Control.AT_SCFG1 		= false;
+		Control.AT_SCFG2 		= false;
+		Control.AT_SGACT 		= false;
+		Control.AT_SERVINFO 	= false;
+		Control.AT_CSQ 			= false;
+		Control.AT_CTZU 		= false;
+		Control.AT_NTP 			= false;
+		Control.AT_CCLK 		= false;
+		Control.AT_HTTPCFG 		= false;
+		Control.AT_HTTPSND 		= false;
+		Control.AT_SL 			= false;
+		Control.AT_FRWL 		= false;
+		Control.AT_SA 			= false;
+		Control.AT_SH 			= false;
+		Control.AT_SRECV 		= false;
+		Control.AT_SCFGEXT 		= false;
+		Control.AT_SHDN 		= false;
+		Control.AT_E2SLRI 		= false;
+		Control.AT_GMI 			= false;
 
-		} else {
-
-			// Set Variable
-			PwrMon = NOT_POWERED;
-			Connected = NOT_CONNECTED;
-
-			// End Function
-			return (true);
-
-		}
+		// End Function
+		return (true);
 
 	}
 
@@ -1031,7 +1028,7 @@ bool GE910::Recieve_AT_Batch(void) {
 	if (GSM.Control.AT_SL) {Serial.println(F("..[OK]"));} else {Serial.println(F("[FAIL]"));}
 
 	// ************************************************************
-	// Firewall Config Command
+	// Firewall Config Command IP1
 	// ************************************************************
 
 	// Declare WD Error Variable
@@ -1044,6 +1041,7 @@ bool GE910::Recieve_AT_Batch(void) {
 
 		// Process Command
 		AT_FRWL(1, "213.14.250.214");
+		AT_FRWL(1, "54.216.226.171");
 
 		// Set WD Variable
 		_Error_WD++;
@@ -1268,7 +1266,7 @@ bool GE910::Send(const String &_Data) {
 	if (!PowerMonitor()) Connect();
 
 	// Control Connection
-	if (Connection_Control() == true) {
+//	if (Connection_Control() == true) {
 
 		// Control HTTP Configuration
 		if (!HTTP_CFG) AT_HTTPCFG(1, Parameter.HTTP_Server, Parameter.HTTP_Port, 0, "", "", 0, 60, 1);
@@ -1279,7 +1277,7 @@ bool GE910::Send(const String &_Data) {
 		// End Function
 		return (Data_Send);
 
-	}
+//	}
 
 	// End Function
 	return (false);
@@ -4185,16 +4183,8 @@ bool GE910::AT_NTP(const char *_NTP_Server, const uint16_t _NTP_Port, bool _Upda
 
 	// Send UART Command
 	UART_IoT.print(F("AT#NTP=\""));
-	UART_IoT.print(String(_NTP_Server));
-	UART_IoT.print(F("\","));
-	UART_IoT.print(String(_NTP_Port));
-	UART_IoT.print(F(","));
-	UART_IoT.print(String(_Update));
-	UART_IoT.print(F(","));
-	UART_IoT.print(String(_TimeOut));
-	UART_IoT.print(F(","));
-	UART_IoT.print(String(_TimeZone));
-	UART_IoT.print(F("\r\n"));
+ 	UART_IoT.print(String(_NTP_Server));
+ 	UART_IoT.print(F("\",123,1,3\r\n"));
 
 	// Wait for UART Data Send
 	UART_IoT.flush();
@@ -4229,8 +4219,7 @@ bool GE910::AT_NTP(const char *_NTP_Server, const uint16_t _NTP_Port, bool _Upda
 		if (strstr(_Response, "#NTP:") != NULL) {
 
 			// Control for Response
-			if (strstr(_Response, "OK") != NULL)
-			{
+			if (strstr(_Response, "OK") != NULL) {
 
 				// Set Response Variable
 				strcpy(Command_Response, _Response);
@@ -4262,19 +4251,19 @@ bool GE910::AT_NTP(const char *_NTP_Server, const uint16_t _NTP_Port, bool _Upda
 				_Buffer[0] = _Response[36 + String(Parameter.NTP_Server).length()];
 				_Buffer[1] = _Response[37 + String(Parameter.NTP_Server).length()];
 				Hour = (uint8_t)atoi(_Buffer);
-				if (Hour > 24) Hour = 1;
+				if (Hour > 24) Hour = 0;
 
 				// Parse Minute
 				_Buffer[0] = _Response[39 + String(Parameter.NTP_Server).length()];
 				_Buffer[1] = _Response[40 + String(Parameter.NTP_Server).length()];
 				Minute = (uint8_t)atoi(_Buffer);
-				if (Minute > 60) Minute = 1;
+				if (Minute > 60) Minute = 0;
 
 				// Parse Second
 				_Buffer[0] = _Response[42 + String(Parameter.NTP_Server).length()];
 				_Buffer[1] = _Response[43 + String(Parameter.NTP_Server).length()];
 				Second = (uint8_t)atoi(_Buffer);
-				if (Second > 60) Second = 1;
+				if (Second > 60) Second = 0;
 
 				// End Function
 				return (true);

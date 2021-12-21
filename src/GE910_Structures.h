@@ -89,4 +89,9 @@ struct Control_Struct {
 	bool					AT_GMI;
 };
 
+// Parameter Variable Structure
+struct Interrupt_Struct {
+	bool					Interrupt;			// GSM Interrupt
+};
+
 #endif

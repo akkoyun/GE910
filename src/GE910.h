@@ -140,6 +140,11 @@ public:
 		false
 	};
 
+	// Interrupt Structure
+	Interrupt_Struct Socket {
+		false
+	};
+
 	// ************************************************************
 	// Public Functions
 	// ************************************************************
