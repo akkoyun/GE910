@@ -137,6 +137,7 @@ public:
 		false,
 		false,
 		false,
+		false,
 		false
 	};
 
@@ -170,6 +171,11 @@ public:
 	bool Send(const String &_Data);
 	void Listen(void);
 
+	// AT Commands
+	bool AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port);
+	bool AT_SH(const uint8_t _ConnID);
+	uint8_t AT_SS(const uint8_t _ConnID);
+
 private:
 	
 	// ************************************************************
@@ -202,10 +208,9 @@ private:
 	bool AT_CTZU(const uint8_t _Ctzu);
 	bool AT_HTTPCFG(const uint8_t _ProfID, const char *_HTTP_Server, const uint8_t _Port, const uint8_t _AuthType, const char *_Username, const char *_Password, const uint8_t _SSL, const uint8_t _TimeOut, const uint8_t _Cid);
 	bool AT_HTTPSND(const uint8_t _ProfID, const uint8_t _Command, const char *_URL, const String &Data);
-	bool AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port);
 	bool AT_FRWL(const uint8_t _Action, const char *_IP);
+	
 	bool AT_SA(const uint8_t _ConnID, const uint8_t _ConnMode);
-	bool AT_SH(const uint8_t _ConnID);
 	bool AT_SHDN(void);
 	bool AT_SRECV(const uint8_t _ConnID);
 	bool AT_SCFGEXT(const uint8_t _ConnID, const uint8_t _srMode, const uint8_t _recvDataMode, const uint8_t _keepalive);

@@ -87,6 +87,7 @@ struct Control_Struct {
 	bool 					AT_SHDN;
 	bool 					AT_E2SLRI;
 	bool					AT_GMI;
+	bool					AT_SS;				// Socket Status Control Variable
 };
 
 // Parameter Variable Structure

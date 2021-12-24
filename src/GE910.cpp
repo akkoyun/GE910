@@ -1014,7 +1014,7 @@ bool GE910::Recieve_AT_Batch(void) {
 	while (!Control.AT_SL) {
 
 		// Process Command
-		AT_SL(2, true, 80);
+		AT_SL(2, true, 100);
 
 		// Set WD Variable
 		_Error_WD++;
@@ -1042,6 +1042,7 @@ bool GE910::Recieve_AT_Batch(void) {
 		// Process Command
 		AT_FRWL(1, "213.14.250.214");
 		AT_FRWL(1, "54.216.226.171");
+		AT_FRWL(1, "83.160.73.106");
 
 		// Set WD Variable
 		_Error_WD++;
@@ -1346,7 +1347,7 @@ void GE910::Listen(void) {
 			AT_SH(2);
 
 			// ReOpen Socket Command
-			AT_SL(2, true, 80);
+			AT_SL(2, true, 100);
 
 		} else {
 
@@ -1377,9 +1378,7 @@ bool GE910::AT(void) {
 	memset(Command_Response, 0, sizeof(Command_Response));
 
 	// Clear UART Buffer
-	while (UART_IoT.available() > 0)
-		UART_IoT.read();
-	delay(3);
+	while (UART_IoT.available() > 0) UART_IoT.read(); delay(3);
 
 	// Send UART Command
 	UART_IoT.print(F("AT\r\n"));
@@ -5051,6 +5050,70 @@ bool GE910::AT_SHDN(void) {
 
 }
 
+// AT#SS command function (Socket Status)
+uint8_t GE910::AT_SS(const uint8_t _ConnID) {
+
+	/******************************************************************************
+	 *	Function	: AT SS Command
+	 *	Revision	: 01.00.00
+	 *	Command		: AT#SL=1,1,80\r\n (14 byte)
+	 *	Response	: AT#SL=1,1,80\r\n\r\nOK\r\n (20 byte)
+	 ******************************************************************************/
+
+	// Command Chain Delay (Advice by Telit)
+	delay(10);
+
+	// Clear Response Variable
+	memset(Command_Response, 0, sizeof(Command_Response));
+
+	// Clear UART Buffer
+	while (UART_IoT.available() > 0) UART_IoT.read(); delay(3);
+
+	// Send UART Command
+	UART_IoT.print(F("AT#SS="));
+	UART_IoT.print(_ConnID);
+	UART_IoT.print(F("\r\n"));
+
+	// Wait for UART Data Send
+	UART_IoT.flush();
+
+	// Handle Response
+	if (Response_Wait(25, 1000)) {
+
+		// Declare Read Order Variable
+		uint8_t _Read_Order = 0;
+
+		// Declare Response Variable
+		char _Response[UART_IoT.available()];
+
+		// Read UART Response
+		while (UART_IoT.available() > 0) {
+
+			// Read Serial Char
+			_Response[_Read_Order] = UART_IoT.read();
+
+			// Increase Read Order
+			_Read_Order++;
+
+			// Stream Delay
+			delay(3);
+
+		}
+
+		// Convert Data Type
+		String _Response_STR = String(_Response[18]);
+		uint8_t _Response_ = _Response_STR.toInt();
+
+		// Return Response
+		return(_Response_);
+
+	}
+
+	// End Function
+	return(0);
+
+}
+
 // AT#SL command function (Socket listen)
 bool GE910::AT_SL(const uint8_t _ConnID, const bool _State, const uint8_t _Port) {
 
@@ -5417,14 +5480,11 @@ bool GE910::AT_SRECV(const uint8_t _ConnID) {
 	// Wait for UART Data Send
 	UART_IoT.flush();
 
-	// Declare Response Length Variable
-	uint16_t _Length = Socket_Incomming_Length + 41;
-
 	// Command Delay
 	delay(30);
 
 	// Handle Response
-	if (Response_Wait(_Length, 1000)) {
+	if (Response_Wait(83, 1000)) {
 
 		// Declare Read Order Variable
 		uint8_t _Read_Order = 0;
@@ -5463,6 +5523,9 @@ bool GE910::AT_SRECV(const uint8_t _ConnID) {
 
 		// Handle Update
 		Response += "}";
+
+		// Server Request JSON
+		Serial.print("Server Request : "); Serial.println(Response);
 
 		// Set Response Variable
 		Response.toCharArray(Command_Response, Response.length() + 1);
